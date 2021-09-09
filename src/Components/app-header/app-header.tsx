@@ -13,7 +13,7 @@ class AppHeader extends React.Component {
             <div className="container">
               <nav className={appHeaderStyles.nav}>
                 <ul className={appHeaderStyles.nav__menu}>
-                  <li className={[appHeaderStyles.nav__item, 'pl-4 pr-4 pt-2 pb-2'].join(' ')}>
+                  <li className={[appHeaderStyles.nav__item, 'pl-5 pr-5 pt-2 pb-2'].join(' ')}>
                     <a href='#' className={[appHeaderStyles.nav__link, 'text text_type_main-default', appHeaderStyles.active].join(' ')}>
                       <BurgerIcon type="primary" /><p>Конструктор</p>
                     </a>
