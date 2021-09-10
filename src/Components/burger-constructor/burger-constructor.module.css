@@ -1,56 +1,39 @@
 .constr {
-  max-width: 600px;
+  width: 600px;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
 }
 
-.tabs {
-  display: flex;
-  list-style-type: none;
-  margin-bottom: 0;
+.list {
   padding: 0;
-}
-
-.tab {
-  width: 200px;
-}
-
-.tab__link {
-  text-decoration: none;
-  color: #8585AD;
+  list-style-type: none;
   display: flex;
-  justify-content: center;
-  box-shadow: inset 0px -1px 0px #2F2F37;
-}
-
-.tab__link.active {
-  color: #F2F2F3;
-  box-shadow: inset 0px -2px 0px #4C4CFF;
-}
-
-.ingredients {
-
-}
-
-.products__cont {
-  display: flex;
-  justify-content: space-between;
-}
-
-.product {
-  max-width: 272px;
-  position: relative;
-  display: flex;
-  align-items: center;
   flex-direction: column;
+  gap: 10px;
+  align-items: center;
 }
 
-.image {
-  width: 240px;
-  height: 120px;
-}
-
-.price {
+.item {
+  width: 100%;
   display: flex;
   align-items: center;
+}
+
+.list__scroll {
+  height: 50vh;
+  overflow-y: scroll;
+}
+
+.list__scroll::-webkit-scrollbar {
+  width: 8px;
+  position: absolute;
+}
+
+.list__scroll::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.list__scroll::-webkit-scrollbar-thumb {
+  background: #8585AD;
 }
