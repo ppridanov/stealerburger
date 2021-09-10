@@ -4,7 +4,6 @@ import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/
 
 class BurgerConstructor extends React.Component{
     render() {
-        const {image} = this.props;
         return (
             <div className={`${cStyle.constr} mt-25`}>
                     <ul className={`${cStyle.list} ml-4`}>
