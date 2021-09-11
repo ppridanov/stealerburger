@@ -19,7 +19,8 @@ class AppHeader extends React.Component {
                     <a href='/orders' className={[appHeaderStyles.nav__link, 'text text_type_main-default'].join(' ')}>
                       <ListIcon type="secondary" /><p>Лента заказов</p>
                     </a>
-                  </li>              </ul>
+                  </li>
+                </ul>
                 <div className={appHeaderStyles.header__logo}>
                   <Logo />
                 </div>

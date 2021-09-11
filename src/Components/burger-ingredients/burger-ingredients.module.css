@@ -28,13 +28,10 @@
     box-shadow: inset 0px -2px 0px #4C4CFF;
 }
 
-.ingredients {
-
-}
-
 .products {
-    height: 70vh;
+    height: 60vh;
     overflow-y: scroll;
+    scroll-behavior: smooth;
 }
 
 .products::-webkit-scrollbar {

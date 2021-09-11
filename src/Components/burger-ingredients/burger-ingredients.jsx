@@ -2,17 +2,32 @@ import React from 'react';
 import ingredientsStyles from './burger-ingredients.module.css';
 import Ingredient from "../ingredient/ingredient";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from 'prop-types';
+import {ingredientsPropTypes} from "../../utils/data";
 
-class BurgerConstructor extends React.Component{
+class BurgerIngredients extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            current: 'but'
+            current: 'but',
         }
     }
     handleTabClick = (value) => {
         this.setState({current: value});
     }
+    //Здесь пока не понял как вешать клик на продукт и поднимать у него счетчик
+    // handleProductClick = (e) => {
+    //     let value = e.currentTarget.getAttribute('value');
+    //     let type = e.currentTarget.getAttribute('type');
+    //
+    //     this.setState((prev) => ({
+    //         ...prev,
+    //         choicesIngredients: {
+    //             ...prev.choicesIngredients,
+    //     {_id: 1, type: type}
+    //         }
+    //     }))
+    // }
   render() {
     return (
         <div className={ingredientsStyles.constr}>
@@ -55,5 +70,8 @@ class BurgerConstructor extends React.Component{
   }
 
 }
+BurgerIngredients.propTypes = {
+    ingredients: PropTypes.arrayOf(ingredientsPropTypes.isRequired)
+}
 
-export default BurgerConstructor;
+export default BurgerIngredients;
