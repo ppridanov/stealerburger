@@ -3,9 +3,6 @@ import appHeaderStyles from './app-header.module.css';
 import {BurgerIcon, ListIcon, Logo, ProfileIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
 class AppHeader extends React.Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
         <>
@@ -14,19 +11,19 @@ class AppHeader extends React.Component {
               <nav className={appHeaderStyles.nav}>
                 <ul className={appHeaderStyles.nav__menu}>
                   <li className={[appHeaderStyles.nav__item, 'pl-5 pr-5 pt-2 pb-2'].join(' ')}>
-                    <a href='#' className={[appHeaderStyles.nav__link, 'text text_type_main-default', appHeaderStyles.active].join(' ')}>
+                    <a href='/constructor' className={[appHeaderStyles.nav__link, 'text text_type_main-default', appHeaderStyles.active].join(' ')}>
                       <BurgerIcon type="primary" /><p>Конструктор</p>
                     </a>
                   </li>
                   <li className={[appHeaderStyles.nav__item, 'pl-4 pr-4 pt-2 pb-2'].join(' ')}>
-                    <a href='#' className={[appHeaderStyles.nav__link, 'text text_type_main-default'].join(' ')}>
+                    <a href='/orders' className={[appHeaderStyles.nav__link, 'text text_type_main-default'].join(' ')}>
                       <ListIcon type="secondary" /><p>Лента заказов</p>
                     </a>
                   </li>              </ul>
                 <div className={appHeaderStyles.header__logo}>
                   <Logo />
                 </div>
-                <a href="#" className={['text text_type_main-default pl-4 pr-4 pt-2 pb-2', appHeaderStyles.login].join(' ')}><ProfileIcon type={"secondary"} /><span>Личный кабинет</span></a>
+                <a href="/login" className={['text text_type_main-default pl-4 pr-4 pt-2 pb-2', appHeaderStyles.login].join(' ')}><ProfileIcon type={"secondary"} /><span>Личный кабинет</span></a>
               </nav>
             </div>
           </header>

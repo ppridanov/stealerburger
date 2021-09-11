@@ -6,45 +6,45 @@ class BurgerConstructor extends React.Component{
     render() {
         return (
             <div className={`${cStyle.constr} mt-25`}>
-                    <ul className={`${cStyle.list} ml-4`}>
-                        <div className="list__top">
-                            <li className={cStyle.item}>
-                                <ConstructorElement
-                                    type="top"
-                                    isLocked={true}
-                                    text="Краторная булка N-200i (верх)"
-                                    price={1255}
-                                    thumbnail='https://code.s3.yandex.net/react/code/bun-02.png'
-                                />
-                            </li>
-                        </div>
-                        <div className={cStyle.list__scroll} style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: "flex-end" }}>
-                            {this.props.ingredient.filter((item) => item.type !== 'bun').map((item) => {
-                                return (<li className={cStyle.item}>
-                                    <DragIcon type={"primary"} />
-                                    <ConstructorElement
-                                        text={item.name}
-                                        price={item.price}
-                                        thumbnail={item.image}
-                                    />
-                                </li>)
-                            })}
-                        </div>
-                        <div className="list__bottom">
-                            <li className={cStyle.item}>
-                                <ConstructorElement
-                                    type="bottom"
-                                    isLocked={true}
-                                    text="Краторная булка N-200i (низ)"
-                                    price={1255}
-                                    thumbnail='https://code.s3.yandex.net/react/code/bun-02.png'
-                                />
-                            </li>
-                        </div>
+                    <ul className={`${cStyle.list}`}>
+                        <li className={cStyle.item}>
+                            <ConstructorElement
+                                type="top"
+                                isLocked={true}
+                                text="Краторная булка N-200i (верх)"
+                                price={1255}
+                                thumbnail='https://code.s3.yandex.net/react/code/bun-02.png'
+                            />
+                        </li>
+                        <li className={cStyle.item}>
+                            <ul className={cStyle.list__scroll} style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: "flex-end" }}>
+                                {this.props.ingredient.filter((item) => item.type !== 'bun').map((item) => {
+                                    return (<li className={cStyle.item} key={item._id}>
+                                        <div className="mr-2">
+                                            <DragIcon type={"primary"} />
+                                        </div>
+                                        <ConstructorElement
+                                            text={item.name}
+                                            price={item.price}
+                                            thumbnail={item.image}
+                                        />
+                                    </li>)
+                                })}
+                            </ul>
+                        </li>
+                        <li className={cStyle.item}>
+                            <ConstructorElement
+                                type="bottom"
+                                isLocked={true}
+                                text="Краторная булка N-200i (низ)"
+                                price={1255}
+                                thumbnail='https://code.s3.yandex.net/react/code/bun-02.png'
+                            />
+                        </li>
                     </ul>
-                    <div className="order">
-                        <div className="total-price">
-                            <span>610</span>
+                    <div className={`${cStyle.order} mr-8`}>
+                        <div className={`${cStyle.total__price} mr-10`}>
+                            <span className="text text_type_digits-medium">610</span>
                             <CurrencyIcon type="primary" />
                         </div>
                         <Button type="primary" size="large">

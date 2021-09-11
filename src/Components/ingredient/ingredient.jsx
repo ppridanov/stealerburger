@@ -3,11 +3,8 @@ import cStyle from './ingredient.module.css';
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 
 class Ingredient extends React.Component{
-    constructor(props) {
-        super(props);
-    }
     render() {
-        const {image, price, name} = this.props;
+        const {image, price} = this.props;
         return (
             <div className={cStyle.product}>
                 <Counter size="default" />

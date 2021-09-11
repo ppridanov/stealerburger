@@ -12,17 +12,24 @@
   flex-direction: column;
   gap: 10px;
   align-items: center;
+  width: 100%;
 }
 
 .item {
   width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .list__scroll {
+  composes: list;
   height: 50vh;
   overflow-y: scroll;
+}
+
+.list__scroll .item {
+  justify-content: flex-start;
 }
 
 .list__scroll::-webkit-scrollbar {
@@ -36,4 +43,23 @@
 
 .list__scroll::-webkit-scrollbar-thumb {
   background: #8585AD;
+}
+
+.order {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.total__price {
+  display: flex;
+  align-items: center;;
+}
+
+.total__price span {
+  margin-right: 8px;
+}
+
+.total__price svg {
+  width: 33px;
+  height: 33px;
 }
