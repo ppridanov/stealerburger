@@ -1,5 +1,5 @@
 import React from 'react';
-import modalStyles from './orders-detail.module.css';
+import modalStyles from './order-details.module.css';
 
 function OrderDetails() {
     return(
