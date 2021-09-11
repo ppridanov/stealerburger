@@ -1,6 +1,6 @@
 import React from 'react';
 import ingredientStyle from './ingredient.module.css';
-import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
 class Ingredient extends React.Component{
     render() {
@@ -13,7 +13,7 @@ class Ingredient extends React.Component{
                     <span className='text text_type_digits-default mr-2'>{price}</span>
                     <CurrencyIcon type="primary" />
                 </div>
-                <p className="text text_type_main-default mt-1 mb-10">{name}</p>
+                <p className={`${ingredientStyle.name} text text_type_main-default mt-1 mb-10`}>{name}</p>
             </div>
         )
     }
