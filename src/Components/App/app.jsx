@@ -13,8 +13,8 @@ class App extends React.Component {
                     <div className="main__wrapper">
                         <div className="container pl-5 pr-5">
                             <div className="main__container">
-                                <BurgerIngredients ingredient={data} />
-                                <BurgerConstructor ingredient={data} />
+                                <BurgerIngredients ingredients={data} />
+                                <BurgerConstructor ingredients={data} />
                             </div>
                         </div>
                     </div>

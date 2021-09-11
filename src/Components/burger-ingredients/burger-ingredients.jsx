@@ -38,15 +38,15 @@ class BurgerConstructor extends React.Component{
             <div className={ingredientsStyles.products}>
               <h3 className="text text_type_main-medium" id="buts">Булки</h3>
               <div className={ingredientsStyles.products__cont}>
-                  {this.props.ingredient.filter((item) => item.type === 'bun').map((item) => <Ingredient {...item} key={item._id} />)}
+                  {this.props.ingredients.filter((item) => item.type === 'bun').map((item) => <Ingredient {...item} key={item._id} />)}
               </div>
               <h3 className="text text_type_main-medium" id="sauces">Соусы</h3>
               <div className={ingredientsStyles.products__cont}>
-                  {this.props.ingredient.filter((item) => item.type === 'sauce').map((item) => <Ingredient {...item} key={item._id} />)}
+                  {this.props.ingredients.filter((item) => item.type === 'sauce').map((item) => <Ingredient {...item} key={item._id} />)}
               </div>
               <h3 className="text text_type_main-medium" id="mains">Начинки</h3>
               <div className={ingredientsStyles.products__cont}>
-                  {this.props.ingredient.filter((item) => item.type === 'main').map((item) => <Ingredient {...item} key={item._id} />)}
+                  {this.props.ingredients.filter((item) => item.type === 'main').map((item) => <Ingredient {...item} key={item._id} />)}
               </div>
             </div>
           </div>
