@@ -3,38 +3,46 @@ import appStyles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import { data } from '../../utils/data';
 import Modal from "../modal/modal";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 
 
 function App() {
+    const [state, setState] = React.useState({
+        isLoading: false,
+        hasError: false,
+        data: []
+    })
+    React.useEffect(() => {
+        const getIngredients = async () => {
+            setState({ ...state, hasError: false, isLoading: true });
+            await fetch('https://norma.nomoreparties.space/api/ingredients')
+                .then(res => res.json())
+                .then((res) => setState({...state, data: res.data, isLoading: false, hasError: false}))
+                .catch(e => {
+                    setState({ ...state, hasError: true, isLoading: false });
+                });
+        }
+        getIngredients();
+    }, [state])
+
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
-    const [modalContent, setModalContent] = React.useState()
     const handleOpenModal = () => {
         setModalIsOpen(true);
+    }
+    const handleCloseModal = () => {
+        setModalIsOpen(false);
+    }
 
-    }
-    React.useEffect(() => {
-        document.addEventListener('keyup', handleEscCloseModal);
-        return () => {
-            document.removeEventListener('keyup', handleEscCloseModal);
-        }
-    })
-    const handleCloseModal = (e) => {
-         setModalIsOpen(false);
-    }
-    const handleEscCloseModal = (e) => {
-        e.keyCode === 27 && modalIsOpen && setModalIsOpen(false);
-    }
     return (
         <div>
             <AppHeader />
             <main>
                 <div className={`${appStyles.container} pl-5 pr-5`}>
                     <div className={appStyles.main__container}>
-                        <BurgerIngredients ingredients={data} />
-                        <BurgerConstructor ingredients={data} onOpenModal={handleOpenModal} />
+                        <BurgerIngredients ingredients={state.data} />
+                        {console.log(state)}
+                        <BurgerConstructor ingredients={state.data} onOpenModal={handleOpenModal} />
                     </div>
                 </div>
                 <ModalOverlay isOpen={modalIsOpen} onCloseModal={handleCloseModal} />
