@@ -11,8 +11,8 @@ function App() {
         hasError: false,
         data: []
     })
-
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
+    const [modalContent, setModalContent] = React.useState(null);
 
     React.useEffect(() => {
         const getIngredients = async () => {
@@ -29,6 +29,7 @@ function App() {
 
     const handleOpenModal = () => {
         setModalIsOpen(true);
+        setModalContent({wtf: 123});
     }
 
     return (
@@ -38,11 +39,11 @@ function App() {
                 <div className={`${appStyles.container} pl-5 pr-5`}>
                     <div className={appStyles.main__container}>
                         <BurgerIngredients ingredients={state.data} />
-                        <BurgerConstructor ingredients={state.data} onOpenModal={handleOpenModal} isOpen={modalIsOpen} setModalIsOpen={setModalIsOpen}  />
+                        <BurgerConstructor ingredients={state.data} onOpenModal={handleOpenModal}  />
                     </div>
                 </div>
             </main>
-
+            <Modal>123</Modal>
         </div>
     );
 }
