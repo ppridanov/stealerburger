@@ -3,6 +3,7 @@ import constructorStyle from './burger-constructor.module.css';
 import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 import { ingredientsPropTypes } from "../../utils/data";
+import Modal from "../modal/modal";
 
 function BurgerConstructor(props) {
     return (
@@ -20,7 +21,7 @@ function BurgerConstructor(props) {
                 <li className={constructorStyle.item}>
                     <ul className={constructorStyle.list__scroll} style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: "flex-end" }}>
                         {props.ingredients.filter((item) => item.type !== 'bun').map((item) => {
-                            return (<li className={constructorStyle.item} key={item._id}>
+                            return (<li onClick={props.onOpenModal} className={constructorStyle.item} key={item._id}>
                                 <div className="mr-2">
                                     <DragIcon type={"primary"} />
                                 </div>

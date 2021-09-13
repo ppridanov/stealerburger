@@ -4,8 +4,6 @@ import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import Modal from "../modal/modal";
-import ModalOverlay from "../modal-overlay/modal-overlay";
-
 
 function App() {
     const [state, setState] = React.useState({
@@ -13,25 +11,24 @@ function App() {
         hasError: false,
         data: []
     })
+
+    const [modalIsOpen, setModalIsOpen] = React.useState(false);
+
     React.useEffect(() => {
         const getIngredients = async () => {
-            setState({ ...state, hasError: false, isLoading: true });
+            setState(prevState => ({...prevState, isLoading: true, hasError: false, data: prevState.data}));
             await fetch('https://norma.nomoreparties.space/api/ingredients')
                 .then(res => res.json())
-                .then((res) => setState({...state, data: res.data, isLoading: false, hasError: false}))
-                .catch(e => {
-                    setState({ ...state, hasError: true, isLoading: false });
+                .then((res) => setState(prevState => ({...prevState, data: res.data, isLoading: false, hasError: false})))
+                .catch(() => {
+                    setState(prevState => ({ ...prevState, hasError: true, isLoading: false, data: prevState.data }));
                 });
         }
         getIngredients();
-    }, [state])
+    }, [])
 
-    const [modalIsOpen, setModalIsOpen] = React.useState(false);
     const handleOpenModal = () => {
         setModalIsOpen(true);
-    }
-    const handleCloseModal = () => {
-        setModalIsOpen(false);
     }
 
     return (
@@ -41,13 +38,11 @@ function App() {
                 <div className={`${appStyles.container} pl-5 pr-5`}>
                     <div className={appStyles.main__container}>
                         <BurgerIngredients ingredients={state.data} />
-                        {console.log(state)}
-                        <BurgerConstructor ingredients={state.data} onOpenModal={handleOpenModal} />
+                        <BurgerConstructor ingredients={state.data} onOpenModal={handleOpenModal} isOpen={modalIsOpen} setModalIsOpen={setModalIsOpen}  />
                     </div>
                 </div>
-                <ModalOverlay isOpen={modalIsOpen} onCloseModal={handleCloseModal} />
-                <Modal isOpen={modalIsOpen} onCloseModal={handleCloseModal} />
             </main>
+
         </div>
     );
 }

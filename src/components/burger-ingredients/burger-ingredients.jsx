@@ -5,6 +5,7 @@ import Ingredient from "../ingredient/ingredient";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
 import { ingredientsPropTypes } from "../../utils/data";
+import Modal from "../modal/modal";
 
 function BurgerIngredients(props) {
     const [current, setCurrent] = React.useState('but');
