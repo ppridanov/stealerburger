@@ -3,7 +3,6 @@ import appStyles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import Modal from "../modal/modal";
 
 function App() {
     const [state, setState] = React.useState({
@@ -11,8 +10,6 @@ function App() {
         hasError: false,
         data: []
     })
-    const [modalIsOpen, setModalIsOpen] = React.useState(false);
-    const [modalContent, setModalContent] = React.useState(null);
 
     React.useEffect(() => {
         const getIngredients = async () => {
@@ -27,11 +24,6 @@ function App() {
         getIngredients();
     }, [])
 
-    const handleOpenModal = () => {
-        setModalIsOpen(true);
-        setModalContent({wtf: 123});
-    }
-
     return (
         <div>
             <AppHeader />
@@ -39,11 +31,10 @@ function App() {
                 <div className={`${appStyles.container} pl-5 pr-5`}>
                     <div className={appStyles.main__container}>
                         <BurgerIngredients ingredients={state.data} />
-                        <BurgerConstructor ingredients={state.data} onOpenModal={handleOpenModal}  />
+                        <BurgerConstructor ingredients={state.data} />
                     </div>
                 </div>
             </main>
-            <Modal>123</Modal>
         </div>
     );
 }
