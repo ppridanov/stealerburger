@@ -1,0 +1,28 @@
+.title {
+    height: 64px;
+    display: flex;
+    align-items: center;
+}
+
+.body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.composition {
+    display: flex;
+    justify-content: center;
+}
+
+.item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.item:last-child {
+    margin-right: 0;
+}

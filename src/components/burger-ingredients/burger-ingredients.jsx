@@ -6,6 +6,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
 import { ingredientsPropTypes } from "../../utils/data";
 import Modal from "../modal/modal";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 function BurgerIngredients(props) {
     const [current, setCurrent] = React.useState('but');
@@ -14,7 +15,7 @@ function BurgerIngredients(props) {
     const handleToggleModal = (e) => {
         const target = e.currentTarget;
         const id = target.getAttribute('_id');
-        setModalData(props.ingredients.filter((item) => item._id === id));
+        setModalData(props.ingredients.find((item) => item._id === id));
         setModalIsOpen(!modalIsOpen);
     }
     const handleTabClick = (value) => {
@@ -59,8 +60,8 @@ function BurgerIngredients(props) {
                 </div>
             </div>
             {modalIsOpen && modalData &&
-                <Modal data={modalData} onClose={handleToggleModal}>
-                    1234
+                <Modal onClose={handleToggleModal}>
+                    <IngredientDetails data={modalData} />
                 </Modal>
             }
         </>
