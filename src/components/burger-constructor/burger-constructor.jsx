@@ -4,6 +4,7 @@ import { Button, ConstructorElement, CurrencyIcon, DragIcon } from "@ya.praktiku
 import PropTypes from "prop-types";
 import { ingredientsPropTypes } from "../../utils/data";
 import Modal from "../modal/modal";
+import OrderDetails from "../order-details/order-details";
 
 function BurgerConstructor(props) {
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
@@ -61,7 +62,7 @@ function BurgerConstructor(props) {
             </div>
             {modalIsOpen &&
             <Modal onClose={handleOpenModal}>
-                123
+                <OrderDetails />
             </Modal>
             }
         </>
