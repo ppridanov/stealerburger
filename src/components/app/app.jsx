@@ -3,6 +3,7 @@ import appStyles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import {apiURL} from "../../utils/constants";
 
 function App() {
     const [state, setState] = React.useState({
@@ -14,7 +15,7 @@ function App() {
     React.useEffect(() => {
         const getIngredients = async () => {
             setState(prevState => ({...prevState, isLoading: true, hasError: false, data: prevState.data}));
-            await fetch('https://norma.nomoreparties.space/api/ingredients')
+            await fetch(apiURL)
                 .then(res => res.json())
                 .then((res) => setState(prevState => ({...prevState, data: res.data, isLoading: false, hasError: false})))
                 .catch(() => {
