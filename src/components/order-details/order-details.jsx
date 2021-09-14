@@ -4,7 +4,7 @@ import {CheckMarkIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 import doneImage from '../../images/graphics.svg'
 function OrderDetails() {
     return(
-        <div className={`${orderDetailsStyles.order} pt-30 pb-30`}>
+        <div className={`${orderDetailsStyles.order} pb-15`}>
             <h3 className={`${orderDetailsStyles.title} text text_primary_ligth text_type_digits-large`}>
                 034536
             </h3>

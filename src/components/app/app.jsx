@@ -30,10 +30,15 @@ function App() {
             <AppHeader />
             <main>
                 <div className={`${appStyles.container} pl-5 pr-5`}>
-                    <div className={appStyles.main__container}>
-                        <BurgerIngredients ingredients={state.data} />
-                        <BurgerConstructor ingredients={state.data} />
-                    </div>
+                    {!state.hasError && state.isLoading  && <h1 className={`${appStyles.error} text text_type_main-large text_color_sucess p-10`}>Загрузка данных</h1>}
+
+                    {!state.hasError && !state.isLoading &&
+                        <div className={appStyles.main__container}>
+                            <BurgerIngredients ingredients={state.data} />
+                            <BurgerConstructor ingredients={state.data} />
+                        </div>
+                }
+                {state.hasError && <h1 className={`${appStyles.error} text text_type_main-large text_color_error p-10`}>Произошла ошибка при загрузке данных</h1>}
                 </div>
             </main>
         </div>

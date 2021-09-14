@@ -4,7 +4,7 @@ import appStyles from '../app/app.module.css';
 import Ingredient from "../ingredient/ingredient";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
-import { ingredientsPropTypes } from "../../utils/data";
+import { ingredientsPropTypes } from "../../utils/constants";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 
@@ -12,11 +12,14 @@ function BurgerIngredients(props) {
     const [current, setCurrent] = React.useState('but');
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
     const [modalData, setModalData] = React.useState({});
-    const handleToggleModal = (e) => {
+    const handleOpenModal = (e) => {
         const target = e.currentTarget;
         const id = target.getAttribute('_id');
         setModalData(props.ingredients.find((item) => item._id === id));
-        setModalIsOpen(!modalIsOpen);
+        setModalIsOpen(true);
+    }
+    const handleCloseModal = () => {
+        setModalIsOpen(false);
     }
     const handleTabClick = (value) => {
         setCurrent(value);
@@ -46,23 +49,23 @@ function BurgerIngredients(props) {
                     <div className={ingredientsStyles.products}>
                         <h3 className="text text_type_main-medium" id="buts">Булки</h3>
                         <div className={ingredientsStyles.products__cont}>
-                            {props.ingredients.filter((item) => item.type === 'bun').map((item) => <Ingredient onOpen={handleToggleModal} {...item} key={item._id} />)}
+                            {props.ingredients.filter((item) => item.type === 'bun').map((item) => <Ingredient onOpen={handleOpenModal} {...item} key={item._id} />)}
                         </div>
                         <h3 className="text text_type_main-medium" id="sauces">Соусы</h3>
                         <div className={ingredientsStyles.products__cont}>
-                            {props.ingredients.filter((item) => item.type === 'sauce').map((item) => <Ingredient onOpen={handleToggleModal} {...item} key={item._id} />)}
+                            {props.ingredients.filter((item) => item.type === 'sauce').map((item) => <Ingredient onOpen={handleOpenModal} {...item} key={item._id} />)}
                         </div>
                         <h3 className="text text_type_main-medium" id="mains">Начинки</h3>
                         <div className={ingredientsStyles.products__cont}>
-                            {props.ingredients.filter((item) => item.type === 'main').map((item) => <Ingredient onOpen={handleToggleModal} {...item} key={item._id} />)}
+                            {props.ingredients.filter((item) => item.type === 'main').map((item) => <Ingredient onOpen={handleOpenModal} {...item} key={item._id} />)}
                         </div>
                     </div>
                 </div>
             </div>
-            {modalIsOpen && modalData &&
-                <Modal onClose={handleToggleModal}>
+            {modalIsOpen && modalData && (
+                <Modal onClose={handleCloseModal} title={'Детали ингредиента'}>
                     <IngredientDetails data={modalData} />
-                </Modal>
+                </Modal>)
             }
         </>
     );
