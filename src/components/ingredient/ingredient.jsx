@@ -4,9 +4,9 @@ import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
 
 function Ingredient(props) {
-    const {image, price, name} = props;
+    const {image, price, name, _id, onOpen} = props;
     return (
-        <div className={ingredientStyle.product} >
+        <div className={ingredientStyle.product} onClick={onOpen} _id={_id} >
             {/*<Counter />*/}
             <img className={`${ingredientStyle.image} pr-4 pl-4`} src={image} alt=""/>
             <div className={`${ingredientStyle.price} mt-1 mb-1`}>
@@ -21,6 +21,8 @@ function Ingredient(props) {
 Ingredient.propTypes = {
     image: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
+    onOpen: PropTypes.func.isRequired
 }
 export default Ingredient;
