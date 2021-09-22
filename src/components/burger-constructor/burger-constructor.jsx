@@ -9,9 +9,18 @@ import {BurgerConstructorContext} from "../../services/burger-constructor-contex
 
 function BurgerConstructor() {
     const {ingredients} = React.useContext(BurgerConstructorContext);
+
     const chosenBun = ingredients.find(item => item.type === 'bun');
-    const chosenIngredients = ingredients.filter(item => item.type !== 'bun').concat(chosenBun);
-    const [modalIsOpen, setModalIsOpen] = React.useState(false);
+    const filteredIngredients = ingredients.filter(item => item.type !== 'bun');
+    const chosenIngredients = filteredIngredients.concat(chosenBun);
+    const [modalIsOpen, setModalIsOpen] = React.useState(false)
+    const totalPrice = chosenIngredients.reduce((acc, item) => {
+        if (item.type === 'bun') {
+            return item.price * 2 + acc;
+        }
+        return item.price + acc;
+    }, 0)
+    console.log(totalPrice)
     const handleOpenModal = () => {
         setModalIsOpen(!modalIsOpen);
     }
@@ -32,7 +41,7 @@ function BurgerConstructor() {
                     </li>
                     <li className={constructorStyle.item}>
                         <ul className={constructorStyle.list__scroll} style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: "flex-end" }}>
-                            {ingredients.filter((item) => item.type !== 'bun').map((item) => {
+                            {filteredIngredients.map((item) => {
                                 return (<li _id={item._id} className={constructorStyle.item} key={item._id}>
                                     <div className="mr-2">
                                         <DragIcon type={"primary"} />
