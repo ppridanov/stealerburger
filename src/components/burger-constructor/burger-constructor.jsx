@@ -14,13 +14,15 @@ function BurgerConstructor() {
     const filteredIngredients = ingredients.filter(item => item.type !== 'bun');
     const chosenIngredients = filteredIngredients.concat(chosenBun);
     const [modalIsOpen, setModalIsOpen] = React.useState(false)
+
     const totalPrice = ingredients.length !== 0 && chosenIngredients.reduce((acc, item) => {
         if (item.type === 'bun') {
             return item.price * 2 + acc;
         }
         return item.price + acc;
     }, 0)
-    console.log(totalPrice)
+
+
     const handleOpenModal = () => {
         setModalIsOpen(!modalIsOpen);
     }
