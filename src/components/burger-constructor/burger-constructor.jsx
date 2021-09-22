@@ -5,8 +5,12 @@ import PropTypes from "prop-types";
 import { ingredientsPropTypes } from "../../utils/constants";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
+import {BurgerConstructorContext} from "../../services/burger-constructor-context";
 
-function BurgerConstructor(props) {
+function BurgerConstructor() {
+    const {ingredients} = React.useContext(BurgerConstructorContext);
+    const chosenBun = ingredients.find(item => item.type === 'bun');
+    const chosenIngredients = ingredients.filter(item => item.type !== 'bun').concat(chosenBun);
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
     const handleOpenModal = () => {
         setModalIsOpen(!modalIsOpen);
@@ -16,17 +20,19 @@ function BurgerConstructor(props) {
             <div className={`${constructorStyle.constr} mt-25`}>
                 <ul className={`${constructorStyle.list}`}>
                     <li className={constructorStyle.item}>
-                        <ConstructorElement
-                            type="top"
-                            isLocked={true}
-                            text="Краторная булка N-200i (верх)"
-                            price={1255}
-                            thumbnail='https://code.s3.yandex.net/react/code/bun-02.png'
-                        />
+                        {chosenBun && (
+                            <ConstructorElement
+                                text={`${chosenBun.name} (верх)`}
+                                price={chosenBun.price}
+                                thumbnail={chosenBun.image}
+                                type="top"
+                                isLocked={true}
+                            />)
+                        }
                     </li>
                     <li className={constructorStyle.item}>
                         <ul className={constructorStyle.list__scroll} style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: "flex-end" }}>
-                            {props.ingredients.filter((item) => item.type !== 'bun').map((item) => {
+                            {ingredients.filter((item) => item.type !== 'bun').map((item) => {
                                 return (<li _id={item._id} className={constructorStyle.item} key={item._id}>
                                     <div className="mr-2">
                                         <DragIcon type={"primary"} />
@@ -41,13 +47,15 @@ function BurgerConstructor(props) {
                         </ul>
                     </li>
                     <li className={constructorStyle.item}>
-                        <ConstructorElement
-                            type="bottom"
-                            isLocked={true}
-                            text="Краторная булка N-200i (низ)"
-                            price={1255}
-                            thumbnail='https://code.s3.yandex.net/react/code/bun-02.png'
-                        />
+                        {chosenBun && (
+                            <ConstructorElement
+                                type="bottom"
+                                isLocked={true}
+                                text={`${chosenBun.name} (низ)`}
+                                price={chosenBun.price}
+                                thumbnail={chosenBun.image}
+                            />
+                        )}
                     </li>
                 </ul>
                 <div className={`${constructorStyle.order} mr-8`}>
