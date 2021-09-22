@@ -1,6 +1,7 @@
-export const postData = async (options) => {
+export const sendData = async (options) => {
     return fetch(options.url, {
+        method: options.method,
         headers: options.headers,
-        body: options.body
+        body: JSON.stringify(options.body)
     })
 }

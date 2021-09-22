@@ -1,19 +1,21 @@
 import React from 'react';
 import constructorStyle from './burger-constructor.module.css';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
-import {ingredientsPropTypes} from "../../utils/constants";
+import {postOrderURL} from "../../utils/constants";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import {BurgerConstructorContext} from "../../services/burger-constructor-context";
+import {sendData} from "../../utils/api";
 
 function BurgerConstructor() {
     const {ingredients} = React.useContext(BurgerConstructorContext);
-    console.log(ingredients)
+
+    const [modalIsOpen, setModalIsOpen] = React.useState(false)
+    const [orderId, setOrderId] = React.useState(0);
+
     const chosenBun = ingredients.find(item => item.type === 'bun');
     const filteredIngredients = ingredients.filter(item => item.type !== 'bun');
     const chosenIngredients = filteredIngredients.concat(chosenBun);
-    const [modalIsOpen, setModalIsOpen] = React.useState(false)
 
     const totalPrice = ingredients.length !== 0 && chosenIngredients.reduce((acc, item) => {
         if (item.type === 'bun') {
@@ -24,6 +26,22 @@ function BurgerConstructor() {
 
 
     const handleOpenModal = () => {
+        const idsArray = chosenIngredients.map(item => item._id);
+        sendData({
+            url: postOrderURL,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: {ingredients: idsArray}
+        })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                throw new Error(`Something wrong: ${res.status}`)
+            })
+            .then(data => setOrderId(data.order.number));
         setModalIsOpen(!modalIsOpen);
     }
     return (
@@ -80,9 +98,9 @@ function BurgerConstructor() {
                     </Button>
                 </div>
             </div>
-            {modalIsOpen &&
+            {modalIsOpen && orderId &&
             <Modal onClose={handleOpenModal}>
-                <OrderDetails/>
+                <OrderDetails id={orderId}/>
             </Modal>
             }
         </>
