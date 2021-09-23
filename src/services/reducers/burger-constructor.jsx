@@ -35,20 +35,20 @@ export const constructorReducer = (state = initialState, action) => {
                 order: action.payload
             }
         case ADD_INGREDIENT_TO_CONSTRUCTOR:
-            const total = calculateTotalPrice(state.chosenIngredients);
             return {
                 ...state,
                 chosenIngredients: [...state.chosenIngredients.concat(action.item)],
-                totalPrice: total
+                totalPrice: calculateTotalPrice(state.chosenIngredients)
             }
         case REMOVE_INGREDIENT_FROM_CONSTRUCTOR:
-            const totalPrice = calculateTotalPrice(state.chosenIngredients);
             return {
                 ...state,
                 chosenIngredients: [
                     ...state.chosenIngredients.filter((item) => item.uuid !== action.id)
                 ],
-                totalPrice: total
+                totalPrice: calculateTotalPrice(state.chosenIngredients)
             }
+        default:
+            return state;
     }
 }

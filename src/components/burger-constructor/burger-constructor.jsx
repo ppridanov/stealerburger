@@ -9,56 +9,41 @@ import {sendData} from "../../utils/api";
 import {useSelector} from "react-redux";
 
 function BurgerConstructor() {
-    const {chosenIngredients} = useSelector(state => state.burgerIngredients);
+    const {chosenIngredients} = useSelector(state => state.burgerConstructor);
     console.log(chosenIngredients)
-    //
-    // const [modalIsOpen, setModalIsOpen] = React.useState(false)
-    // const [orderId, setOrderId] = React.useState(0);
-    //
-    // const chosenBun = ingredients.find(item => item.type === 'bun');
-    // const chosenIngredients = filteredIngredients.concat(chosenBun);
-    //
-    // const totalPrice = ingredients.length !== 0 && chosenIngredients.reduce((acc, item) => {
-    //     if (item.type === 'bun') {
-    //         return item.price * 2 + acc;
-    //     }
-    //     return item.price + acc;
-    // }, 0)
-    //
-    //
-    // const handleOpenModal = () => {
-    //     const idsArray = chosenIngredients.map(item => item._id);
-    //     sendData({
-    //         url: postOrderURL,
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json;charset=utf-8'
-    //         },
-    //         body: {ingredients: idsArray}
-    //     })
-    //         .then((res) => {
-    //             if (res.ok) {
-    //                 return res.json();
-    //             }
-    //             throw new Error(`Something wrong: ${res.status}`)
-    //         })
-    //         .then(data => setOrderId(data.order.number));
-    //     setModalIsOpen(!modalIsOpen);
-    // }
+
+    const [modalIsOpen, setModalIsOpen] = React.useState(false)
+    const chosenBun = chosenIngredients.find(item => item.type === 'bun');
+    const totalPrice = chosenIngredients.length !== 0 && chosenIngredients.reduce((acc, item) => {
+        if (item.type === 'bun') {
+            return item.price * 2 + acc;
+        }
+        return item.price + acc;
+    }, 0)
+
+    const handleOpenModal = () => {
+        const idsArray = chosenIngredients.map(item => item._id);
+
+    }
     return (
         <>
             <div className={`${constructorStyle.constr} mt-25`}>
                 <ul className={`${constructorStyle.list}`}>
                     <li className={constructorStyle.item}>
-                        {/*{chosenBun && (*/}
-                        {/*    <ConstructorElement*/}
-                        {/*        text={`${chosenBun.name} (верх)`}*/}
-                        {/*        price={chosenBun.price}*/}
-                        {/*        thumbnail={chosenBun.image}*/}
-                        {/*        type="top"*/}
-                        {/*        isLocked={true}*/}
-                        {/*    />)*/}
-                        {/*}*/}
+
+                        {chosenBun ? (
+                            <ConstructorElement
+                                text={`${chosenBun.name} (верх)`}
+                                price={chosenBun.price}
+                                thumbnail={chosenBun.image}
+                                type="top"
+                                isLocked={true}
+                            />
+                        ) : (
+                            <div className={`${constructorStyle.nobun_top} text text_type_main-default`}>
+                                <p>Выберите булочку</p>
+                            </div>
+                        )}
                     </li>
                     <li className={constructorStyle.item}>
                         <ul className={constructorStyle.list__scroll}
@@ -78,32 +63,38 @@ function BurgerConstructor() {
                         </ul>
                     </li>
                     <li className={constructorStyle.item}>
-                        {/*{chosenBun && (*/}
-                        {/*    <ConstructorElement*/}
-                        {/*        type="bottom"*/}
-                        {/*        isLocked={true}*/}
-                        {/*        text={`${chosenBun.name} (низ)`}*/}
-                        {/*        price={chosenBun.price}*/}
-                        {/*        thumbnail={chosenBun.image}*/}
-                        {/*    />*/}
-                        {/*)}*/}
+                        {chosenBun ? (
+                            <ConstructorElement
+                                type="bottom"
+                                isLocked={true}
+                                text={`${chosenBun.name} (низ)`}
+                                price={chosenBun.price}
+                                thumbnail={chosenBun.image}
+                            />
+                        ) : (
+                            <div className={`${constructorStyle.nobun_bottom} text text_type_main-default`}>
+                                <p>Выберите булочку</p>
+                            </div>
+                        )}
                     </li>
                 </ul>
-                <div className={`${constructorStyle.order} mr-8`}>
-                    <div className={`${constructorStyle.total__price} mr-10`}>
-                        {/*<span className="text text_type_digits-medium">{totalPrice}</span>*/}
-                        <CurrencyIcon type="primary"/>
+                {chosenIngredients.length > 1 && (
+                    <div className={`${constructorStyle.order} mr-8`}>
+                        <div className={`${constructorStyle.total__price} mr-10`}>
+                            <span className="text text_type_digits-medium">{totalPrice}</span>
+                            <CurrencyIcon type="primary"/>
+                        </div>
+                        <Button type="primary" size="large" onClick={handleOpenModal}>
+                            Оформить заказ
+                        </Button>
                     </div>
-                    {/*<Button type="primary" size="large" onClick={handleOpenModal}>*/}
-                    {/*    Оформить заказ*/}
-                    {/*</Button>*/}
-                </div>
+                )}
             </div>
-            {/*// {modalIsOpen &&*/}
-            {/*// <Modal onClose={handleOpenModal}>*/}
-            {/*//     <OrderDetails id={orderId}/>*/}
-            {/*// </Modal>*/}
-            {/*// }*/}
+            {modalIsOpen &&
+            <Modal onClose={handleOpenModal}>
+                <OrderDetails id={123} />
+            </Modal>
+            }
         </>
 
     )
