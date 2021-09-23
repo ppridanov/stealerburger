@@ -80,18 +80,18 @@ function BurgerIngredients() {
                     </div>
                     <div className={`${ingredientsStyles.ingredients} mt-10`}>
                         <div className={ingredientsStyles.products} onScroll={handleScroll}>
-                            <h3 className="text text_type_main-medium" id="buns">Булки</h3>
-                            <div className={ingredientsStyles.products__cont} ref={bunsRef}>
+                            <h3 className="text text_type_main-medium" ref={bunsRef} id="buns">Булки</h3>
+                            <div className={ingredientsStyles.products__cont}>
                                 {ingredients.filter((item) => item.type === 'bun').map((item) => <Ingredient
                                     onOpen={handleOpenModal} {...item} key={item._id}/>)}
                             </div>
-                            <h3 className="text text_type_main-medium"  id="sauces">Соусы</h3>
-                            <div className={ingredientsStyles.products__cont} ref={saucesRef}>
+                            <h3 className="text text_type_main-medium" ref={saucesRef}  id="sauces">Соусы</h3>
+                            <div className={ingredientsStyles.products__cont}>
                                 {ingredients.filter((item) => item.type === 'sauce').map((item) => <Ingredient
                                     onOpen={handleOpenModal} {...item} key={item._id}/>)}
                             </div>
-                            <h3 className="text text_type_main-medium" id="mains">Начинки</h3>
-                            <div className={ingredientsStyles.products__cont} ref={mainsRef}>
+                            <h3 className="text text_type_main-medium" ref={mainsRef} id="mains">Начинки</h3>
+                            <div className={ingredientsStyles.products__cont}>
                                 {ingredients.filter((item) => item.type === 'main').map((item) => <Ingredient
                                     onOpen={handleOpenModal} {...item} key={item._id}/>)}
                             </div>
