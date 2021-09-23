@@ -3,6 +3,7 @@ import {
     GET_ORDER_SUCCESS,
     GET_ORDER_REQUEST,
     ADD_INGREDIENT_TO_CONSTRUCTOR,
+    ADD_BUN_TO_CONSTRUCTOR,
     REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
 } from "../actions/burger-constructor";
 import {calculateTotalPrice} from "../../utils/funcs";
@@ -12,7 +13,8 @@ const initialState = {
     orderRequest: false,
     orderFailed: false,
 
-    chosenIngredients: [],
+    ingredients: [],
+    bun: {},
 
     totalPrice: 0
 }
@@ -37,8 +39,12 @@ export const constructorReducer = (state = initialState, action) => {
         case ADD_INGREDIENT_TO_CONSTRUCTOR:
             return {
                 ...state,
-                chosenIngredients: [...state.chosenIngredients.concat(action.item)],
-                totalPrice: calculateTotalPrice(state.chosenIngredients)
+                chosenIngredients: [...state.chosenIngredients, action.item],
+            }
+        case ADD_BUN_TO_CONSTRUCTOR:
+            return {
+                ...state,
+                bun: action.item,
             }
         case REMOVE_INGREDIENT_FROM_CONSTRUCTOR:
             return {
@@ -46,7 +52,6 @@ export const constructorReducer = (state = initialState, action) => {
                 chosenIngredients: [
                     ...state.chosenIngredients.filter((item) => item.uuid !== action.id)
                 ],
-                totalPrice: calculateTotalPrice(state.chosenIngredients)
             }
         default:
             return state;

@@ -9,20 +9,15 @@ import {sendData} from "../../utils/api";
 import {useSelector} from "react-redux";
 
 function BurgerConstructor() {
-    const {chosenIngredients} = useSelector(state => state.burgerConstructor);
-    console.log(chosenIngredients)
-
+    const {ingredients, bun} = useSelector(state => state.burgerConstructor);
     const [modalIsOpen, setModalIsOpen] = React.useState(false)
-    const chosenBun = chosenIngredients.find(item => item.type === 'bun');
-    const totalPrice = chosenIngredients.length !== 0 && chosenIngredients.reduce((acc, item) => {
-        if (item.type === 'bun') {
-            return item.price * 2 + acc;
-        }
-        return item.price + acc;
+
+    const totalPrice = ingredients.length !== 0 && bun.length !== 0 && ingredients.concat(bun).reduce((acc, item) => {
+        return item.type === 'bun' ? item.price * 2 + acc : item.price + acc;
     }, 0)
 
     const handleOpenModal = () => {
-        const idsArray = chosenIngredients.map(item => item._id);
+        const idsArray = ingredients.map(item => item._id);
 
     }
     return (
@@ -31,11 +26,11 @@ function BurgerConstructor() {
                 <ul className={`${constructorStyle.list}`}>
                     <li className={constructorStyle.item}>
 
-                        {chosenBun ? (
+                        {bun ? (
                             <ConstructorElement
-                                text={`${chosenBun.name} (верх)`}
-                                price={chosenBun.price}
-                                thumbnail={chosenBun.image}
+                                text={`${bun.name} (верх)`}
+                                price={bun.price}
+                                thumbnail={bun.image}
                                 type="top"
                                 isLocked={true}
                             />
@@ -48,28 +43,28 @@ function BurgerConstructor() {
                     <li className={constructorStyle.item}>
                         <ul className={constructorStyle.list__scroll}
                             style={{display: 'flex', flexDirection: 'column', gap: '10px', alignItems: "flex-end"}}>
-                            {/*{filteredIngredients.map((item) => {*/}
-                            {/*    return (<li _id={item._id} className={constructorStyle.item} key={item._id}>*/}
-                            {/*        <div className="mr-2">*/}
-                            {/*            <DragIcon type={"primary"}/>*/}
-                            {/*        </div>*/}
-                            {/*        <ConstructorElement*/}
-                            {/*            text={item.name}*/}
-                            {/*            price={item.price}*/}
-                            {/*            thumbnail={item.image}*/}
-                            {/*        />*/}
-                            {/*    </li>)*/}
-                            {/*})}*/}
+                            {ingredients.map((item) => {
+                                return (<li _id={item._id} className={constructorStyle.item} key={item._id}>
+                                    <div className="mr-2">
+                                        <DragIcon type={"primary"}/>
+                                    </div>
+                                    <ConstructorElement
+                                        text={item.name}
+                                        price={item.price}
+                                        thumbnail={item.image}
+                                    />
+                                </li>)
+                            })}
                         </ul>
                     </li>
                     <li className={constructorStyle.item}>
-                        {chosenBun ? (
+                        {bun ? (
                             <ConstructorElement
                                 type="bottom"
                                 isLocked={true}
-                                text={`${chosenBun.name} (низ)`}
-                                price={chosenBun.price}
-                                thumbnail={chosenBun.image}
+                                text={`${bun.name} (низ)`}
+                                price={bun.price}
+                                thumbnail={bun.image}
                             />
                         ) : (
                             <div className={`${constructorStyle.nobun_bottom} text text_type_main-default`}>
@@ -78,7 +73,7 @@ function BurgerConstructor() {
                         )}
                     </li>
                 </ul>
-                {chosenIngredients.length > 1 && (
+                {ingredients.length > 1 && (
                     <div className={`${constructorStyle.order} mr-8`}>
                         <div className={`${constructorStyle.total__price} mr-10`}>
                             <span className="text text_type_digits-medium">{totalPrice}</span>
