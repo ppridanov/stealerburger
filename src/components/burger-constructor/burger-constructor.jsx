@@ -16,6 +16,7 @@ function BurgerConstructor() {
         return item.type === 'bun' ? item.price * 2 + acc : item.price + acc;
     }, 0)
 
+
     const handleOpenModal = () => {
         const idsArray = ingredients.map(item => item._id);
 
