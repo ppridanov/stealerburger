@@ -4,6 +4,7 @@ import AppHeader from '../app-header/app-header';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import {apiURL} from "../../utils/constants";
+import {BurgerConstructorContext} from "../../services/burger-constructor-context";
 
 function App() {
     const [state, setState] = React.useState({
@@ -39,8 +40,10 @@ function App() {
                     {state.hasError && <h1 className={`${appStyles.error} text text_type_main-large text_color_error p-10`}>Произошла ошибка при загрузке данных</h1>}
                     {!state.hasError && !state.isLoading &&
                         <div className={appStyles.main__container}>
-                            <BurgerIngredients ingredients={state.data} />
-                            <BurgerConstructor ingredients={state.data} />
+                            <BurgerConstructorContext.Provider value={{ingredients: state.data}}>
+                                <BurgerIngredients />
+                                <BurgerConstructor />
+                            </BurgerConstructorContext.Provider>
                         </div>
                     }
                 </div>
