@@ -41,7 +41,7 @@ function App() {
                     {!state.hasError && !state.isLoading &&
                         <div className={appStyles.main__container}>
                             <BurgerConstructorContext.Provider value={{ingredients: state.data}}>
-                                <BurgerIngredients ingredients={state.data} />
+                                <BurgerIngredients />
                                 <BurgerConstructor />
                             </BurgerConstructorContext.Provider>
                         </div>

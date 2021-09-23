@@ -98,7 +98,7 @@ function BurgerConstructor() {
                     </Button>
                 </div>
             </div>
-            {modalIsOpen && orderId &&
+            {modalIsOpen &&
             <Modal onClose={handleOpenModal}>
                 <OrderDetails id={orderId}/>
             </Modal>
