@@ -14,7 +14,7 @@ const initialState = {
     orderFailed: false,
 
     ingredients: [],
-    bun: {},
+    bun: null,
 
     totalPrice: 0
 }
