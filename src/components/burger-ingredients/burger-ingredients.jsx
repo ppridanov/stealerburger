@@ -1,15 +1,19 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ingredientsStyles from './burger-ingredients.module.css';
 import appStyles from '../app/app.module.css';
 import Ingredient from "../ingredient/ingredient";
-import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import {BurgerConstructorContext} from "../../services/burger-constructor-context";
+import {useDispatch, useSelector} from "react-redux";
+import {getIngredients} from "../../services/actions/burger-ingredients";
 
 function BurgerIngredients() {
-    const {ingredients} = React.useContext(BurgerConstructorContext);
-
+    const {ingredients, ingredientsFailed, ingredientsRequest} = useSelector(state => {});
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getIngredients());
+    }, []);
     const [current, setCurrent] = React.useState('but');
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
     const [modalData, setModalData] = React.useState({});
@@ -31,7 +35,7 @@ function BurgerIngredients() {
         <>
             <div className={ingredientsStyles.constr}>
                 <h1 className="text text_type_main-large mt-10">Соберите бургер</h1>
-                <div style={{ display: 'flex' }} className='mt-5'>
+                <div style={{display: 'flex'}} className='mt-5'>
                     <a className={appStyles.link} href="#buts">
                         <Tab value="but" active={current === 'but'} onClick={handleTabClick}>
                             Булка
@@ -52,22 +56,22 @@ function BurgerIngredients() {
                     <div className={ingredientsStyles.products}>
                         <h3 className="text text_type_main-medium" id="buts">Булки</h3>
                         <div className={ingredientsStyles.products__cont}>
-                            {ingredients.filter((item) => item.type === 'bun').map((item) => <Ingredient onOpen={handleOpenModal} {...item} key={item._id} />)}
+                            {/*{ingredients.filter((item) => item.type === 'bun').map((item) => <Ingredient onOpen={handleOpenModal} {...item} key={item._id} />)}*/}
                         </div>
                         <h3 className="text text_type_main-medium" id="sauces">Соусы</h3>
                         <div className={ingredientsStyles.products__cont}>
-                            {ingredients.filter((item) => item.type === 'sauce').map((item) => <Ingredient onOpen={handleOpenModal} {...item} key={item._id} />)}
+                            {/*{ingredients.filter((item) => item.type === 'sauce').map((item) => <Ingredient onOpen={handleOpenModal} {...item} key={item._id} />)}*/}
                         </div>
                         <h3 className="text text_type_main-medium" id="mains">Начинки</h3>
                         <div className={ingredientsStyles.products__cont}>
-                            {ingredients.filter((item) => item.type === 'main').map((item) => <Ingredient onOpen={handleOpenModal} {...item} key={item._id} />)}
+                            {/*{ingredients.filter((item) => item.type === 'main').map((item) => <Ingredient onOpen={handleOpenModal} {...item} key={item._id} />)}*/}
                         </div>
                     </div>
                 </div>
             </div>
             {modalIsOpen && modalData && (
                 <Modal onClose={handleCloseModal} title={'Детали ингредиента'}>
-                    <IngredientDetails data={modalData} />
+                    <IngredientDetails data={modalData}/>
                 </Modal>)
             }
         </>

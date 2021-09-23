@@ -1,7 +1,11 @@
 export const sendData = async (options) => {
-    return fetch(options.url, {
+    return await fetch(options.url, {
         method: options.method,
         headers: options.headers,
         body: JSON.stringify(options.body)
     })
+}
+
+export const getData = async (url) => {
+    return await fetch(url)
 }
