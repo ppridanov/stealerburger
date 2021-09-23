@@ -33,18 +33,3 @@ export const getIngredients = () => {
             })
     }
 }
-
-const wtf = async () => {
-//         setState(prevState => ({...prevState, isLoading: true, hasError: false, data: prevState.data}));
-//         await fetch(apiURL)
-//             .then(res => {
-//                 if (res.ok) {
-//                     return res.json()
-//                 }
-//                 return Promise.reject(`Произошла ошибка: ${res.status}`);
-//             })
-//             .then((res) => setState(prevState => ({...prevState, data: res.data, isLoading: false, hasError: false})))
-//             .catch(() => {
-//                 setState(prevState => ({ ...prevState, hasError: true, isLoading: false, data: prevState.data }));
-//             });
-}

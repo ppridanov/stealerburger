@@ -4,11 +4,6 @@ const initialState = {
     ingredients: [],
     ingredientsRequest: false,
     ingredientsFailed: false,
-
-    chosenIngredients: [],
-    currentIngredient: {},
-    order: {}
-
 };
 
 export const burgerIngredientsReducer = (state = initialState, action) => {
