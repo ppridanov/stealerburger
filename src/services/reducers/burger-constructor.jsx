@@ -4,7 +4,7 @@ import {
     GET_ORDER_REQUEST,
     ADD_INGREDIENT_TO_CONSTRUCTOR,
     ADD_BUN_TO_CONSTRUCTOR,
-    REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
+    REMOVE_INGREDIENT_FROM_CONSTRUCTOR, MOVE_INGREDIENT_IN_CONSTRUCTOR,
 } from "../actions/burger-constructor";
 import {calculateTotalPrice} from "../../utils/funcs";
 
@@ -53,6 +53,15 @@ export const constructorReducer = (state = initialState, action) => {
                 ingredients: [
                     ...state.ingredients.filter((item) => item.uuid !== action.id)
                 ],
+            }
+        case MOVE_INGREDIENT_IN_CONSTRUCTOR:
+            let ingredients = [...state.ingredients];
+            const dragCard = ingredients[action.dragIndex];
+            ingredients.splice(action.dragIndex, 1);
+            ingredients.splice(action.hoverIndex, 0, dragCard)
+            return {
+                ...state,
+                ingredients: ingredients
             }
         default:
             return state;

@@ -1,16 +1,14 @@
-import React, {useMemo} from 'react';
+import React, {useCallback, useMemo} from 'react';
 import constructorStyle from './burger-constructor.module.css';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {postOrderURL} from "../../utils/constants";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import {BurgerConstructorContext} from "../../services/burger-constructor-context";
 import {sendData} from "../../utils/api";
 import {useDispatch, useSelector} from "react-redux";
 import {
     ADD_BUN_TO_CONSTRUCTOR,
     ADD_INGREDIENT_TO_CONSTRUCTOR,
-    REMOVE_INGREDIENT_FROM_CONSTRUCTOR
 } from "../../services/actions/burger-constructor";
 
 import {useDrop} from "react-dnd";
@@ -41,14 +39,13 @@ function BurgerConstructor() {
             moveIngredient(item);
         }
     });
+
     const handleOpenModal = () => {
         if (!bun) {
             alert('Выберите булку');
             return;
         }
 
-        const idsArray =
-        console.log(idsArray);
     }
 
     const totalPrice = useMemo(() => {
@@ -82,8 +79,8 @@ function BurgerConstructor() {
                     <li className={`${constructorStyle.item} ${isHover ? constructorStyle.item_isHovering : ''}`}>
                         <ul className={constructorStyle.list__scroll}
                             style={{display: 'flex', flexDirection: 'column', gap: '10px', alignItems: "flex-end"}}>
-                            {ingredients.map((item) => {
-                                return <BurgerConstructorIngredient {...item} key={item.uuid}/>
+                            {ingredients.map((item, idx) => {
+                                return <BurgerConstructorIngredient {...item} index={idx} key={item.uuid}/>
                             })}
                         </ul>
                     </li>
