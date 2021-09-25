@@ -1,11 +1,24 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import ingredientStyle from './ingredient.module.css';
-import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
 import {useDrag} from "react-dnd";
+import {useSelector} from "react-redux";
 
-const Ingredient =(props) => {
-    const {image, price, name, _id, onOpen} = props;
+const Ingredient = (props) => {
+    const {ingredients, bun} = useSelector(state => state.burgerConstructor);
+    const {image, price, name, _id, onOpen, type} = props;
+    let ingredientsCount = ingredients.filter((item) => item._id === _id).length;
+    let counter;
+
+    if (type === 'bun' && bun && bun._id === _id) {
+        counter = 2;
+    } else if (type !== 'bun' && ingredientsCount) {
+        counter = ingredientsCount
+    } else {
+        counter = '';
+    }
+
     const [{opacity}, ref] = useDrag({
         type: 'ingredients',
         item: {...props},
@@ -14,12 +27,13 @@ const Ingredient =(props) => {
         })
     })
     return (
-        <div ref={ref} draggable className={`${ingredientStyle.product}`} style={{opacity: opacity}} onClick={onOpen} _id={_id} >
-            {/*<Counter />*/}
+        <div ref={ref} draggable className={`${ingredientStyle.product}`} style={{opacity: opacity}} onClick={onOpen}
+             _id={_id}>
+            {counter && <Counter count={counter}/>}
             <img className={`${ingredientStyle.image} pr-4 pl-4`} src={image} alt=""/>
             <div className={`${ingredientStyle.price} mt-1 mb-1`}>
                 <span className='text text_type_digits-default mr-2'>{price}</span>
-                <CurrencyIcon type="primary" />
+                <CurrencyIcon type="primary"/>
             </div>
             <p className={`${ingredientStyle.name} text text_type_main-default mt-1 mb-10`}>{name}</p>
         </div>

@@ -42,7 +42,13 @@ function BurgerConstructor() {
         }
     });
     const handleOpenModal = () => {
-        const idsArray = ingredients.map(item => item._id);
+        if (!bun) {
+            alert('Выберите булку');
+            return;
+        }
+
+        const idsArray =
+        console.log(idsArray);
     }
 
     const totalPrice = useMemo(() => {
