@@ -37,9 +37,10 @@ export const constructorReducer = (state = initialState, action) => {
                 order: action.payload
             }
         case ADD_INGREDIENT_TO_CONSTRUCTOR:
+            console.log(action);
             return {
                 ...state,
-                chosenIngredients: [...state.chosenIngredients, action.item],
+                ingredients: [...state.ingredients, action.item],
             }
         case ADD_BUN_TO_CONSTRUCTOR:
             return {
@@ -49,8 +50,8 @@ export const constructorReducer = (state = initialState, action) => {
         case REMOVE_INGREDIENT_FROM_CONSTRUCTOR:
             return {
                 ...state,
-                chosenIngredients: [
-                    ...state.chosenIngredients.filter((item) => item.uuid !== action.id)
+                ingredients: [
+                    ...state.ingredients.filter((item) => item.uuid !== action.id)
                 ],
             }
         default:
