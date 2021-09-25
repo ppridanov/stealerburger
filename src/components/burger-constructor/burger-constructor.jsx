@@ -7,45 +7,57 @@ import OrderDetails from "../order-details/order-details";
 import {BurgerConstructorContext} from "../../services/burger-constructor-context";
 import {sendData} from "../../utils/api";
 import {useDispatch, useSelector} from "react-redux";
-import {ADD_INGREDIENT_TO_CONSTRUCTOR} from "../../services/actions/burger-constructor";
+import {
+    ADD_BUN_TO_CONSTRUCTOR,
+    ADD_INGREDIENT_TO_CONSTRUCTOR,
+    REMOVE_INGREDIENT_FROM_CONSTRUCTOR
+} from "../../services/actions/burger-constructor";
+
 import {useDrop} from "react-dnd";
+import {v4 as uuidv4} from 'uuid';
+
+import BurgerConstructorIngredient from "../burger-constructor-item/burger-constructor-item";
 
 function BurgerConstructor() {
-    const {ingredients, bun} = useSelector(state => state.burgerConstructor);
-    const [modalIsOpen, setModalIsOpen] = React.useState(false)
+    const {ingredients, bun} = useSelector(state => ({
+        ingredients: state.burgerConstructor.ingredients,
+        bun: state.burgerConstructor.bun
+    }));
     const dispatch = useDispatch();
-    // const totalPrice = useMemo(() => {
-    //     ingredients.length !== 0 && bun.length !== 0 && ingredients.concat(bun).reduce((acc, item) => {
-    //         return item.type === 'bun' ? item.price * 2 + acc : item.price + acc;
-    //     }, 0)
-    // }, [ingredients, bun])
 
-    const moveIngredient = (item) => {
+    const [modalIsOpen, setModalIsOpen] = React.useState(false)
+    const moveIngredient = (ingredient) => {
         dispatch({
-            type: ADD_INGREDIENT_TO_CONSTRUCTOR,
-            item: item
+            type: ingredient.type === 'bun' ? ADD_BUN_TO_CONSTRUCTOR : ADD_INGREDIENT_TO_CONSTRUCTOR,
+            item: {...ingredient, uuid: uuidv4()}
         })
-        console.log(ingredients)
     }
-    const [{ isHover }, dropTarget] = useDrop({
+    const [{isHover}, dropTarget] = useDrop({
         accept: 'ingredients',
         collect: monitor => ({
             isHover: monitor.isOver()
         }),
         drop(item) {
-            item.type === 'bun' ? console.log('wtf') : moveIngredient(item);
+            moveIngredient(item);
         }
     });
-
     const handleOpenModal = () => {
         const idsArray = ingredients.map(item => item._id);
-
     }
+
+    const totalPrice = useMemo(() => {
+        let price = ingredients.reduce((acc, item) => {
+            return item.price + acc;
+        }, 0);
+        price += bun && bun.price * 2;
+        return price;
+    }, [ingredients, bun])
+
     return (
         <>
             <div ref={dropTarget} className={`${constructorStyle.constr} mt-25`}>
                 <ul className={`${constructorStyle.list}`}>
-                    <li className={constructorStyle.item}>
+                    <li className={`${constructorStyle.item} ${isHover ? constructorStyle.item_isHovering : ''}`}>
 
                         {bun ? (
                             <ConstructorElement
@@ -61,24 +73,15 @@ function BurgerConstructor() {
                             </div>
                         )}
                     </li>
-                    <li className={constructorStyle.item}>
+                    <li className={`${constructorStyle.item} ${isHover ? constructorStyle.item_isHovering : ''}`}>
                         <ul className={constructorStyle.list__scroll}
                             style={{display: 'flex', flexDirection: 'column', gap: '10px', alignItems: "flex-end"}}>
                             {ingredients.map((item) => {
-                                return (<li _id={item._id} className={constructorStyle.item} key={item._id}>
-                                    <div className="mr-2">
-                                        <DragIcon type={"primary"}/>
-                                    </div>
-                                    <ConstructorElement
-                                        text={item.name}
-                                        price={item.price}
-                                        thumbnail={item.image}
-                                    />
-                                </li>)
+                                return <BurgerConstructorIngredient {...item} key={item.uuid}/>
                             })}
                         </ul>
                     </li>
-                    <li className={constructorStyle.item}>
+                    <li className={`${constructorStyle.item} ${isHover ? constructorStyle.item_isHovering : ''}`}>
                         {bun ? (
                             <ConstructorElement
                                 type="bottom"
@@ -94,10 +97,10 @@ function BurgerConstructor() {
                         )}
                     </li>
                 </ul>
-                {ingredients.length > 1 && (
+                {(ingredients || bun) && (
                     <div className={`${constructorStyle.order} mr-8`}>
                         <div className={`${constructorStyle.total__price} mr-10`}>
-                            {/*<span className="text text_type_digits-medium">{totalPrice}</span>*/}
+                            <span className="text text_type_digits-medium">{totalPrice}</span>
                             <CurrencyIcon type="primary"/>
                         </div>
                         <Button type="primary" size="large" onClick={handleOpenModal}>
@@ -108,7 +111,7 @@ function BurgerConstructor() {
             </div>
             {modalIsOpen &&
             <Modal onClose={handleOpenModal}>
-                <OrderDetails id={123} />
+                <OrderDetails id={123}/>
             </Modal>
             }
         </>

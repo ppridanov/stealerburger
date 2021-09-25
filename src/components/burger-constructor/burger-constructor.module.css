@@ -83,3 +83,7 @@
   composes: nobun;
   border-radius: var(--bottom-constructor-item-border-radius);
 }
+
+.item_isHovering {
+  border: 1px solid red;
+}

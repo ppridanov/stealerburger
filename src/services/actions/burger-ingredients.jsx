@@ -21,7 +21,7 @@ export const getIngredients = () => {
                 if (data && data.success) {
                     dispatch({
                         type: GET_INGREDIENTS_SUCCESS,
-                        ingredients: data.data
+                        ingredients: data.data,
                     })
                 } else {
                     dispatch({type: GET_INGREDIENTS_FAILED})
