@@ -67,8 +67,8 @@ const BurgerConstructorIngredient =(props) => {
 
     drag(drop(ref))
 
-    return (<li  ref={ref} _id={_id} className={constructorStyle.item}>
-        <div className="mr-2">
+    return (<li _id={_id} className={constructorStyle.item} ref={ref}>
+        <div className="mr-2" style={{cursor: 'pointer'}}>
             <DragIcon type={"primary"}/>
         </div>
         <ConstructorElement

@@ -36,18 +36,18 @@ function BurgerIngredients() {
     }
 
     const handleScroll = (e) => {
-        const mainContainer = e.target.getBoundingClientRect();
+        const scrollContainer = e.target;
         const bunsContainer = bunsRef.current.getBoundingClientRect();
         const saucesContainer = saucesRef.current.getBoundingClientRect();
         const mainsContainer = mainsRef.current.getBoundingClientRect();
-        if (bunsContainer.top >= 0 && bunsContainer.bottom <= mainsContainer.height) {
-            setCurrent('buns')
-        } else if (saucesContainer.top >= 0 && saucesContainer.bottom <= mainsContainer.height) {
+        // console.log(`buns: ${scrollContainer.offsetTop - bunsContainer.top}, sauces: ${scrollContainer.offsetTop - saucesContainer.top}, mains: ${scrollContainer.offsetTop - mainsContainer.top}`)
+        if (scrollContainer.offsetTop - saucesContainer.top < 0) {
+            setCurrent('buns');
+        } else if (scrollContainer.offsetTop - mainsContainer.top < 0) {
             setCurrent('sauces');
-        } else if (mainsContainer.top >= 0 && mainContainer.bottom <= mainsContainer.height) {
+        } else {
             setCurrent('mains');
         }
-
     }
 
     return (
@@ -63,17 +63,17 @@ function BurgerIngredients() {
                     <h1 className="text text_type_main-large mt-10">Соберите бургер</h1>
                     <div style={{display: 'flex'}} className='mt-5'>
                         <a className={appStyles.link} href="#buns">
-                            <Tab value="but" active={current === 'buns'} onClick={handleTabClick}>
+                            <Tab value="buns" active={current === 'buns'} onClick={handleTabClick}>
                                 Булка
                             </Tab>
                         </a>
                         <a className={appStyles.link} href="#sauces">
-                            <Tab value="sauce" active={current === 'sauces'} onClick={handleTabClick}>
+                            <Tab value="sauces" active={current === 'sauces'} onClick={handleTabClick}>
                                 Соусы
                             </Tab>
                         </a>
                         <a className={appStyles.link} href="#mains">
-                            <Tab value="main" active={current === 'mains'} onClick={handleTabClick}>
+                            <Tab value="mains" active={current === 'mains'} onClick={handleTabClick}>
                                 Начинки
                             </Tab>
                         </a>
@@ -85,7 +85,7 @@ function BurgerIngredients() {
                                 {ingredients.filter((item) => item.type === 'bun').map((item) => <Ingredient
                                     onOpen={handleOpenModal} {...item} key={item._id}/>)}
                             </div>
-                            <h3 className="text text_type_main-medium" ref={saucesRef}  id="sauces">Соусы</h3>
+                            <h3 className="text text_type_main-medium" ref={saucesRef} id="sauces">Соусы</h3>
                             <div className={ingredientsStyles.products__cont}>
                                 {ingredients.filter((item) => item.type === 'sauce').map((item) => <Ingredient
                                     onOpen={handleOpenModal} {...item} key={item._id}/>)}
