@@ -1,9 +1,11 @@
-import {sendData} from "../../utils/api";
-import {postOrderURL} from "../../utils/constants";
+import {getData, sendData} from "../../utils/api";
+import {apiURL, postOrderURL} from "../../utils/constants";
+import {GET_INGREDIENTS_FAILED, GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS} from "./burger-ingredients";
 
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
 export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
+export const CLEAR_ORDER = 'CLEAR_ORDER';
 
 export const ADD_INGREDIENT_TO_CONSTRUCTOR = 'ADD_INGREDIENT_TO_CONSTRUCTOR';
 export const REMOVE_INGREDIENT_FROM_CONSTRUCTOR = 'REMOVE_INGREDIENT_FROM_CONSTRUCTOR';
@@ -19,7 +21,7 @@ export const postOrder = (idsArr) => {
             url: postOrderURL,
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json;charset=utf-8'
+                'Content-Type': 'application/json'
             },
             body: {ingredients: idsArr}
         })
@@ -27,19 +29,28 @@ export const postOrder = (idsArr) => {
                 if (res.ok) {
                     return res.json();
                 }
+                throw new Error(`Something wrong: ${res.status}`)
+            })
+            .then(res => {
+                    if (res && res.success) {
+                        dispatch({
+                            type: GET_ORDER_SUCCESS,
+                            payload: res.order.number
+                        })
+                    } else {
+                        dispatch({
+                            type: GET_ORDER_FAILED
+                        })
+                    }
+                }
+            )
+            .catch(err => {
+                console.log(err)
                 dispatch({
                     type: GET_ORDER_FAILED
                 })
-                throw new Error(`Something wrong: ${res.status}`)
-            })
-            .then(data => dispatch({
-                type: GET_ORDER_SUCCESS,
-                payload: data
-            }))
-            .catch(err => {
-                console.log(err);
                 dispatch({
-                    type: GET_ORDER_FAILED
+                    type: CLEAR_ORDER
                 })
             })
     }

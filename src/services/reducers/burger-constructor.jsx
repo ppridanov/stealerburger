@@ -4,7 +4,7 @@ import {
     GET_ORDER_REQUEST,
     ADD_INGREDIENT_TO_CONSTRUCTOR,
     ADD_BUN_TO_CONSTRUCTOR,
-    REMOVE_INGREDIENT_FROM_CONSTRUCTOR, MOVE_INGREDIENT_IN_CONSTRUCTOR,
+    REMOVE_INGREDIENT_FROM_CONSTRUCTOR, MOVE_INGREDIENT_IN_CONSTRUCTOR, CLEAR_ORDER,
 } from "../actions/burger-constructor";
 import {calculateTotalPrice} from "../../utils/funcs";
 
@@ -32,9 +32,15 @@ export const constructorReducer = (state = initialState, action) => {
                 orderRequest: true
             }
         case GET_ORDER_SUCCESS:
+            console.log(action.payload)
             return {
                 ...state,
                 order: action.payload
+            }
+        case CLEAR_ORDER:
+            return {
+                ...state,
+                order: null
             }
         case ADD_INGREDIENT_TO_CONSTRUCTOR:
             console.log(action);

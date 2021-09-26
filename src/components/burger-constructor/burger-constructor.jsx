@@ -1,14 +1,13 @@
-import React, {useCallback, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import constructorStyle from './burger-constructor.module.css';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {postOrderURL} from "../../utils/constants";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import {sendData} from "../../utils/api";
 import {useDispatch, useSelector} from "react-redux";
 import {
     ADD_BUN_TO_CONSTRUCTOR,
-    ADD_INGREDIENT_TO_CONSTRUCTOR,
+    ADD_INGREDIENT_TO_CONSTRUCTOR, CLEAR_ORDER,
+    postOrder
 } from "../../services/actions/burger-constructor";
 
 import {useDrop} from "react-dnd";
@@ -17,9 +16,10 @@ import {v4 as uuidv4} from 'uuid';
 import BurgerConstructorIngredient from "../burger-constructor-item/burger-constructor-item";
 
 function BurgerConstructor() {
-    const {ingredients, bun} = useSelector(state => ({
+    const {ingredients, bun, order} = useSelector(state => ({
         ingredients: state.burgerConstructor.ingredients,
-        bun: state.burgerConstructor.bun
+        bun: state.burgerConstructor.bun,
+        order: state.burgerConstructor.order
     }));
     const dispatch = useDispatch();
 
@@ -42,10 +42,19 @@ function BurgerConstructor() {
 
     const handleOpenModal = () => {
         if (!bun) {
-            alert('Выберите булку');
-            return;
+            return alert('Выберите булку');
         }
+        //Здесь я не понял как мне две булки отправлять или же она одна?
+        const idsArr = [...ingredients.map(item => item._id), bun._id, bun._id];
+        dispatch(postOrder(idsArr));
+        setModalIsOpen(true)
+    }
 
+    const handleClose = () => {
+        dispatch({
+            type: CLEAR_ORDER
+        })
+        setModalIsOpen(false);
     }
 
     const totalPrice = useMemo(() => {
@@ -112,11 +121,11 @@ function BurgerConstructor() {
                     </div>
                 )}
             </div>
-            {modalIsOpen &&
-            <Modal onClose={handleOpenModal}>
-                <OrderDetails id={123}/>
-            </Modal>
-            }
+            {modalIsOpen && order && (
+                <Modal onClose={handleClose}>
+                    <OrderDetails id={order}/>
+                </Modal>
+            )}
         </>
 
     )
