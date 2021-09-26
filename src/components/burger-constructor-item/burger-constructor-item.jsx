@@ -38,6 +38,7 @@ const BurgerConstructorIngredient =(props) => {
             isDragging: monitor.isDragging(),
         }),
     });
+    const opacity = isDragging ? 0 : 1;
 
     const [, drop] = useDrop({
         accept: 'sortable',
@@ -67,7 +68,7 @@ const BurgerConstructorIngredient =(props) => {
 
     drag(drop(ref))
 
-    return (<li _id={_id} className={constructorStyle.item} ref={ref}>
+    return (<li _id={_id} style={{opacity: opacity}} className={constructorStyle.item} ref={ref}>
         <div className="mr-2" style={{cursor: 'pointer'}}>
             <DragIcon type={"primary"}/>
         </div>

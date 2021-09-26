@@ -37,7 +37,6 @@ function BurgerIngredients() {
 
     const handleScroll = (e) => {
         const scrollContainer = e.target;
-        const bunsContainer = bunsRef.current.getBoundingClientRect();
         const saucesContainer = saucesRef.current.getBoundingClientRect();
         const mainsContainer = mainsRef.current.getBoundingClientRect();
         // console.log(`buns: ${scrollContainer.offsetTop - bunsContainer.top}, sauces: ${scrollContainer.offsetTop - saucesContainer.top}, mains: ${scrollContainer.offsetTop - mainsContainer.top}`)
