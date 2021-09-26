@@ -6,10 +6,14 @@ import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {useDispatch, useSelector} from "react-redux";
-import {getIngredients} from "../../services/actions/burger-ingredients";
+import {
+    getIngredients,
+    REMOVE_INGREDIENT_FROM_MODAL,
+    SET_INGREDIENT_TO_MODAL
+} from "../../services/actions/burger-ingredients";
 
 function BurgerIngredients() {
-    const {ingredients, ingredientsRequest, ingredientsError} = useSelector(state => state.burgerIngredients)
+    const {ingredients, ingredientsRequest, ingredientsError, ingredientDetails} = useSelector(state => state.burgerIngredients)
     const [current, setCurrent] = React.useState('buns');
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
     const [modalData, setModalData] = React.useState({});
@@ -23,13 +27,18 @@ function BurgerIngredients() {
     }, [dispatch]);
 
     const handleOpenModal = (e) => {
-        const target = e.currentTarget;
-        const id = target.getAttribute('_id');
-        setModalData(ingredients.find((item) => item._id === id));
+        const id = e.currentTarget.getAttribute('_id');
+        dispatch({
+            type: SET_INGREDIENT_TO_MODAL,
+            item: ingredients.find((item) => item._id === id)
+        })
         setModalIsOpen(true);
     }
     const handleCloseModal = () => {
         setModalIsOpen(false);
+        dispatch({
+            type: REMOVE_INGREDIENT_FROM_MODAL
+        })
     }
     const handleTabClick = (value) => {
         setCurrent(value);
@@ -101,7 +110,7 @@ function BurgerIngredients() {
             }
             {modalIsOpen && modalData && (
                 <Modal onClose={handleCloseModal} title={'Детали ингредиента'}>
-                    <IngredientDetails data={modalData}/>
+                    <IngredientDetails data={ingredientDetails}/>
                 </Modal>)
             }
         </>
