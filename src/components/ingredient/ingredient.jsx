@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import ingredientStyle from './ingredient.module.css';
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';

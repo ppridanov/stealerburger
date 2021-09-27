@@ -16,7 +16,6 @@ function BurgerIngredients() {
     const {ingredients, ingredientsRequest, ingredientsError, ingredientDetails} = useSelector(state => state.burgerIngredients)
     const [current, setCurrent] = React.useState('buns');
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
-    const [modalData, setModalData] = React.useState({});
     const bunsRef = createRef();
     const saucesRef = createRef();
     const mainsRef = createRef();
@@ -108,7 +107,7 @@ function BurgerIngredients() {
                 </div>
             )
             }
-            {modalIsOpen && modalData && (
+            {modalIsOpen && ingredientDetails && (
                 <Modal onClose={handleCloseModal} title={'Детали ингредиента'}>
                     <IngredientDetails data={ingredientDetails}/>
                 </Modal>)

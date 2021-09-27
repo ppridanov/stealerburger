@@ -1,12 +1,12 @@
 import React, {useMemo} from 'react';
 import constructorStyle from './burger-constructor.module.css';
-import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import {useDispatch, useSelector} from "react-redux";
 import {
     ADD_BUN_TO_CONSTRUCTOR,
-    ADD_INGREDIENT_TO_CONSTRUCTOR, CLEAR_ORDER,
+    ADD_INGREDIENT_TO_CONSTRUCTOR, CLEAR_CONSTRUCTOR, CLEAR_ORDER,
     postOrder
 } from "../../services/actions/burger-constructor";
 
@@ -53,6 +53,9 @@ function BurgerConstructor() {
     const handleClose = () => {
         dispatch({
             type: CLEAR_ORDER
+        })
+        dispatch({
+            type: CLEAR_CONSTRUCTOR
         })
         setModalIsOpen(false);
     }
