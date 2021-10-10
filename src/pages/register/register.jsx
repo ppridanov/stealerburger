@@ -2,6 +2,7 @@ import React from "react";
 import AppHeader from "../../components/app-header/app-header";
 import styles from "./register.module.css";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Link} from "react-router-dom";
 
 export function Register() {
     return (
@@ -55,10 +56,9 @@ export function Register() {
                             </div>
                         </form>
                         <div className={styles.login__links}>
-                            <p className="text text_type_main-default text_color_inactive mb-4">Вы - новый
-                                пользователь? <a className="text text_color_accent">Зарегистрироваться</a></p>
-                            <p className="text text_type_main-default text_color_inactive">Забыли пароль? <a
-                                className="text text_color_accent">Восстановить пароль</a></p>
+                            <p className="text text_type_main-default text_color_inactive mb-4">
+                                Уже зарегистрированы? <Link to={`/login`} className="text text_color_accent">Войти</Link>
+                            </p>
                         </div>
                     </div>
                 </div>
