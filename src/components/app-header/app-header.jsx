@@ -6,11 +6,11 @@ import { BurgerIcon, ListIcon, Logo, ProfileIcon } from "@ya.praktikum/react-dev
 function AppHeader() {
   return (
       <header className={`${appHeaderStyles.header} p-4`}>
-        <div className={appStyles.container}>
+        <div className="container">
           <nav className={appHeaderStyles.nav}>
             <ul className={appHeaderStyles.nav__menu}>
               <li className={`${appHeaderStyles.nav__item} pl-5 pr-5 pt-2 pb-2`}>
-                <a href='/constructor' className={`${appHeaderStyles.nav__link} text text_type_main-default ${appHeaderStyles.active}`}>
+                <a href='/' className={`${appHeaderStyles.nav__link} text text_type_main-default ${appHeaderStyles.active}`}>
                   <BurgerIcon type="primary" /><p>Конструктор</p>
                 </a>
               </li>
