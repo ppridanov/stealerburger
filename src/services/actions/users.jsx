@@ -1,29 +1,22 @@
 import {sendData} from "../../utils/api";
 import {apiURL} from "../../utils/constants";
 
-export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
-export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
-export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
-export const CLEAR_ORDER = 'CLEAR_ORDER';
+export const GET_USER_REQUEST = 'GET_USER_REQUEST';
+export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
+export const GET_USER_FAILED = 'GET_USER_FAILED';
 
-export const ADD_INGREDIENT_TO_CONSTRUCTOR = 'ADD_INGREDIENT_TO_CONSTRUCTOR';
-export const REMOVE_INGREDIENT_FROM_CONSTRUCTOR = 'REMOVE_INGREDIENT_FROM_CONSTRUCTOR';
-export const ADD_BUN_TO_CONSTRUCTOR = 'ADD_BUN_TO_CONSTRUCTOR';
-export const MOVE_INGREDIENT_IN_CONSTRUCTOR = 'MOVE_INGREDIENT_IN_CONSTRUCTOR';
-export const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR';
-
-export const postOrder = (idsArr) => {
+export const postPasswordReset = (emailValue) => {
     return function (dispatch) {
         dispatch({
-            type: GET_ORDER_REQUEST
+            type: GET_USER_REQUEST
         })
         sendData({
-            url: `${apiURL}/orders`,
+            url: `${apiURL}/password-reset`,
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: {ingredients: idsArr}
+            body: {email: emailValue}
         })
             .then((res) => {
                 if (res.ok) {
@@ -34,12 +27,12 @@ export const postOrder = (idsArr) => {
             .then(res => {
                     if (res && res.success) {
                         dispatch({
-                            type: GET_ORDER_SUCCESS,
+                            type: GET_USER_SUCCESS,
                             payload: res.order.number
                         })
                     } else {
                         dispatch({
-                            type: GET_ORDER_FAILED
+                            type: GET_USER_FAILED
                         })
                     }
                 }
@@ -47,10 +40,7 @@ export const postOrder = (idsArr) => {
             .catch(err => {
                 console.log(err)
                 dispatch({
-                    type: GET_ORDER_FAILED
-                })
-                dispatch({
-                    type: CLEAR_ORDER
+                    type: GET_USER_FAILED
                 })
             })
     }
