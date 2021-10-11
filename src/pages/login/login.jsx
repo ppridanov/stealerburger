@@ -1,20 +1,25 @@
 import React, {useState} from "react";
 import styles from "./login.module.css";
-import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useHistory} from "react-router-dom";
+import {useDispatch} from "react-redux";
 
 export function Login() {
     const history = useHistory();
+    const dispatch = useDispatch();
     const [formData, setFormData] = useState({
         email: "",
         password: ""
     })
-    const onChange = (e) => {
+    const handleChange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         })
-        console.log(formData);
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
     }
     return (
         <div className="container">
@@ -29,20 +34,19 @@ export function Login() {
                             name={"email"}
                             size={"default"}
                             type={"email"}
-                            onChange={onChange}
+                            onChange={handleChange}
                             value={formData.email}
                         />
                     </div>
                     <div className="form__item mb-6">
-                        <Input
+                        <PasswordInput
                             type={"password"}
-                            icon={"ShowIcon"}
                             size={"default"}
                             placeholder="Пароль"
                             error={false}
                             errorText={"Ошибка какая то"}
                             name={"password"}
-                            onChange={onChange}
+                            onChange={handleChange}
                             value={formData.password}
                         />
                     </div>

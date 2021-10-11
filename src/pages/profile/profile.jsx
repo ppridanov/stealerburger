@@ -1,23 +1,16 @@
-import React, {useState} from "react";
-import AppHeader from "../../components/app-header/app-header";
+import React, {useRef, useState} from "react";
 import styles from "./profile.module.css";
-import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, useHistory} from "react-router-dom";
-import {postRegister, postResetPassword} from "../../services/actions/users";
-import {useDispatch} from "react-redux";
+import {ProfileForm} from "../../components/profile-form/profile-form";
+import {ProfileMenu} from "../../components/profile-menu/profile-menu";
 
 export function Profile() {
     return (
         <div className="container">
-            <div className="profile__container">
-                <div className="profile__menu">
-                    <div className="profile__links">
-                        <Link to={`/profile`}>Профиль</Link>
-                        <Link to={`/profile/orders`}>История заказов</Link>
-                        <Link to={`/exit`}>Выход</Link>
-                    </div>
+            <div className={`${styles.profile__container} mt-30 pr-5 pl-5`}>
+                <ProfileMenu/>
+                <div className={`${styles.profile__content}`}>
+                    <ProfileForm/>
                 </div>
-                <div className="profile__content"></div>
             </div>
         </div>
     )

@@ -4,6 +4,7 @@ import {Home, Login, Register} from "../../pages";
 import {ForgotPassword} from "../../pages/forgot-password/forgot-password";
 import AppHeader from "../app-header/app-header";
 import {ResetPassword} from "../../pages/reset-password/reset-password";
+import {Profile} from "../../pages/profile/profile";
 
 function App() {
     return (
@@ -26,6 +27,9 @@ function App() {
                         </Route>
                         <Route path={"/reset-password"} exact={true}>
                             <ResetPassword />
+                        </Route>
+                        <Route path={"/profile"} exact={true}>
+                            <Profile />
                         </Route>
                     </Switch>
                 </Router>

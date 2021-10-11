@@ -1,19 +1,9 @@
-.login__container {
+.profile__container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin-top: 180px;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
-.form__button {
-    display: flex;
-    justify-content: center;
-}
-
-.login__links {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+.profile__content {
+    width: 100%;
 }
