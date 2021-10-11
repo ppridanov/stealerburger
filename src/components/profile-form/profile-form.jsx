@@ -1,14 +1,29 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import styles from "../../pages/profile/profile.module.css";
 import {EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useCustomInput} from "../../hooks/useInput";
+import {useDispatch, useSelector} from "react-redux";
+import {getUserInfo} from "../../services/actions/users";
 
 export function ProfileForm() {
+    const {user} = useSelector(state => state.user);
+    const dispatch = useDispatch();
+
     const [formData, setFormData] = useState({
         name: "",
         email: "",
-        password: ""
+        password: "********"
     })
+
+    useEffect(() => {
+        dispatch(getUserInfo());
+        setFormData({
+            ...formData,
+            name: user.name,
+            email: user.email
+        })
+    }, [])
+
     const nameCustomInput = useCustomInput();
     const passCustomInput = useCustomInput();
 
@@ -54,7 +69,7 @@ export function ProfileForm() {
                     onIconClick={nameCustomInput.handleIconClick}
                     disabled={true}
                     ref={nameCustomInput.ref}
-                    value={formData.name}
+                    value={formData.password}
                 />
             </div>
         </form>

@@ -1,8 +1,15 @@
 import React from 'react';
 import styles from "./profile-menu.module.css";
-import {Link, NavLink} from "react-router-dom";
+import {Link, NavLink, useHistory} from "react-router-dom";
+import {postLogout} from "../../services/actions/users";
+import {useDispatch} from "react-redux";
 
 export function ProfileMenu() {
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const handleClick = () => {
+        dispatch(postLogout(history));
+    }
     return (
         <ul className={`${styles.profile__menu} mr-15`}>
             <li className={`${styles.profile__menuItem} text text_type_main-medium text_color_inactive`}>
@@ -11,8 +18,8 @@ export function ProfileMenu() {
             <li className={`${styles.profile__menuItem} text text_type_main-medium text_color_inactive`}>
                 <Link to={`/profile/orders`}>История заказов</Link>
             </li>
-            <li className={`${styles.profile__menuItem} text text_type_main-medium text_color_inactive`}>
-                <Link to={`/exit`}>Выход</Link>
+            <li onClick={handleClick} className={`${styles.profile__menuItem} text text_type_main-medium text_color_inactive`}>
+                <a href={"#exit"}>Выход</a>
             </li>
         </ul>
     )
