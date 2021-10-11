@@ -2,12 +2,13 @@ import { Redirect, Route } from 'react-router-dom';
 import {useSelector} from "react-redux";
 import PropTypes, {object} from "prop-types";
 
-export function ProtectedRoute({ children, ...rest }) {
+export function ProtectedRoute({ children, exact, path }) {
    const {isAuth} = useSelector(state => state.user);
-
+    console.log(isAuth)
     return (
         <Route
-            {...rest}
+            exact={exact}
+            path={path}
             render={({ location }) =>
                 isAuth ? (
                     children
@@ -26,5 +27,4 @@ export function ProtectedRoute({ children, ...rest }) {
 
 ProtectedRoute.propTypes = {
     children: PropTypes.node.isRequired,
-    rest: PropTypes.object
 }
