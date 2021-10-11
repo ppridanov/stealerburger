@@ -34,7 +34,7 @@ export const usersReducer = (state = initialState, action) => {
         case GET_USER_INFO:
             return {
                 ...state,
-                user: action.payload.user,
+                user: action.payload.user
             }
         case SET_IS_AUTH:
             setCookie('token', action.payload.accessToken);

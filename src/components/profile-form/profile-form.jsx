@@ -1,28 +1,32 @@
-import React, {useEffect, useRef, useState} from "react";
-import styles from "../../pages/profile/profile.module.css";
-import {EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import React, {useEffect, useState} from "react";
+import styles from "./profile-form.module.css";
+import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useCustomInput} from "../../hooks/useInput";
 import {useDispatch, useSelector} from "react-redux";
-import {getUserInfo} from "../../services/actions/users";
+import {getUserInfo, postChangeUserInfo} from "../../services/actions/users";
 
 export function ProfileForm() {
-    const {user} = useSelector(state => state.user);
+    const {user} = useSelector(state => state.userData);
     const dispatch = useDispatch();
 
     const [formData, setFormData] = useState({
-        name: null,
-        email: null,
+        name: "",
+        email: "",
         password: "********"
     })
 
+    const [isChangeInput, setIsChangeInput] = useState(false);
+
     useEffect(() => {
         dispatch(getUserInfo());
+    }, [dispatch])
+
+    useEffect(() => {
         setFormData({
             ...formData,
-            name: user.name,
-            email: user.email
+            ...user
         })
-    }, [])
+    }, [user])
 
     const nameCustomInput = useCustomInput();
     const passCustomInput = useCustomInput();
@@ -32,6 +36,11 @@ export function ProfileForm() {
             ...formData,
             [e.target.name]: e.target.value
         })
+        setIsChangeInput(true);
+    }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(postChangeUserInfo(formData));
     }
     return (
         <form className={`${styles.form}`}>
@@ -49,11 +58,11 @@ export function ProfileForm() {
                     onIconClick={passCustomInput.handleIconClick}
                     disabled={true}
                     ref={passCustomInput.ref}
-                    value={user.name}
+                    value={formData.name}
                 />
             </div>
             <div className="form__item mb-6">
-                <EmailInput onChange={handleOnChange} value={user.email} name={'email'}/>
+                <EmailInput onChange={handleOnChange} value={formData.email} name={'email'}/>
             </div>
             <div className="form__item mb-6">
                 <Input
@@ -72,6 +81,11 @@ export function ProfileForm() {
                     value={formData.password}
                 />
             </div>
+            {isChangeInput && (
+                <div className={`${styles.form__button} mb-20`}>
+                    <Button type={"primary"} size="medium" onClick={handleSubmit}>Сохранить</Button>
+                </div>
+            )}
         </form>
     )
 }

@@ -1,9 +1,9 @@
 import { Redirect, Route } from 'react-router-dom';
 import {useSelector} from "react-redux";
-import PropTypes, {object} from "prop-types";
+import PropTypes from "prop-types";
 
 export function ProtectedRoute({ children, exact, path }) {
-   const {isAuth} = useSelector(state => state.user);
+   const {isAuth} = useSelector(state => state.userData);
     console.log(isAuth);
     return (
         <Route

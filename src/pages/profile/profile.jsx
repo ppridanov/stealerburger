@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react";
+import React from "react";
 import styles from "./profile.module.css";
 import {ProfileForm} from "../../components/profile-form/profile-form";
 import {ProfileMenu} from "../../components/profile-menu/profile-menu";

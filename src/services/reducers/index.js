@@ -6,5 +6,5 @@ import {usersReducer} from "./users";
 export const rootReducer = combineReducers({
     burgerIngredients: burgerIngredientsReducer,
     burgerConstructor: constructorReducer,
-    user: usersReducer
+    userData: usersReducer
 });

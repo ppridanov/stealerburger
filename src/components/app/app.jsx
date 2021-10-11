@@ -6,7 +6,6 @@ import AppHeader from "../app-header/app-header";
 import {ResetPassword} from "../../pages/reset-password/reset-password";
 import {Profile} from "../../pages/profile/profile";
 import {ProtectedRoute} from "../../hocs/protected-route";
-import {getCookie} from "../../utils/funcs";
 
 function App() {
     return (

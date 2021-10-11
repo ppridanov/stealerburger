@@ -8,7 +8,7 @@ import {postLogin} from "../../services/actions/users";
 export function Login() {
     const history = useHistory();
     const dispatch = useDispatch();
-    const {isAuth} = useSelector(state => state.user);
+    const {isAuth} = useSelector(state => state.userData);
     const [formData, setFormData] = useState({
         email: "",
         password: ""

@@ -1,9 +1,8 @@
 import React, {useState} from "react";
-import AppHeader from "../../components/app-header/app-header";
 import styles from "./register.module.css";
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useHistory} from "react-router-dom";
-import {postRegister, postResetPassword} from "../../services/actions/users";
+import {postRegister} from "../../services/actions/users";
 import {useDispatch} from "react-redux";
 
 export function Register() {

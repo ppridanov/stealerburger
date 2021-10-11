@@ -1,6 +1,5 @@
-import {checkResponseStatus, sendData} from "../../utils/api";
+import {getUser, patchUser, sendData} from "../../utils/api";
 import {apiURL} from "../../utils/constants";
-import {checkReponse, getCookie, setCookie} from "../../utils/funcs";
 
 export const GET_USER_REQUEST = 'GET_USER_REQUEST';
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
@@ -8,7 +7,7 @@ export const GET_USER_FAILED = 'GET_USER_FAILED';
 export const GET_USER_INFO = 'GET_USER_INFO';
 export const SET_IS_AUTH = 'SET_IS_AUTH';
 export const DELETE_IS_AUTH = 'DELETE_IS_AUTH';
-
+export const CHANGE_USER_INFO = 'CHANGE_USER_INFO';
 
 export const postForgotPassword = (emailValue, history) => {
     return function (dispatch) {
@@ -199,36 +198,6 @@ export const postLogin = (formData, history) => {
     }
 }
 
-export const refreshToken = () => {
-    return fetch(`${apiURL}/auth/token`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify({
-            token: localStorage.getItem("refreshToken"),
-        }),
-    }).then(checkReponse);
-};
-
-export const fetchWithRefresh = async (url, options) => {
-    try {
-        const res = await fetch(url, options);
-        return await checkReponse(res);
-    } catch (err) {
-        if (err.message === "jwt expired") {
-            const refreshData = await refreshToken(); //обновляем токен
-            localStorage.setItem("refreshToken", refreshData.refreshToken);
-            setCookie("accessToken", refreshData.accessToken);
-            options.headers.authorization = refreshData.accessToken;
-            const res = await fetch(url, options); //повторяем запрос
-            return await checkReponse(res);
-        } else {
-            return Promise.reject(err);
-        }
-    }
-};
-
 export const postLogout = (history) => {
     return function (dispatch) {
         dispatch({
@@ -274,29 +243,46 @@ export const postLogout = (history) => {
 }
 
 export const getUserInfo = () => {
-    return function (dispatch) {
+    return async function (dispatch) {
         dispatch({
             type: GET_USER_REQUEST
         })
-        sendData({
-            url: `${apiURL}/auth/user`,
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'authorization': getCookie('token')
-            },
-        })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                throw new Error(`Something wrong: ${res.status}`);
-            })
+        await getUser()
             .then(res => {
                     if (res && res.success) {
                         console.log(res);
                         dispatch({
                             type: GET_USER_INFO,
+                            payload: {
+                                user: res.user
+                            }
+                        })
+                    } else {
+                        dispatch({
+                            type: GET_USER_FAILED
+                        })
+                    }
+                }
+            )
+            .catch(err => {
+                console.log(err)
+                dispatch({
+                    type: GET_USER_FAILED
+                })
+            })
+    }
+}
+
+export const postChangeUserInfo = (formData) => {
+    return async function (dispatch) {
+        dispatch({
+            type: GET_USER_REQUEST
+        })
+        await patchUser(formData)
+            .then(res => {
+                    if (res && res.success) {
+                        dispatch({
+                            type: CHANGE_USER_INFO,
                             payload: {
                                 user: res.user
                             }

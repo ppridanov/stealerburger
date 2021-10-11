@@ -6,3 +6,7 @@
 .form .input {
     width: 100%;
 }
+
+.form__button {
+    max-width: 480px;
+}
