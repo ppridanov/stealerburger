@@ -1,19 +1,50 @@
-import React from "react";
+import React, {useState} from "react";
 import styles from "./login.module.css";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 
 export function Login() {
+    const history = useHistory();
+    const [formData, setFormData] = useState({
+        email: "",
+        password: ""
+    })
+    const onChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        })
+        console.log(formData);
+    }
     return (
         <div className="container">
             <div className={styles.login__container}>
                 <h3 className="text text_type_main-medium mb-6">Вход</h3>
                 <form className="form" action="">
                     <div className="form__item mb-6">
-                        <Input placeholder="E-mail"/>
+                        <Input
+                            placeholder="E-mail"
+                            error={false}
+                            errorText={"Ошибка какая то"}
+                            name={"email"}
+                            size={"default"}
+                            type={"email"}
+                            onChange={onChange}
+                            value={formData.email}
+                        />
                     </div>
                     <div className="form__item mb-6">
-                        <Input type={"password"} icon={"ShowIcon"} size={"default"} placeholder="Пароль"/>
+                        <Input
+                            type={"password"}
+                            icon={"ShowIcon"}
+                            size={"default"}
+                            placeholder="Пароль"
+                            error={false}
+                            errorText={"Ошибка какая то"}
+                            name={"password"}
+                            onChange={onChange}
+                            value={formData.password}
+                        />
                     </div>
                     <div className={`${styles.form__button} mb-20`}>
                         <Button type={"primary"} size="medium">Войти</Button>

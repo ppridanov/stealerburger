@@ -1,9 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 import styles from "./forgot-password.module.css";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {postForgotPassword} from "../../services/actions/users";
 
 export function ForgotPassword() {
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const [email, setEmail] = useState("");
+    const onChange = (e) => {
+        setEmail(e.target.value);
+    }
+    const onSendForm = (e) => {
+        e.preventDefault();
+        dispatch(postForgotPassword(email, history))
+    }
     return (
         <div className="container">
             <div className={styles.login__container}>
@@ -17,11 +29,12 @@ export function ForgotPassword() {
                             name={"email"}
                             size={"default"}
                             type={"email"}
-                            onChange={(e) => console.log(e.target.value)}
+                            value={email}
+                            onChange={onChange}
                         />
                     </div>
                     <div className={`${styles.form__button} mb-20`}>
-                        <Button type={"primary"} size="medium">Войти</Button>
+                        <Button onClick={onSendForm} type={"primary"} size="medium">Войти</Button>
                     </div>
                 </form>
                 <div className={styles.login__links}>
