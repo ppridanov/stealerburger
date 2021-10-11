@@ -1,9 +1,12 @@
 import {checkResponseStatus, sendData} from "../../utils/api";
 import {apiURL} from "../../utils/constants";
+import {setCookie} from "../../utils/funcs";
 
 export const GET_USER_REQUEST = 'GET_USER_REQUEST';
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
 export const GET_USER_FAILED = 'GET_USER_FAILED';
+export const GET_USER_INFO = 'GET_USER_INFO';
+export const SET_IS_AUTH = 'SET_IS_AUTH';
 
 export const postForgotPassword = (emailValue, history) => {
     return function (dispatch) {
@@ -89,7 +92,7 @@ export const postRegister = (formData, history) => {
             type: GET_USER_REQUEST
         })
         sendData({
-            url: `${apiURL}/password-reset/reset`,
+            url: `${apiURL}/auth/register`,
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -108,7 +111,11 @@ export const postRegister = (formData, history) => {
             })
             .then(res => {
                     if (res && res.success) {
-                        history.push('/login');
+                        dispatch({
+                            type: GET_USER_INFO,
+                            email: res.user.email,
+                            name: res.user.name
+                        });
                     } else {
                         dispatch({
                             type: GET_USER_FAILED
@@ -118,6 +125,56 @@ export const postRegister = (formData, history) => {
             )
             .catch(err => {
                 console.log(err)
+                dispatch({
+                    type: GET_USER_FAILED
+                })
+            })
+    }
+}
+
+export const postLogin = (formData, history) => {
+    return function (dispatch) {
+        dispatch({
+            type: GET_USER_REQUEST
+        })
+        sendData({
+            url: `${apiURL}/auth/login`,
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: {
+                email: formData.email,
+                password: formData.password,
+            }
+        })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                throw new Error(res.status === 401 ? 'Неправильные введенные данные' : 'Произошла ошибка. Код ошибки: ' + res.status);
+            })
+            .then(res => {
+                    if (res && res.success) {
+                        setCookie(res.accessToken);
+                        localStorage.setItem('refreshToken', res.refreshToken);
+                        dispatch({
+                            type: GET_USER_SUCCESS,
+                            payload: {
+                                user: res.user
+                            },
+                        })
+                        history.replace({pathname: '/'})
+                    } else {
+                        dispatch({
+                            type: GET_USER_FAILED
+                        })
+                    }
+                }
+            )
+            .catch(err => {
+                console.log(err)
+                alert(err)
                 dispatch({
                     type: GET_USER_FAILED
                 })

@@ -37,6 +37,7 @@ export function ResetPassword() {
                             errorText={"Ошибка какая то"}
                             name={"password"}
                             onChange={onChange}
+                            value={formData.password}
                         />
                     </div>
                     <div className="form__item mb-6">
@@ -46,8 +47,9 @@ export function ResetPassword() {
                             placeholder="Введите код из письма"
                             error={false}
                             errorText={"Ошибка какая то"}
-                            name={"password"}
+                            name={"token"}
                             onChange={onChange}
+                            value={formData.token}
                         />
                     </div>
                     <div className={`${resetStyles.form__button} mb-20`}>

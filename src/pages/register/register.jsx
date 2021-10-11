@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import AppHeader from "../../components/app-header/app-header";
 import styles from "./register.module.css";
-import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useHistory} from "react-router-dom";
 import {postRegister, postResetPassword} from "../../services/actions/users";
 import {useDispatch} from "react-redux";
@@ -15,13 +15,13 @@ export function Register() {
         password: "",
         name: ""
     })
-    const onChange = (e) => {
+    const handleChange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         })
     }
-    const onSendForm = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(postRegister(formData, history))
     }
@@ -35,12 +35,11 @@ export function Register() {
                             placeholder="Имя"
                             error={false}
                             name={"name"}
-                            onChange={(e) => {
-                                console.log(e.target.value)
-                            }}
+                            onChange={handleChange}
                             errorText={'Ошибка какая то'}
                             size={"default"}
                             type={"text"}
+                            value={formData.name}
                         />
                     </div>
                     <div className="form__item mb-6">
@@ -51,25 +50,23 @@ export function Register() {
                             name={"email"}
                             size={"default"}
                             type={"email"}
-                            onChange={(e) => console.log(e.target.value)}
+                            onChange={handleChange}
+                            value={formData.email}
                         />
                     </div>
                     <div className="form__item mb-6">
-                        <Input
-                            type={"password"}
-                            icon={"ShowIcon"}
+                        <PasswordInput
                             size={"default"}
                             placeholder="Пароль"
                             error={false}
                             errorText={"Ошибка какая то"}
                             name={"password"}
-                            onChange={(e) => {
-                                console.log(e.target.value);
-                            }}
+                            onChange={handleChange}
+                            value={formData.password}
                         />
                     </div>
                     <div className={`${styles.form__button} mb-20`}>
-                        <Button type={"primary"} size="medium">Войти</Button>
+                        <Button type={"primary"} size="medium" onClick={handleSubmit}>Войти</Button>
                     </div>
                 </form>
                 <div className={styles.login__links}>

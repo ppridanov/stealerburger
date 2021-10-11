@@ -4,8 +4,11 @@ export const calculateTotalPrice = (items) => {
     })
 }
 
-export function setCookie(name, value, props) {
-    props = props || {};
+export function setCookie(name, value, props = {}) {
+    props = {
+        path: '/',
+        ...props
+    };
     let exp = props.expires;
     if (typeof exp == 'number' && exp) {
         const d = new Date();
@@ -35,5 +38,5 @@ export function getCookie(name) {
 }
 
 export function deleteCookie(name) {
-    setCookie(name, null, { expires: -1 });
+    setCookie(name, null, {expires: -1});
 }
