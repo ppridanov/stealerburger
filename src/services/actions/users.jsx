@@ -294,6 +294,7 @@ export const getUserInfo = () => {
             })
             .then(res => {
                     if (res && res.success) {
+                        console.log(res);
                         dispatch({
                             type: GET_USER_INFO,
                             payload: {

@@ -4,7 +4,10 @@ import {setCookie, deleteCookie, getCookie} from "../../utils/funcs";
 const initialState = {
     authRequest: false,
     authFailed: false,
-    user: {},
+    user: {
+        name: "",
+        email: ""
+    },
     isAuth: Boolean(getCookie('token'))
 }
 

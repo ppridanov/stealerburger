@@ -10,8 +10,8 @@ export function ProfileForm() {
     const dispatch = useDispatch();
 
     const [formData, setFormData] = useState({
-        name: "",
-        email: "",
+        name: null,
+        email: null,
         password: "********"
     })
 
@@ -49,11 +49,11 @@ export function ProfileForm() {
                     onIconClick={passCustomInput.handleIconClick}
                     disabled={true}
                     ref={passCustomInput.ref}
-                    value={formData.name}
+                    value={user.name}
                 />
             </div>
             <div className="form__item mb-6">
-                <EmailInput onChange={handleOnChange} value={formData.email} name={'email'}/>
+                <EmailInput onChange={handleOnChange} value={user.email} name={'email'}/>
             </div>
             <div className="form__item mb-6">
                 <Input
