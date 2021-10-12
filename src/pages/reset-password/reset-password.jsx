@@ -7,13 +7,16 @@ import {useDispatch, useSelector} from "react-redux";
 
 export function ResetPassword() {
     const history = useHistory();
+
     const {wasOnForgotPass, isAuth} = useSelector(state => state.userData);
-    console.log(wasOnForgotPass);
+
     const dispatch = useDispatch();
+
     const [formData, setFormData] = useState({
         password: "",
         token: ""
     })
+
     const onChange = (e) => {
         setFormData({
             ...formData,
@@ -25,9 +28,11 @@ export function ResetPassword() {
         dispatch(postResetPassword(formData, history));
         dispatch({type: DELETE_WAS_ON_FORGOT_PAGE})
     }
+
     if (isAuth) {
         return (<Redirect to={{pathname: '/'}}/>)
     }
+
     if (!wasOnForgotPass) {
         return (<Redirect to={'/forgot-password'}/>)
     }

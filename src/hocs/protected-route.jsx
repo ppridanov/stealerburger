@@ -26,4 +26,6 @@ export function ProtectedRoute({ children, exact, path }) {
 
 ProtectedRoute.propTypes = {
     children: PropTypes.node.isRequired,
+    exact: PropTypes.bool,
+    path: PropTypes.string.isRequired
 }
