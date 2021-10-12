@@ -24,7 +24,8 @@ export function ProfileForm() {
     useEffect(() => {
         setFormData({
             ...formData,
-            ...user
+            email: user.email,
+            name: user.name
         })
     }, [user])
 

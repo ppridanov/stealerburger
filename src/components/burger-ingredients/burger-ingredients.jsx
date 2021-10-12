@@ -31,7 +31,6 @@ function BurgerIngredients() {
             type: SET_INGREDIENT_TO_MODAL,
             item: ingredients.find((item) => item._id === id)
         })
-        console.log(ingredientDetails, "details");
         setModalIsOpen(true);
     }
     const handleCloseModal = () => {

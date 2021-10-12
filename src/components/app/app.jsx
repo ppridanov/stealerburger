@@ -12,7 +12,6 @@ function App() {
     const history = useHistory();
     const location = useLocation();
     let background = history.action === 'PUSH' && location.state && location.state.background;
-    console.log(background, "background");
 
     return (
         <div>
