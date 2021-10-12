@@ -145,7 +145,7 @@ export const postRegister = (formData, history) => {
     }
 }
 
-export const postLogin = (formData, history) => {
+export const postLogin = (formData, history, from) => {
     return function (dispatch) {
         dispatch({
             type: GET_USER_REQUEST
@@ -182,7 +182,7 @@ export const postLogin = (formData, history) => {
                                 refreshToken: res.refreshToken
                             }
                         })
-                        history.replace({pathname: '/'})
+                        history.replace(from)
                     } else {
                         dispatch({
                             type: GET_USER_FAILED

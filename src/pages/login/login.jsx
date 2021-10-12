@@ -1,18 +1,20 @@
 import React, {useState} from "react";
 import styles from "./login.module.css";
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, Redirect, useHistory} from "react-router-dom";
+import {Link, Redirect, useHistory, useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {postLogin} from "../../services/actions/users";
 
 export function Login() {
     const history = useHistory();
+    const location = useLocation();
     const dispatch = useDispatch();
     const {isAuth} = useSelector(state => state.userData);
     const [formData, setFormData] = useState({
         email: "",
         password: ""
     })
+    let {from} = location.state || {from: {pathname: '/'}}
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -24,7 +26,7 @@ export function Login() {
         dispatch(postLogin({
             email: formData.email,
             password: formData.password
-        }, history))
+        }, history, from))
     }
     if (isAuth) {
         return (<Redirect to={{pathname: '/'}} />)
