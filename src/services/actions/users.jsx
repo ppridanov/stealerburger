@@ -1,4 +1,4 @@
-import {getUser, patchUser, sendData} from "../../utils/api";
+import {checkResponse, getUser, patchUser, sendData} from "../../utils/api";
 import {apiURL} from "../../utils/constants";
 
 export const GET_USER_REQUEST = 'GET_USER_REQUEST';
@@ -24,12 +24,7 @@ export const postForgotPassword = (emailValue, history) => {
             },
             body: {email: emailValue}
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                throw new Error(`Something wrong: ${res.status}`);
-            })
+            .then(res => checkResponse(res))
             .then(res => {
                     if (res && res.success) {
                         history.push('/reset-password');
@@ -65,12 +60,7 @@ export const postResetPassword = (formData, history) => {
                 token: formData.token
             }
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                throw new Error(`Something wrong: ${res.status}`);
-            })
+            .then(res => checkResponse(res))
             .then(res => {
                     if (res && res.success) {
                         history.push('/login');
@@ -107,12 +97,7 @@ export const postRegister = (formData, history) => {
                 name: formData.name
             }
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                throw new Error(`Something wrong: ${res.status}`);
-            })
+            .then(res => checkResponse(res))
             .then(res => {
                     if (res && res.success) {
                         dispatch({
@@ -161,12 +146,7 @@ export const postLogin = (formData, history, from) => {
                 password: formData.password,
             }
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                throw new Error(res.status === 401 ? 'Неправильные введенные данные' : 'Произошла ошибка. Код ошибки: ' + res.status);
-            })
+            .then(res => checkResponse(res))
             .then(res => {
                     if (res && res.success) {
                         dispatch({
@@ -192,7 +172,7 @@ export const postLogin = (formData, history, from) => {
             )
             .catch(err => {
                 console.log(err)
-                alert(err)
+                alert(err.message)
                 dispatch({
                     type: GET_USER_FAILED
                 })
@@ -215,18 +195,13 @@ export const postLogout = (history) => {
                 token: localStorage.getItem('refreshToken'),
             }
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                throw new Error('Произошла ошибка. Код ошибки: ' + res.status);
-            })
+            .then(res => checkResponse(res))
             .then(res => {
                     if (res && res.success) {
                         dispatch({
                             type: DELETE_IS_AUTH
                         })
-                        history.replace({pathname: '/'})
+                        history.replace({pathname: '/login'})
                     } else {
                         dispatch({
                             type: GET_USER_FAILED
@@ -236,7 +211,7 @@ export const postLogout = (history) => {
             )
             .catch(err => {
                 console.log(err)
-                alert(err)
+                alert(err.message)
                 dispatch({
                     type: GET_USER_FAILED
                 })

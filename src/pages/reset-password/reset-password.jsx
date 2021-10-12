@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import resetStyles from './reset-password.css';
+import resetStyles from './reset-password.module.css';
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect, useHistory} from "react-router-dom";
 import {DELETE_WAS_ON_FORGOT_PAGE, postResetPassword} from "../../services/actions/users";
@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 
 export function ResetPassword() {
     const history = useHistory();
-    const {wasOnForgotPass} = useSelector(state => state.userData);
+    const {wasOnForgotPass, isAuth} = useSelector(state => state.userData);
     console.log(wasOnForgotPass);
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
@@ -25,9 +25,13 @@ export function ResetPassword() {
         dispatch(postResetPassword(formData, history));
         dispatch({type: DELETE_WAS_ON_FORGOT_PAGE})
     }
+    if (isAuth) {
+        return (<Redirect to={{pathname: '/'}}/>)
+    }
     if (!wasOnForgotPass) {
         return (<Redirect to={'/forgot-password'}/>)
     }
+
     return (
         <div className="container">
             <div className={resetStyles.login__container}>

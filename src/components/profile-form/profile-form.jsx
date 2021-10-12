@@ -12,7 +12,7 @@ export function ProfileForm() {
     const [formData, setFormData] = useState({
         name: "",
         email: "",
-        password: "********"
+        password: ""
     })
 
     const [isChangeInput, setIsChangeInput] = useState(false);
@@ -50,7 +50,7 @@ export function ProfileForm() {
         setFormData({
             email: user.email,
             name: user.name,
-            password: "********"
+            password: ""
         })
         setIsChangeInput(false);
     }

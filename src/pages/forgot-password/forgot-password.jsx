@@ -1,13 +1,15 @@
 import React, {useState} from "react";
 import styles from "./forgot-password.module.css";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, useHistory} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {Link, Redirect, useHistory} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 import {postForgotPassword, SET_WAS_ON_FORGOT_PAGE} from "../../services/actions/users";
 
 export function ForgotPassword() {
     const history = useHistory();
     const dispatch = useDispatch();
+    const {isAuth} = useSelector(state => state.userData);
+
     const [email, setEmail] = useState("");
     const onChange = (e) => {
         setEmail(e.target.value);
@@ -18,7 +20,9 @@ export function ForgotPassword() {
             type: SET_WAS_ON_FORGOT_PAGE
         })
         dispatch(postForgotPassword(email, history));
-
+    }
+    if (isAuth) {
+        return (<Redirect to={{pathname: '/'}}/>)
     }
     return (
         <div className="container">

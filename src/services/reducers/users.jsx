@@ -5,7 +5,7 @@ import {
     GET_USER_SUCCESS,
     SET_IS_AUTH,
     DELETE_IS_AUTH,
-    SET_WAS_ON_FORGOT_PAGE, DELETE_WAS_ON_FORGOT_PAGE
+    SET_WAS_ON_FORGOT_PAGE, DELETE_WAS_ON_FORGOT_PAGE, CHANGE_USER_INFO
 } from "../actions/users";
 import {setCookie, deleteCookie, getCookie} from "../../utils/funcs";
 
@@ -68,6 +68,11 @@ export const usersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 wasOnForgotPass: false
+            }
+        case CHANGE_USER_INFO:
+            return {
+                ...state,
+                user: action.payload.user
             }
         default:
             return state;
