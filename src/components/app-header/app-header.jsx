@@ -10,15 +10,15 @@ function AppHeader() {
   const isFeed = !!useRouteMatch('/feed');
   const isProfile = !!useRouteMatch('/profile');
   const isLogin = !!useRouteMatch('/login');
-
+  const isIngredient = !!useRouteMatch({path: '/ingredients/:id'})
   return (
       <header className={`${appHeaderStyles.header} p-4`}>
         <div className="container">
           <nav className={appHeaderStyles.nav}>
             <ul className={appHeaderStyles.nav__menu}>
               <li className={`${appHeaderStyles.nav__item} pl-5 pr-5 pt-2 pb-2`}>
-                <NavLink exact={true} to={"/"} activeClassName={appHeaderStyles.nav__linkActive}  className={`${appHeaderStyles.nav__link} text text_type_main-default`}>
-                  <BurgerIcon type={isConstructor ? "primary" : "secondary"} /><p>Конструктор</p>
+                <NavLink exact={true} to={"/"} activeClassName={appHeaderStyles.nav__linkActive}  className={`${appHeaderStyles.nav__link} ${isIngredient && appHeaderStyles.nav__linkActive} text text_type_main-default`}>
+                  <BurgerIcon type={(isConstructor || isIngredient) ? "primary" : "secondary"} /><p>Конструктор</p>
                 </NavLink>
               </li>
               <li className={`${appHeaderStyles.nav__item} pl-4 pr-4 pt-2 pb-2`}>
