@@ -40,3 +40,10 @@ export function getCookie(name) {
 export function deleteCookie(name) {
     setCookie(name, null, {expires: -1});
 }
+
+export function isEmptyObj(obj) {
+    for (var key in obj) {
+        return false;
+    }
+    return true;
+}

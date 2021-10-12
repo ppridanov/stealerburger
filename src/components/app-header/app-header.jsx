@@ -10,7 +10,7 @@ function AppHeader() {
   const isFeed = !!useRouteMatch('/feed');
   const isProfile = !!useRouteMatch('/profile');
   const isLogin = !!useRouteMatch('/login');
-  console.log(isAuth)
+
   return (
       <header className={`${appHeaderStyles.header} p-4`}>
         <div className="container">
