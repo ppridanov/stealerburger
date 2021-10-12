@@ -1,19 +1,24 @@
 import React from 'react';
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {Switch, Route, useLocation, useHistory} from 'react-router-dom';
 import {Home, Login, Register} from "../../pages";
 import {ForgotPassword} from "../../pages/forgot-password/forgot-password";
 import AppHeader from "../app-header/app-header";
 import {ResetPassword} from "../../pages/reset-password/reset-password";
 import {Profile} from "../../pages/profile/profile";
 import {ProtectedRoute} from "../../hocs/protected-route";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 function App() {
+    const history = useHistory();
+    const location = useLocation();
+    let background = history.action === 'PUSH' && location.state && location.state.background;
+    console.log(background, "background");
+
     return (
         <div>
-            <Router>
                 <AppHeader/>
                 <main>
-                    <Switch>
+                    <Switch location={background || location}>
                         <Route path="/" exact={true}>
                             <Home/>
                         </Route>
@@ -29,13 +34,14 @@ function App() {
                         <Route path={"/reset-password"} exact={true}>
                             <ResetPassword/>
                         </Route>
+                        <Route path={"/ingredients/:id"} exact={true}>
+                            <IngredientDetails />
+                        </Route>
                         <ProtectedRoute path={"/profile"} exact={true}>
                             <Profile/>
                         </ProtectedRoute>
                     </Switch>
                 </main>
-            </Router>
-
 </div>
 )
     ;

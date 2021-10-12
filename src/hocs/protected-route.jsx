@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 
 export function ProtectedRoute({ children, exact, path }) {
    const {isAuth} = useSelector(state => state.userData);
-    console.log(isAuth);
     return (
         <Route
             exact={exact}

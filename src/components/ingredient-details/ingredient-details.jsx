@@ -1,9 +1,22 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ingredientDetailsStyle from './ingredient-detail.module.css';
 import PropTypes from "prop-types";
+import {useParams} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {getIngredients} from "../../services/actions/burger-ingredients";
 
 function IngredientDetails(props) {
-    const {image_large, name, calories, carbohydrates, fat, proteins} = props.data;
+    const dispatch = useDispatch();
+    const {ingredients} = useSelector(state => state.burgerIngredients);
+    const {id} = useParams();
+    console.log(id);
+    let ingredient = ingredients.find(item => item._id === id);
+
+    useEffect(() => {
+        dispatch(getIngredients());
+    }, [dispatch]);
+
+    const {image_large, name, calories, carbohydrates, fat, proteins} = ingredient || props;
     return (
         <div className={ingredientDetailsStyle.body}>
             <img src={image_large} alt=""/>
@@ -29,16 +42,5 @@ function IngredientDetails(props) {
         </div>
     )
 }
-
-IngredientDetails.propTypes = {
-    data: PropTypes.shape({
-        image_large: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        calories: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        proteins: PropTypes.number.isRequired,
-    }).isRequired
-};
 
 export default  IngredientDetails;

@@ -252,7 +252,6 @@ export const getUserInfo = () => {
         await getUser()
             .then(res => {
                     if (res && res.success) {
-                        console.log(res);
                         dispatch({
                             type: GET_USER_INFO,
                             payload: {
