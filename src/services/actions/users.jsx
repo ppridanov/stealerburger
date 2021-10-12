@@ -8,6 +8,8 @@ export const GET_USER_INFO = 'GET_USER_INFO';
 export const SET_IS_AUTH = 'SET_IS_AUTH';
 export const DELETE_IS_AUTH = 'DELETE_IS_AUTH';
 export const CHANGE_USER_INFO = 'CHANGE_USER_INFO';
+export const SET_WAS_ON_FORGOT_PAGE = 'SET_WAS_ON_FORGOT_PAGE';
+export const DELETE_WAS_ON_FORGOT_PAGE = 'DELETE_WAS_ON_FORGOT_PAGE';
 
 export const postForgotPassword = (emailValue, history) => {
     return function (dispatch) {

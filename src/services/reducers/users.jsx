@@ -1,4 +1,12 @@
-import {GET_USER_FAILED, GET_USER_INFO, GET_USER_REQUEST, GET_USER_SUCCESS, SET_IS_AUTH, DELETE_IS_AUTH} from "../actions/users";
+import {
+    GET_USER_FAILED,
+    GET_USER_INFO,
+    GET_USER_REQUEST,
+    GET_USER_SUCCESS,
+    SET_IS_AUTH,
+    DELETE_IS_AUTH,
+    SET_WAS_ON_FORGOT_PAGE, DELETE_WAS_ON_FORGOT_PAGE
+} from "../actions/users";
 import {setCookie, deleteCookie, getCookie} from "../../utils/funcs";
 
 const initialState = {
@@ -8,7 +16,8 @@ const initialState = {
         name: "",
         email: ""
     },
-    isAuth: Boolean(getCookie('token'))
+    isAuth: Boolean(getCookie('token')),
+    wasOnForgotPass: false
 }
 
 export const usersReducer = (state = initialState, action) => {
@@ -49,6 +58,16 @@ export const usersReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isAuth: false
+            }
+        case SET_WAS_ON_FORGOT_PAGE:
+            return {
+                ...state,
+                wasOnForgotPass: true
+            }
+        case DELETE_WAS_ON_FORGOT_PAGE:
+            return {
+                ...state,
+                wasOnForgotPass: false
             }
         default:
             return state;

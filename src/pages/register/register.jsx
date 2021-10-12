@@ -1,13 +1,14 @@
 import React, {useState} from "react";
 import styles from "./register.module.css";
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link, useHistory} from "react-router-dom";
+import {Link, Redirect, useHistory} from "react-router-dom";
 import {postRegister} from "../../services/actions/users";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 export function Register() {
     const history = useHistory();
     const dispatch = useDispatch();
+    const {isAuth} = useSelector(state => state.userData);
 
     const [formData, setFormData] = useState({
         email: "",
@@ -20,10 +21,16 @@ export function Register() {
             [e.target.name]: e.target.value
         })
     }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(postRegister(formData, history))
     }
+
+    if (isAuth) {
+        return (<Redirect to={{pathname: '/'}}/>)
+    }
+
     return (
         <div className="container">
             <div className={styles.login__container}>
@@ -65,7 +72,7 @@ export function Register() {
                         />
                     </div>
                     <div className={`${styles.form__button} mb-20`}>
-                        <Button type={"primary"} size="medium" onClick={handleSubmit}>Войти</Button>
+                        <Button type={"primary"} size="medium" onClick={handleSubmit}>Зарегестрироваться</Button>
                     </div>
                 </form>
                 <div className={styles.login__links}>

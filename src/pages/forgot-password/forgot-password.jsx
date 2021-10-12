@@ -3,7 +3,7 @@ import styles from "./forgot-password.module.css";
 import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useHistory} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import {postForgotPassword} from "../../services/actions/users";
+import {postForgotPassword, SET_WAS_ON_FORGOT_PAGE} from "../../services/actions/users";
 
 export function ForgotPassword() {
     const history = useHistory();
@@ -14,7 +14,11 @@ export function ForgotPassword() {
     }
     const onSendForm = (e) => {
         e.preventDefault();
-        dispatch(postForgotPassword(email, history))
+        dispatch({
+            type: SET_WAS_ON_FORGOT_PAGE
+        })
+        dispatch(postForgotPassword(email, history));
+
     }
     return (
         <div className="container">
