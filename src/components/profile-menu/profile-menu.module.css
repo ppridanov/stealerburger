@@ -11,3 +11,13 @@
     display: flex;
     align-items: center;
 }
+
+.profile__cont {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile__menuSubtitle {
+    max-width: 320px;
+    opacity: .4;
+}

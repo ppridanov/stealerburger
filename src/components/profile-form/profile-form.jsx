@@ -42,7 +42,19 @@ export function ProfileForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(postChangeUserInfo(formData));
+        setIsChangeInput(false);
     }
+
+    const handleCancel = (e) => {
+        e.preventDefault();
+        setFormData({
+            email: user.email,
+            name: user.name,
+            password: "********"
+        })
+        setIsChangeInput(false);
+    }
+
     return (
         <form className={`${styles.form}`}>
             <div className="form__item mb-6">
@@ -83,7 +95,8 @@ export function ProfileForm() {
                 />
             </div>
             {isChangeInput && (
-                <div className={`${styles.form__button} mb-20`}>
+                <div className={`${styles.form__buttons} mb-20`}>
+                    <Button type={"secondary"} size="medium" onClick={handleCancel}>Отмена</Button>
                     <Button type={"primary"} size="medium" onClick={handleSubmit}>Сохранить</Button>
                 </div>
             )}

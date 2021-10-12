@@ -7,6 +7,8 @@
     width: 100%;
 }
 
-.form__button {
+.form__buttons {
+    display: flex;
     max-width: 480px;
+    justify-content: flex-end;
 }
