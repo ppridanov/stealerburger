@@ -17,13 +17,13 @@ export function ResetPassword() {
         token: ""
     })
 
-    const onChange = (e) => {
+    const handleChange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         })
     }
-    const onSendForm = (e) => {
+    const handleFormSubmit = (e) => {
         e.preventDefault();
         dispatch(postResetPassword(formData, history));
         dispatch({type: DELETE_WAS_ON_FORGOT_PAGE})
@@ -41,7 +41,7 @@ export function ResetPassword() {
         <div className="container">
             <div className={resetStyles.login__container}>
                 <h3 className="text text_type_main-medium mb-6">Восстановление пароля</h3>
-                <form className="form" action="">
+                <form onSubmit={handleFormSubmit} className="form" action="">
                     <div className="form__item mb-6">
                         <Input
                             type={"password"}
@@ -51,7 +51,7 @@ export function ResetPassword() {
                             error={false}
                             errorText={"Ошибка какая то"}
                             name={"password"}
-                            onChange={onChange}
+                            onChange={handleChange}
                             value={formData.password}
                         />
                     </div>
@@ -63,12 +63,12 @@ export function ResetPassword() {
                             error={false}
                             errorText={"Ошибка какая то"}
                             name={"token"}
-                            onChange={onChange}
+                            onChange={handleChange}
                             value={formData.token}
                         />
                     </div>
                     <div className={`${resetStyles.form__button} mb-20`}>
-                        <Button type={"primary"} onClick={onSendForm} size="medium">Войти</Button>
+                        <Button type={"primary"} size="medium">Войти</Button>
                     </div>
                 </form>
                 <div className={resetStyles.login__links}>

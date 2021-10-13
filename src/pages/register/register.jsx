@@ -22,7 +22,7 @@ export function Register() {
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleFormSubmit = (e) => {
         e.preventDefault();
         dispatch(postRegister(formData, history))
     }
@@ -35,7 +35,7 @@ export function Register() {
         <div className="container">
             <div className={styles.login__container}>
                 <h3 className="text text_type_main-medium mb-6">Регистрация</h3>
-                <form className="form" action="">
+                <form onSubmit={handleFormSubmit} className="form" action="">
                     <div className="form__item mb-6">
                         <Input
                             placeholder="Имя"
@@ -72,7 +72,7 @@ export function Register() {
                         />
                     </div>
                     <div className={`${styles.form__button} mb-20`}>
-                        <Button type={"primary"} size="medium" onClick={handleSubmit}>Зарегестрироваться</Button>
+                        <Button type={"primary"} size="medium">Зарегестрироваться</Button>
                     </div>
                 </form>
                 <div className={styles.login__links}>

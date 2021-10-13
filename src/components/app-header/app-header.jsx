@@ -1,7 +1,7 @@
 import React from 'react';
 import appHeaderStyles from './app-header.module.css';
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import {NavLink, useRouteMatch} from "react-router-dom";
+import {Link, NavLink, useRouteMatch} from "react-router-dom";
 import {useSelector} from "react-redux";
 
 function AppHeader() {
@@ -28,7 +28,9 @@ function AppHeader() {
               </li>
             </ul>
             <div className={appHeaderStyles.header__logo}>
-              <Logo />
+              <Link to={`/`}>
+                <Logo />
+              </Link>
             </div>
             {isAuth ? (
                 <NavLink to={"/profile"} activeClassName={appHeaderStyles.nav__linkActive} className={`${appHeaderStyles.login} text text_type_main-default pl-4 pr-4 pt-2 pb-2`}>

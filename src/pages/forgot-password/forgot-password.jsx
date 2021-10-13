@@ -11,10 +11,10 @@ export function ForgotPassword() {
     const {isAuth} = useSelector(state => state.userData);
 
     const [email, setEmail] = useState("");
-    const onChange = (e) => {
+    const handleChange = (e) => {
         setEmail(e.target.value);
     }
-    const onSendForm = (e) => {
+    const handleSubmitForm = (e) => {
         e.preventDefault();
         dispatch({
             type: SET_WAS_ON_FORGOT_PAGE
@@ -28,7 +28,7 @@ export function ForgotPassword() {
         <div className="container">
             <div className={styles.login__container}>
                 <h3 className="text text_type_main-medium mb-6">Восстановление пароля</h3>
-                <form className="form" action="">
+                <form onSubmit={handleSubmitForm} className="form" action="">
                     <div className="form__item mb-6">
                         <Input
                             placeholder="Укажите E-mail"
@@ -38,11 +38,11 @@ export function ForgotPassword() {
                             size={"default"}
                             type={"email"}
                             value={email}
-                            onChange={onChange}
+                            onChange={handleChange}
                         />
                     </div>
                     <div className={`${styles.form__button} mb-20`}>
-                        <Button onClick={onSendForm} type={"primary"} size="medium">Войти</Button>
+                        <Button type={"primary"} size="medium">Войти</Button>
                     </div>
                 </form>
                 <div className={styles.login__links}>
