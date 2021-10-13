@@ -7,6 +7,7 @@ import {ResetPassword} from "../../pages/reset-password/reset-password";
 import {Profile} from "../../pages/profile/profile";
 import {ProtectedRoute} from "../../hocs/protected-route";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import {Page404} from "../../pages/page-404/page-404";
 
 function App() {
     const history = useHistory();
@@ -39,6 +40,9 @@ function App() {
                         <ProtectedRoute path={"/profile"} exact={true}>
                             <Profile/>
                         </ProtectedRoute>
+                        <Route path={`*`}>
+                            <Page404 />
+                        </Route>
                     </Switch>
                 </main>
 </div>
