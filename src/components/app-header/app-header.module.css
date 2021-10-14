@@ -40,10 +40,6 @@
     margin-left: 8px;
 }
 
-.nav__link.active {
-    color: #F2F2F3;
-}
-
 .login {
     cursor: pointer;
     color: #8585AD;
@@ -54,5 +50,9 @@
 
 .login span {
     margin-left: 8px;
+}
+
+.nav__linkActive {
+    color: #F2F2F3;
 }
 

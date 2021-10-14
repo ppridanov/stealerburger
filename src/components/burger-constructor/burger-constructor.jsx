@@ -14,14 +14,17 @@ import {useDrop} from "react-dnd";
 import {v4 as uuidv4} from 'uuid';
 
 import BurgerConstructorIngredient from "../burger-constructor-item/burger-constructor-item";
+import {useHistory} from "react-router-dom";
 
 function BurgerConstructor() {
-    const {ingredients, bun, order} = useSelector(state => ({
+    const {ingredients, bun, order, isAuth} = useSelector(state => ({
         ingredients: state.burgerConstructor.ingredients,
         bun: state.burgerConstructor.bun,
-        order: state.burgerConstructor.order
+        order: state.burgerConstructor.order,
+        isAuth: state.userData.isAuth
     }));
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const [modalIsOpen, setModalIsOpen] = React.useState(false)
     const moveIngredient = (ingredient) => {
@@ -43,6 +46,9 @@ function BurgerConstructor() {
     const handleOpenModal = () => {
         if (!bun) {
             return alert('Выберите булку');
+        }
+        if (!isAuth) {
+            history.push('/login');
         }
         //Здесь я не понял как мне две булки отправлять или же она одна?
         const idsArr = [...ingredients.map(item => item._id), bun._id, bun._id];

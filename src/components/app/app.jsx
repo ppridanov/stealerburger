@@ -1,42 +1,53 @@
 import React from 'react';
-import appStyles from './app.module.css';
-import AppHeader from '../app-header/app-header';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import {Switch, Route, useLocation, useHistory} from 'react-router-dom';
+import {Home, Login, Register} from "../../pages";
+import {ForgotPassword} from "../../pages/forgot-password/forgot-password";
+import AppHeader from "../app-header/app-header";
+import {ResetPassword} from "../../pages/reset-password/reset-password";
+import {Profile} from "../../pages/profile/profile";
+import {ProtectedRoute} from "../../hocs/protected-route";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import {Page404} from "../../pages/page-404/page-404";
 
 function App() {
-    //
-    // React.useEffect(() => {
-    //     const getIngredients = async () => {
-    //         setState(prevState => ({...prevState, isLoading: true, hasError: false, data: prevState.data}));
-    //         await fetch(apiURL)
-    //             .then(res => {
-    //                 if (res.ok) {
-    //                     return res.json()
-    //                 }
-    //                 return Promise.reject(`Произошла ошибка: ${res.status}`);
-    //             })
-    //             .then((res) => setState(prevState => ({...prevState, data: res.data, isLoading: false, hasError: false})))
-    //             .catch(() => {
-    //                 setState(prevState => ({ ...prevState, hasError: true, isLoading: false, data: prevState.data }));
-    //             });
-    //     }
-    //     getIngredients();
-    // }, [])
+    const history = useHistory();
+    const location = useLocation();
+    let background = history.action === 'PUSH' && location.state && location.state.background;
 
     return (
         <div>
-            <AppHeader />
-            <main>
-                <div className={`${appStyles.container} pl-5 pr-5`}>
-                        <div className={appStyles.main__container}>
-                                <BurgerIngredients />
-                                <BurgerConstructor />
-                        </div>
-                </div>
-            </main>
-        </div>
-    );
+                <AppHeader/>
+                <main>
+                    <Switch location={background || location}>
+                        <Route path="/" exact={true}>
+                            <Home/>
+                        </Route>
+                        <Route path="/login" exact={true}>
+                            <Login/>
+                        </Route>
+                        <Route path={"/register"} exact={true}>
+                            <Register/>
+                        </Route>
+                        <Route path={"/forgot-password"} exact={true}>
+                            <ForgotPassword/>
+                        </Route>
+                        <Route path={"/reset-password"} exact={true}>
+                            <ResetPassword/>
+                        </Route>
+                        <Route path={"/ingredients/:id"} exact={true}>
+                            <IngredientDetails />
+                        </Route>
+                        <ProtectedRoute path={"/profile"} exact={true}>
+                            <Profile/>
+                        </ProtectedRoute>
+                        <Route path={`*`}>
+                            <Page404 />
+                        </Route>
+                    </Switch>
+                </main>
+</div>
+)
+    ;
 }
 
 
