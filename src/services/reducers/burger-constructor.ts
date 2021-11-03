@@ -1,3 +1,4 @@
+import { TConstructorIngredient } from "../../utils/types";
 import {
     GET_ORDER_FAILED,
     GET_ORDER_SUCCESS,
@@ -7,7 +8,16 @@ import {
     REMOVE_INGREDIENT_FROM_CONSTRUCTOR, MOVE_INGREDIENT_IN_CONSTRUCTOR, CLEAR_ORDER, CLEAR_CONSTRUCTOR,
 } from "../actions/burger-constructor";
 
-const initialState = {
+type TInintialState = {
+    order: string | null;
+    orderRequest: boolean;
+    orderFailed: boolean;
+    ingredients: TConstructorIngredient[];
+    bun: string | null;
+    totalPrice: number;
+}
+
+const initialState: TInintialState = {
     order: null,
     orderRequest: false,
     orderFailed: false,

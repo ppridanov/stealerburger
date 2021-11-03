@@ -51,6 +51,7 @@ const BurgerConstructor: React.FC = () => {
         if (!isAuth) {
             history.push('/login');
         }
+         
         //Здесь я не понял как мне две булки отправлять или же она одна?
         const idsArr = [...ingredients.map((item: TConstructorIngredient) => item._id), bun._id, bun._id];
         dispatch(postOrder(idsArr));

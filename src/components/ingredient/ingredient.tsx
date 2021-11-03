@@ -1,10 +1,9 @@
 import React, {SyntheticEvent} from 'react';
 import ingredientStyle from './ingredient.module.css';
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from 'prop-types';
 import {useDrag} from "react-dnd";
 import {useSelector} from "react-redux";
-import {Link, useLocation, useParams} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {TIngredient} from "../../utils/types";
 
 type TIngredientProps = {

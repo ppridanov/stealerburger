@@ -1,6 +1,7 @@
 import {getCookie, setCookie} from "./funcs";
 import {apiURL} from "./constants";
 
+// Здесь не понял если честно. Почему то на RequestInit ругался что в боди попадает массив. Думаю что это не верное описание типа.
 type TOptions = {
     url: string,
     method: string;
@@ -9,14 +10,14 @@ type TOptions = {
     }
     body?: {
         ingredients?: Array<string>;
-        email?: string | null;
-        password?: string | null;
+        email?: string;
+        password?: string;
         token?: string | null;
-        name?: string | null;
+        name?: string;
     }
 }
 
-export const sendData = async (options: TOptions) => {
+export const sendData = async (options: TOptions ) => {
     return await fetch(options.url, {
         method: options.method,
         headers: options.headers,
@@ -29,6 +30,7 @@ export const getData = async (url: string) => {
 }
 
 export const refreshToken = () => {
+    console.log('I\' am rock');
     return fetch(`${apiURL}/auth/token`, {
         method: "POST",
         headers: {
@@ -48,8 +50,10 @@ export const fetchWithRefresh = async (url: string, options: RequestInit = {}) =
     try {
         const res = await fetch(url, options);
         return await checkResponse(res);
-    } catch (err) {
-        if ((err as Error).message === "jwt expired") {
+        
+        // Здесь где catch мне тоже не понятно почему я могу использовать только тип any или never. Судя по всему тип never возвращает Promise.reject из функции checkResponse
+    } catch (err: any) {
+        if (err.message === "jwt expired" || err.message === "You should be authorised") {
             const refreshData = await refreshToken();
             localStorage.setItem("refreshToken", refreshData.refreshToken);
             setCookie("token", refreshData.accessToken.split("Bearer ")[1]);

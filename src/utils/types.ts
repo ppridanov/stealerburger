@@ -28,12 +28,7 @@ export type TConstructorIngredient = TIngredient & {
 }
 
 export type TConstructorItemIngredient = TIngredient & {
-    _id: string;
-    name: string;
-    price: number;
-    image: string;
     uuid: string;
-    index: number;
 }
 
 export type TMoveCards = {

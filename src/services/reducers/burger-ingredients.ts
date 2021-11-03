@@ -1,3 +1,4 @@
+import { TIngredient } from "../../utils/types";
 import {
     GET_INGREDIENTS_REQUEST,
     GET_INGREDIENTS_SUCCESS,
@@ -5,7 +6,14 @@ import {
     SET_INGREDIENT_TO_MODAL, REMOVE_INGREDIENT_FROM_MODAL
 } from "../actions/burger-ingredients";
 
-const initialState = {
+type TIngredientInitialState = {
+    ingredients: TIngredient[];
+    ingredientsRequest: false;
+    ingredientsFailed: false;
+    ingredientDetails: TIngredient | {}
+}
+
+const initialState: TIngredientInitialState = {
     ingredients: [],
     ingredientsRequest: false,
     ingredientsFailed: false,
