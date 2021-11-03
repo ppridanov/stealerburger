@@ -27,7 +27,7 @@ const BurgerConstructor: React.FC = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const [modalIsOpen, setModalIsOpen] = React.useState(false)
+    const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false)
     const moveIngredient = (ingredient: TConstructorIngredient) => {
         dispatch({
             type: ingredient.type === 'bun' ? ADD_BUN_TO_CONSTRUCTOR : ADD_INGREDIENT_TO_CONSTRUCTOR,
