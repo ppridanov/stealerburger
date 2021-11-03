@@ -17,7 +17,7 @@ const BurgerIngredients = () => {
     const {ingredients, ingredientsRequest, ingredientsError, ingredientDetails}: any = useSelector<any>(state => state.burgerIngredients)
     const [current, setCurrent] = React.useState<string>('buns');
     const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
-    const scrollContainer = createRef<HTMLDivElement>();
+    const scrollContRef = createRef<HTMLDivElement>();
     const bunsRef = createRef<HTMLDivElement>();
     const saucesRef = createRef<HTMLDivElement>();
     const mainsRef = createRef<HTMLDivElement>();
@@ -47,11 +47,11 @@ const BurgerIngredients = () => {
     const handleScroll = (e: SyntheticEvent) => {
         const saucesContainer = saucesRef.current?.getBoundingClientRect();
         const mainsContainer = mainsRef.current?.getBoundingClientRect();
-        // console.log(`buns: ${scrollContainer.offsetTop - bunsContainer.top}, sauces: ${scrollContainer.offsetTop - saucesContainer.top}, mains: ${scrollContainer.offsetTop - mainsContainer.top}`)
-        if (scrollContainer !== null) {
-            if (saucesContainer && scrollContainer instanceof HTMLElement && scrollContainer.offsetTop - saucesContainer.top < 0) {
+        const scrollContainer = scrollContRef.current;
+        if (scrollContainer !== null && saucesContainer && mainsContainer) {
+            if (scrollContainer.offsetTop - saucesContainer.top < 0) {
                 setCurrent('buns');
-            } else if (mainsContainer && scrollContainer instanceof HTMLElement && scrollContainer.offsetTop - mainsContainer.top < 0) {
+            } else if (scrollContainer.offsetTop - mainsContainer.top < 0) {
                 setCurrent('sauces');
             } else {
                 setCurrent('mains');
@@ -89,7 +89,7 @@ const BurgerIngredients = () => {
                         </a>
                     </div>
                     <div className={`${ingredientsStyles.ingredients} mt-10`}>
-                        <div className={ingredientsStyles.products} onScroll={handleScroll} ref={scrollContainer}>
+                        <div className={ingredientsStyles.products} onScroll={handleScroll} ref={scrollContRef}>
                             <h3 className="text text_type_main-medium" ref={bunsRef} id="buns">Булки</h3>
                             <div className={ingredientsStyles.products__cont}>
                                 {ingredients.filter((item: TIngredient) => item.type === 'bun').map((item: TIngredient) => <Ingredient
