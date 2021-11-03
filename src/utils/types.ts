@@ -45,3 +45,9 @@ export type TFormData = {
     email: string,
     password: string
 }
+
+export type TResetPasswordForm = Pick<TFormData, 'password'> & {
+    token: string
+}
+
+export type TLoginForm = Omit<TFormData, 'name'>

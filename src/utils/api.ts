@@ -2,26 +2,16 @@ import {getCookie, setCookie} from "./funcs";
 import {apiURL} from "./constants";
 
 // Здесь не понял если честно. Почему то на RequestInit ругался что в боди попадает массив. Думаю что это не верное описание типа.
+// Thanks вопрос снят.
 type TOptions = {
     url: string,
-    method: string;
-    headers: {
-        "Content-Type": string
-    }
-    body?: {
-        ingredients?: Array<string>;
-        email?: string;
-        password?: string;
-        token?: string | null;
-        name?: string;
-    }
-}
+} & RequestInit
 
 export const sendData = async (options: TOptions ) => {
     return await fetch(options.url, {
         method: options.method,
         headers: options.headers,
-        body: JSON.stringify(options.body)
+        body: options.body
     })
 }
 

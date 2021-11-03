@@ -1,7 +1,8 @@
-import {checkResponse, getUser, patchUser, sendData} from "../../utils/api";
-import {apiURL} from "../../utils/constants";
-import {Dispatch} from "react";
-import {History, Location} from 'history';
+import { checkResponse, getUser, patchUser, sendData } from "../../utils/api";
+import { apiURL } from "../../utils/constants";
+import { Dispatch } from "react";
+import { History } from 'history';
+import { TFormData, TLoginForm, TResetPasswordForm } from "../../utils/types";
 
 export const GET_USER_REQUEST = 'GET_USER_REQUEST';
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
@@ -25,18 +26,18 @@ export const postForgotPassword = (emailValue: string, history: History) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: {email: emailValue}
+            body: JSON.stringify({ email: emailValue })
         })
             .then(res => checkResponse(res))
             .then(res => {
-                    if (res && res.success) {
-                        history.push('/reset-password');
-                    } else {
-                        dispatch({
-                            type: GET_USER_FAILED
-                        })
-                    }
+                if (res && res.success) {
+                    history.push('/reset-password');
+                } else {
+                    dispatch({
+                        type: GET_USER_FAILED
+                    })
                 }
+            }
             )
             .catch(err => {
                 console.log(err)
@@ -45,11 +46,6 @@ export const postForgotPassword = (emailValue: string, history: History) => {
                 })
             })
     }
-}
-
-type TResetPasswordForm = {
-    password: string;
-    token: string
 }
 
 export const postResetPassword = (formData: TResetPasswordForm, history: History) => {
@@ -63,21 +59,21 @@ export const postResetPassword = (formData: TResetPasswordForm, history: History
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: {
+            body: JSON.stringify({
                 password: formData.password,
                 token: formData.token
-            }
+            })
         })
             .then(res => checkResponse(res))
             .then(res => {
-                    if (res && res.success) {
-                        history.push('/login');
-                    } else {
-                        dispatch({
-                            type: GET_USER_FAILED
-                        })
-                    }
+                if (res && res.success) {
+                    history.push('/login');
+                } else {
+                    dispatch({
+                        type: GET_USER_FAILED
+                    })
                 }
+            }
             )
             .catch(err => {
                 console.log(err)
@@ -88,13 +84,7 @@ export const postResetPassword = (formData: TResetPasswordForm, history: History
     }
 }
 
-type TRegisterForm = {
-    email: string;
-    password: string;
-    name: string;
-}
-
-export const postRegister = (formData: TRegisterForm, history: History) => {
+export const postRegister = (formData: TFormData, history: History) => {
     return function (dispatch: Dispatch<any>) {
         dispatch({
             type: GET_USER_REQUEST
@@ -105,35 +95,35 @@ export const postRegister = (formData: TRegisterForm, history: History) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: {
+            body: JSON.stringify({
                 email: formData.email,
                 password: formData.password,
                 name: formData.name
-            }
+            })
         })
             .then(res => checkResponse(res))
             .then(res => {
-                    if (res && res.success) {
-                        dispatch({
-                            type: GET_USER_SUCCESS,
-                            payload: {
-                                user: res.user
-                            }
-                        });
-                        dispatch({
-                            type: SET_IS_AUTH,
-                            payload: {
-                                accessToken: res.accessToken,
-                                refreshToken: res.refreshToken
-                            }
-                        })
-                        history.push({pathname: "/"});
-                    } else {
-                        dispatch({
-                            type: GET_USER_FAILED
-                        })
-                    }
+                if (res && res.success) {
+                    dispatch({
+                        type: GET_USER_SUCCESS,
+                        payload: {
+                            user: res.user
+                        }
+                    });
+                    dispatch({
+                        type: SET_IS_AUTH,
+                        payload: {
+                            accessToken: res.accessToken,
+                            refreshToken: res.refreshToken
+                        }
+                    })
+                    history.push({ pathname: "/" });
+                } else {
+                    dispatch({
+                        type: GET_USER_FAILED
+                    })
                 }
+            }
             )
             .catch(err => {
                 console.log(err)
@@ -143,12 +133,6 @@ export const postRegister = (formData: TRegisterForm, history: History) => {
             })
     }
 }
-
-type TLoginForm = Omit<TRegisterForm, 'name'>
-type TLocationState = {
-    from: Location
-}
-
 
 export const postLogin = (formData: TLoginForm, history: History, from: { pathname: string }) => {
     return function (dispatch: Dispatch<any>) {
@@ -161,34 +145,34 @@ export const postLogin = (formData: TLoginForm, history: History, from: { pathna
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: {
+            body: JSON.stringify({
                 email: formData.email,
                 password: formData.password,
-            }
+            })
         })
             .then(res => checkResponse(res))
             .then(res => {
-                    if (res && res.success) {
-                        dispatch({
-                            type: GET_USER_SUCCESS,
-                            payload: {
-                                user: res.user
-                            },
-                        });
-                        dispatch({
-                            type: SET_IS_AUTH,
-                            payload: {
-                                accessToken: res.accessToken,
-                                refreshToken: res.refreshToken
-                            }
-                        })
-                        history.replace(from)
-                    } else {
-                        dispatch({
-                            type: GET_USER_FAILED
-                        })
-                    }
+                if (res && res.success) {
+                    dispatch({
+                        type: GET_USER_SUCCESS,
+                        payload: {
+                            user: res.user
+                        },
+                    });
+                    dispatch({
+                        type: SET_IS_AUTH,
+                        payload: {
+                            accessToken: res.accessToken,
+                            refreshToken: res.refreshToken
+                        }
+                    })
+                    history.replace(from)
+                } else {
+                    dispatch({
+                        type: GET_USER_FAILED
+                    })
                 }
+            }
             )
             .catch(err => {
                 console.log(err)
@@ -211,23 +195,23 @@ export const postLogout = (history: History) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: {
+            body: JSON.stringify({
                 token: localStorage.getItem('refreshToken'),
-            }
+            })
         })
             .then(res => checkResponse(res))
             .then(res => {
-                    if (res && res.success) {
-                        dispatch({
-                            type: DELETE_IS_AUTH
-                        })
-                        history.replace({pathname: '/login'})
-                    } else {
-                        dispatch({
-                            type: GET_USER_FAILED
-                        })
-                    }
+                if (res && res.success) {
+                    dispatch({
+                        type: DELETE_IS_AUTH
+                    })
+                    history.replace({ pathname: '/login' })
+                } else {
+                    dispatch({
+                        type: GET_USER_FAILED
+                    })
                 }
+            }
             )
             .catch(err => {
                 console.log(err)
@@ -246,19 +230,19 @@ export const getUserInfo = () => {
         })
         await getUser()
             .then(res => {
-                    if (res && res.success) {
-                        dispatch({
-                            type: GET_USER_INFO,
-                            payload: {
-                                user: res.user
-                            }
-                        })
-                    } else {
-                        dispatch({
-                            type: GET_USER_FAILED
-                        })
-                    }
+                if (res && res.success) {
+                    dispatch({
+                        type: GET_USER_INFO,
+                        payload: {
+                            user: res.user
+                        }
+                    })
+                } else {
+                    dispatch({
+                        type: GET_USER_FAILED
+                    })
                 }
+            }
             )
             .catch(err => {
                 console.log(err)
@@ -269,26 +253,26 @@ export const getUserInfo = () => {
     }
 }
 
-export const postChangeUserInfo = (formData: TRegisterForm) => {
+export const postChangeUserInfo = (formData: TFormData) => {
     return async function (dispatch: Dispatch<any>) {
         dispatch({
             type: GET_USER_REQUEST
         })
         await patchUser(formData)
             .then(res => {
-                    if (res && res.success) {
-                        dispatch({
-                            type: CHANGE_USER_INFO,
-                            payload: {
-                                user: res.user
-                            }
-                        })
-                    } else {
-                        dispatch({
-                            type: GET_USER_FAILED
-                        })
-                    }
+                if (res && res.success) {
+                    dispatch({
+                        type: CHANGE_USER_INFO,
+                        payload: {
+                            user: res.user
+                        }
+                    })
+                } else {
+                    dispatch({
+                        type: GET_USER_FAILED
+                    })
                 }
+            }
             )
             .catch(err => {
                 console.log(err)

@@ -24,7 +24,7 @@ export const postOrder = (idsArr: string[]) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: {ingredients: idsArr}
+            body: JSON.stringify({ingredients: idsArr})
         })
             .then((res) => {
                 if (res.ok) {
