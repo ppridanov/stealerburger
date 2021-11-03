@@ -1,28 +1,34 @@
-import React, {useState} from "react";
+import React, {ChangeEvent, FormEvent, useState} from "react";
 import styles from "./register.module.css";
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect, useHistory} from "react-router-dom";
 import {postRegister} from "../../services/actions/users";
 import {useDispatch, useSelector} from "react-redux";
 
+export type TFormData = {
+    email: string;
+    password: string;
+    name: string;
+}
+
 export function Register() {
     const history = useHistory();
     const dispatch = useDispatch();
-    const {isAuth} = useSelector(state => state.userData);
+    const {isAuth}: any = useSelector<any>(state => state.userData);
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<TFormData>({
         email: "",
         password: "",
         name: ""
     })
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         })
     }
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = (e: FormEvent) => {
         e.preventDefault();
         dispatch(postRegister(formData, history))
     }
@@ -63,9 +69,6 @@ export function Register() {
                     <div className="form__item mb-6">
                         <PasswordInput
                             size={"default"}
-                            placeholder="Пароль"
-                            error={false}
-                            errorText={"Ошибка какая то"}
                             name={"password"}
                             onChange={handleChange}
                             value={formData.password}

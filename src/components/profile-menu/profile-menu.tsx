@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from "./profile-menu.module.css";
-import {Link, NavLink, useHistory} from "react-router-dom";
+import {NavLink, useHistory} from "react-router-dom";
 import {postLogout} from "../../services/actions/users";
 import {useDispatch} from "react-redux";
 

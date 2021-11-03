@@ -1,16 +1,25 @@
-import React from 'react';
+import React, {SyntheticEvent} from 'react';
 import ingredientStyle from './ingredient.module.css';
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from 'prop-types';
 import {useDrag} from "react-dnd";
 import {useSelector} from "react-redux";
 import {Link, useLocation} from "react-router-dom";
+import {TIngredient} from "../../utils/types";
 
-const Ingredient = (props) => {
+type TIngredientProps = {
+    image: string;
+    price: number;
+    name: string;
+    _id: string;
+    onOpen: (e: SyntheticEvent) => void;
+    type: string;
+}
+
+const Ingredient: React.FC<TIngredientProps> = (props) => {
     const location = useLocation();
     const {image, price, name, _id, onOpen, type} = props;
-    const {ingredients, bun} = useSelector(state => state.burgerConstructor);
-    let ingredientsCount = ingredients.filter((item) => item._id === _id).length;
+    const {ingredients, bun}: any = useSelector<any>(state => state.burgerConstructor);
+    let ingredientsCount = ingredients.filter((item: TIngredient) => item._id === _id).length;
     let counter;
 
     if (type === 'bun' && bun && bun._id === _id) {
@@ -36,7 +45,7 @@ const Ingredient = (props) => {
             className={`${ingredientStyle.product}`}
             style={{opacity: opacity}}
             onClick={onOpen}
-            _id={_id}
+            id={_id}
         >
             {counter && <Counter count={counter}/>}
             <img className={`${ingredientStyle.image} pr-4 pl-4`} src={image} alt=""/>
@@ -49,12 +58,4 @@ const Ingredient = (props) => {
     )
 }
 
-Ingredient.propTypes = {
-    image: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    _id: PropTypes.string.isRequired,
-    onOpen: PropTypes.func.isRequired,
-    type: PropTypes.string.isRequired
-}
 export default Ingredient;

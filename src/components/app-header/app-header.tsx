@@ -4,8 +4,8 @@ import { BurgerIcon, ListIcon, Logo, ProfileIcon } from "@ya.praktikum/react-dev
 import {Link, NavLink, useRouteMatch} from "react-router-dom";
 import {useSelector} from "react-redux";
 
-function AppHeader() {
-  const {isAuth} = useSelector(state => state.userData);
+const AppHeader: React.FC = () => {
+  const {isAuth}: any = useSelector<any>(state => state.userData);
   const isConstructor = !!useRouteMatch({ path: '/', exact: true});
   const isFeed = !!useRouteMatch('/feed');
   const isProfile = !!useRouteMatch('/profile');

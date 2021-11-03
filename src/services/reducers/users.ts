@@ -9,7 +9,18 @@ import {
 } from "../actions/users";
 import {setCookie, deleteCookie, getCookie} from "../../utils/funcs";
 
-const initialState = {
+type TUsersInitialState = {
+    authRequest: boolean;
+    authFailed: boolean;
+    user: {
+        name: string;
+        email: string;
+    };
+    isAuth: boolean;
+    wasOnForgotPass: boolean;
+}
+
+const initialState: TUsersInitialState = {
     authRequest: false,
     authFailed: false,
     user: {
@@ -20,7 +31,7 @@ const initialState = {
     wasOnForgotPass: false
 }
 
-export const usersReducer = (state = initialState, action) => {
+export const usersReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case GET_USER_FAILED:
             return {

@@ -1,10 +1,9 @@
-export const calculateTotalPrice = (items) => {
-    return items.reduce((acc, item) => {
-        return item.type === 'bun' ? item.price * 2 + acc : item.price + acc;
-    })
+type TSetCookieProps = {
+    expires?: number | Date | string;
+    path?: string;
 }
 
-export function setCookie(name, value, props = {}) {
+export function setCookie(name: string, value: string, props: TSetCookieProps = {}) {
     props = {
         path: '/',
         ...props
@@ -15,14 +14,14 @@ export function setCookie(name, value, props = {}) {
         d.setTime(d.getTime() + exp * 1000);
         exp = props.expires = d;
     }
-    if (exp && exp.toUTCString) {
+    if (exp && exp instanceof Date) {
         props.expires = exp.toUTCString();
     }
     value = encodeURIComponent(value);
     let updatedCookie = name + '=' + value;
     for (const propName in props) {
         updatedCookie += '; ' + propName;
-        const propValue = props[propName];
+        const propValue = (props as { [key: string]: string | boolean })[propName];
         if (propValue !== true) {
             updatedCookie += '=' + propValue;
         }
@@ -30,19 +29,20 @@ export function setCookie(name, value, props = {}) {
     document.cookie = updatedCookie;
 }
 
-export function getCookie(name) {
+export function getCookie(name: string) {
     const matches = document.cookie.match(
+        // eslint-disable-next-line no-useless-escape
         new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
     );
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function deleteCookie(name) {
-    setCookie(name, null, {expires: -1});
+export function deleteCookie(name: string) {
+    setCookie(name, "", {expires: -1});
 }
 
-export function isEmptyObj(obj) {
-    for (var key in obj) {
+export function isEmptyObj(obj: {}) {
+    for (let key in obj) {
         return false;
     }
     return true;

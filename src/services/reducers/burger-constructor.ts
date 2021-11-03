@@ -1,3 +1,4 @@
+import { TConstructorIngredient } from "../../utils/types";
 import {
     GET_ORDER_FAILED,
     GET_ORDER_SUCCESS,
@@ -7,7 +8,16 @@ import {
     REMOVE_INGREDIENT_FROM_CONSTRUCTOR, MOVE_INGREDIENT_IN_CONSTRUCTOR, CLEAR_ORDER, CLEAR_CONSTRUCTOR,
 } from "../actions/burger-constructor";
 
-const initialState = {
+type TInintialState = {
+    order: string | null;
+    orderRequest: boolean;
+    orderFailed: boolean;
+    ingredients: TConstructorIngredient[];
+    bun: string | null;
+    totalPrice: number;
+}
+
+const initialState: TInintialState = {
     order: null,
     orderRequest: false,
     orderFailed: false,
@@ -18,7 +28,7 @@ const initialState = {
     totalPrice: 0
 }
 
-export const constructorReducer = (state = initialState, action) => {
+export const constructorReducer = (state = initialState, action: any) => {
     switch(action.type) {
         case GET_ORDER_FAILED:
             return {
@@ -54,7 +64,7 @@ export const constructorReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ingredients: [
-                    ...state.ingredients.filter((item) => item.uuid !== action.id)
+                    ...state.ingredients.filter(({uuid}) => uuid !== action.id)
                 ],
             }
         case MOVE_INGREDIENT_IN_CONSTRUCTOR:

@@ -1,21 +1,22 @@
-import React, {useEffect, useState} from "react";
+import React, {ChangeEvent, FormEvent, SyntheticEvent, useEffect, useState} from "react";
 import styles from "./profile-form.module.css";
 import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useCustomInput} from "../../hooks/useInput";
 import {useDispatch, useSelector} from "react-redux";
 import {getUserInfo, postChangeUserInfo} from "../../services/actions/users";
+import { TFormData } from "../../utils/types";
 
-export function ProfileForm() {
-    const {user} = useSelector(state => state.userData);
+export const ProfileForm: React.FC = () => {
+    const {user}: any = useSelector<any>(state => state.userData);
     const dispatch = useDispatch();
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<TFormData>({
         name: "",
         email: "",
         password: ""
     })
 
-    const [isChangeInput, setIsChangeInput] = useState(false);
+    const [isChangeInput, setIsChangeInput] = useState<boolean>(false);
 
     useEffect(() => {
         dispatch(getUserInfo());
@@ -32,20 +33,24 @@ export function ProfileForm() {
     const nameCustomInput = useCustomInput();
     const passCustomInput = useCustomInput();
 
-    const handleOnChange = (e) => {
+    const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const target = e.target;
+        if (!target) {
+            return
+        }
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
+            [target.name]: target.value
         })
         setIsChangeInput(true);
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         dispatch(postChangeUserInfo(formData));
         setIsChangeInput(false);
     }
 
-    const handleCancel = (e) => {
+    const handleCancel = (e: SyntheticEvent) => {
         e.preventDefault();
         setFormData({
             email: user.email,
