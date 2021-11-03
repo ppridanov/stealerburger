@@ -4,11 +4,7 @@ import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {getIngredients} from "../../services/actions/burger-ingredients";
 import {isEmptyObj} from "../../utils/funcs";
-import {TIngredient} from "../../utils/types";
-
-type TIngredientDetailParams = {
-    id: string
-}
+import {TIngredient, TIngredientDetailParams} from "../../utils/types";
 
 function IngredientDetails() {
     const dispatch = useDispatch();

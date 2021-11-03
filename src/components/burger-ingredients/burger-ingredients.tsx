@@ -12,14 +12,11 @@ import {
     SET_INGREDIENT_TO_MODAL
 } from "../../services/actions/burger-ingredients";
 import {TIngredient} from "../../utils/types";
-import {useLocation, useParams} from "react-router-dom";
-
-type TIngredients = TIngredient[];
 
 const BurgerIngredients = () => {
     const {ingredients, ingredientsRequest, ingredientsError, ingredientDetails}: any = useSelector<any>(state => state.burgerIngredients)
     const [current, setCurrent] = React.useState<string>('buns');
-    const [modalIsOpen, setModalIsOpen] = React.useState(false);
+    const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
     const scrollContainer = createRef<HTMLDivElement>();
     const bunsRef = createRef<HTMLDivElement>();
     const saucesRef = createRef<HTMLDivElement>();
@@ -31,7 +28,6 @@ const BurgerIngredients = () => {
 
     const handleOpenModal = (e: SyntheticEvent) => {
         const id = e.currentTarget.getAttribute('id');
-        console.log(id);
         dispatch({
             type: SET_INGREDIENT_TO_MODAL,
             item: ingredients.find((item: TIngredient) => item._id === id)

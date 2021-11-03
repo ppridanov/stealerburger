@@ -1,10 +1,9 @@
-import {Location} from "history";
-
-
-export function setCookie(name: string, value: string, props: {
+type TSetCookieProps = {
     expires?: number | Date | string;
     path?: string;
-} = {}) {
+}
+
+export function setCookie(name: string, value: string, props: TSetCookieProps = {}) {
     props = {
         path: '/',
         ...props
@@ -32,6 +31,7 @@ export function setCookie(name: string, value: string, props: {
 
 export function getCookie(name: string) {
     const matches = document.cookie.match(
+        // eslint-disable-next-line no-useless-escape
         new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
     );
     return matches ? decodeURIComponent(matches[1]) : undefined;

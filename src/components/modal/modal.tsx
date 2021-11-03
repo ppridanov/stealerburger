@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from "react-dom";
 import modalStyles from './modal.module.css';
-import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import ModalOverlay from "../modal-overlay/modal-overlay";
-import PropTypes from "prop-types";
 
 type TModalProps = {
     title?: string,
@@ -11,9 +10,9 @@ type TModalProps = {
 }
 
 const Modal: React.FC<TModalProps> = (props) => {
-    const {onClose, children, title} = props;
+    const { onClose, children, title } = props;
     const handleEscCloseModal = (e: KeyboardEvent) => {
-        if (e.key === 'ESCAPE') {
+        if (e.code === 'Escape') {
             onClose();
         }
     }
@@ -39,4 +38,4 @@ const Modal: React.FC<TModalProps> = (props) => {
     )
 }
 
-export default  Modal;
+export default Modal;

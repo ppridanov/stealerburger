@@ -7,21 +7,9 @@ import {
     REMOVE_INGREDIENT_FROM_CONSTRUCTOR
 } from "../../services/actions/burger-constructor";
 import {useDrag, useDrop} from "react-dnd";
-import {TIngredient} from "../../utils/types";
-type TConstructorIngredient = TIngredient & {
-    _id: string;
-    name: string;
-    price: number;
-    image: string;
-    uuid: string;
-    index: number;
-}
+import {TConstructorItemIngredient, TIngredient} from "../../utils/types";
 
-type TMoveCards = {
-    dragIndex: number,
-    hoverIndex: number
-}
-const BurgerConstructorIngredient: React.FC<TConstructorIngredient> = (props) => {
+const BurgerConstructorIngredient: React.FC<TConstructorItemIngredient> = (props) => {
     const {index, _id, name, price, image, uuid} = props;
     const dispatch = useDispatch();
     const handleRemoveIngredient = () => {

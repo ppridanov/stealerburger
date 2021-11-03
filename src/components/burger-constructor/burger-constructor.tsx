@@ -15,23 +15,7 @@ import {v4 as uuidv4} from 'uuid';
 
 import BurgerConstructorIngredient from "../burger-constructor-item/burger-constructor-item";
 import {useHistory} from "react-router-dom";
-
-type TConstructorIngredient = {
-    calories: number;
-    carbohydrates: number;
-    fat: number;
-    image: string;
-    image_large: string;
-    image_mobile: string;
-    name: string;
-    onOpen: () => {},
-    price: number;
-    proteins: number;
-    type: string;
-    uuid: string;
-    __v: number;
-    _id: string;
-}
+import { TConstructorIngredient } from '../../utils/types';
 
 const BurgerConstructor: React.FC = () => {
     const {ingredients, bun, order, isAuth}: any = useSelector<any>(state => ({

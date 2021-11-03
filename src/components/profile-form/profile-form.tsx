@@ -4,12 +4,7 @@ import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui
 import {useCustomInput} from "../../hooks/useInput";
 import {useDispatch, useSelector} from "react-redux";
 import {getUserInfo, postChangeUserInfo} from "../../services/actions/users";
-
-type TFormData = {
-    name: string,
-    email: string,
-    password: string
-}
+import { TFormData } from "../../utils/types";
 
 export const ProfileForm: React.FC = () => {
     const {user}: any = useSelector<any>(state => state.userData);
@@ -77,8 +72,8 @@ export const ProfileForm: React.FC = () => {
                     size={"default"}
                     type={"text"}
                     icon={"EditIcon"}
-                    onBlur={(e) => passCustomInput.handleBlur}
-                    onIconClick={(e) => passCustomInput.handleIconClick}
+                    onBlur={passCustomInput.handleBlur}
+                    onIconClick={passCustomInput.handleIconClick}
                     disabled={true}
                     ref={passCustomInput.ref}
                     value={formData.name}
@@ -97,8 +92,8 @@ export const ProfileForm: React.FC = () => {
                     size={"default"}
                     type={"password"}
                     icon={"EditIcon"}
-                    onBlur={(e) => nameCustomInput.handleBlur}
-                    onIconClick={(e) => nameCustomInput.handleIconClick}
+                    onBlur={nameCustomInput.handleBlur}
+                    onIconClick={nameCustomInput.handleIconClick}
                     disabled={true}
                     ref={nameCustomInput.ref}
                     value={formData.password}
