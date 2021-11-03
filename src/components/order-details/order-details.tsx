@@ -2,8 +2,12 @@ import React from 'react';
 import orderDetailsStyles from './order-details.module.css';
 import {CheckMarkIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import doneImage from '../../images/graphics.svg'
-import PropTypes from "prop-types";
-function OrderDetails({id}) {
+
+type TOrderDetailsProps = {
+    id: string
+}
+
+const OrderDetails: React.FC<TOrderDetailsProps> = ({id}) => {
     return(
         <div className={`${orderDetailsStyles.order} pb-15`}>
             <h3 className={`${orderDetailsStyles.title} text text_primary_ligth text_type_digits-large`}>
@@ -18,10 +22,6 @@ function OrderDetails({id}) {
             <p className="text text_type_main-default text_color_inactive mt-2">Дождитесь готовности на орбитальной станции</p>
         </div>
     )
-}
-
-OrderDetails.propTypes = {
-    id: PropTypes.number.isRequired
 }
 
 export default  OrderDetails;

@@ -1,5 +1,6 @@
 import {sendData} from "../../utils/api";
 import {apiURL} from "../../utils/constants";
+import {Dispatch} from "react";
 
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
@@ -12,8 +13,8 @@ export const ADD_BUN_TO_CONSTRUCTOR = 'ADD_BUN_TO_CONSTRUCTOR';
 export const MOVE_INGREDIENT_IN_CONSTRUCTOR = 'MOVE_INGREDIENT_IN_CONSTRUCTOR';
 export const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR';
 
-export const postOrder = (idsArr) => {
-    return function (dispatch) {
+export const postOrder = (idsArr: string[]) => {
+    return function (dispatch: Dispatch<any>) {
         dispatch({
             type: GET_ORDER_REQUEST
         })

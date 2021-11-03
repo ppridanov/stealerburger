@@ -20,7 +20,7 @@ const initialState = {
     wasOnForgotPass: false
 }
 
-export const usersReducer = (state = initialState, action) => {
+export const usersReducer = (state = initialState, action: any) => {
     switch (action.type) {
         case GET_USER_FAILED:
             return {

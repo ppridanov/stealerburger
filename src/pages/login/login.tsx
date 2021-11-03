@@ -1,27 +1,37 @@
-import React, {useState} from "react";
+import React, {ChangeEvent, FormEvent, useState} from "react";
 import styles from "./login.module.css";
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, Redirect, useHistory, useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {postLogin} from "../../services/actions/users";
+import {Location} from "history";
+
+export type TFormData = {
+    email: string;
+    password: string;
+}
+
+type TLocationState = {
+    from: Location
+}
 
 export function Login() {
     const history = useHistory();
-    const location = useLocation();
+    const location = useLocation<TLocationState>();
     const dispatch = useDispatch();
-    const {isAuth} = useSelector(state => state.userData);
-    const [formData, setFormData] = useState({
+    const {isAuth}: any = useSelector<any>(state => state.userData);
+    const [formData, setFormData] = useState<TFormData>({
         email: "",
         password: ""
     })
     let {from} = location.state || {from: {pathname: '/'}}
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         })
     }
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = (e: FormEvent) => {
         e.preventDefault();
         dispatch(postLogin({
             email: formData.email,
@@ -51,11 +61,7 @@ export function Login() {
                     </div>
                     <div className="form__item mb-6">
                         <PasswordInput
-                            type={"password"}
                             size={"default"}
-                            placeholder="Пароль"
-                            error={false}
-                            errorText={"Ошибка какая то"}
                             name={"password"}
                             onChange={handleChange}
                             value={formData.password}

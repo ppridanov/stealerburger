@@ -16,8 +16,25 @@ import {v4 as uuidv4} from 'uuid';
 import BurgerConstructorIngredient from "../burger-constructor-item/burger-constructor-item";
 import {useHistory} from "react-router-dom";
 
-function BurgerConstructor() {
-    const {ingredients, bun, order, isAuth} = useSelector(state => ({
+type TConstructorIngredient = {
+    calories: number;
+    carbohydrates: number;
+    fat: number;
+    image: string;
+    image_large: string;
+    image_mobile: string;
+    name: string;
+    onOpen: () => {},
+    price: number;
+    proteins: number;
+    type: string;
+    uuid: string;
+    __v: number;
+    _id: string;
+}
+
+const BurgerConstructor: React.FC = () => {
+    const {ingredients, bun, order, isAuth}: any = useSelector<any>(state => ({
         ingredients: state.burgerConstructor.ingredients,
         bun: state.burgerConstructor.bun,
         order: state.burgerConstructor.order,
@@ -27,7 +44,7 @@ function BurgerConstructor() {
     const history = useHistory();
 
     const [modalIsOpen, setModalIsOpen] = React.useState(false)
-    const moveIngredient = (ingredient) => {
+    const moveIngredient = (ingredient: TConstructorIngredient) => {
         dispatch({
             type: ingredient.type === 'bun' ? ADD_BUN_TO_CONSTRUCTOR : ADD_INGREDIENT_TO_CONSTRUCTOR,
             item: {...ingredient, uuid: uuidv4()}
@@ -38,7 +55,7 @@ function BurgerConstructor() {
         collect: monitor => ({
             isHover: monitor.isOver()
         }),
-        drop(item) {
+        drop(item:TConstructorIngredient) {
             moveIngredient(item);
         }
     });
@@ -51,7 +68,7 @@ function BurgerConstructor() {
             history.push('/login');
         }
         //Здесь я не понял как мне две булки отправлять или же она одна?
-        const idsArr = [...ingredients.map(item => item._id), bun._id, bun._id];
+        const idsArr = [...ingredients.map((item: TConstructorIngredient) => item._id), bun._id, bun._id];
         dispatch(postOrder(idsArr));
         setModalIsOpen(true)
     }
@@ -67,7 +84,7 @@ function BurgerConstructor() {
     }
 
     const totalPrice = useMemo(() => {
-        let price = ingredients.reduce((acc, item) => {
+        let price = ingredients.reduce((acc: number, item: TConstructorIngredient) => {
             return item.price + acc;
         }, 0);
         price += bun && bun.price * 2;
@@ -97,7 +114,7 @@ function BurgerConstructor() {
                     <li className={`${constructorStyle.item} ${isHover ? constructorStyle.item_isHovering : ''}`}>
                         <ul className={constructorStyle.list__scroll}
                             style={{display: 'flex', flexDirection: 'column', gap: '10px', alignItems: "flex-end"}}>
-                            {ingredients.map((item, idx) => {
+                            {ingredients.map((item: TConstructorIngredient, idx: number) => {
                                 return <BurgerConstructorIngredient {...item} index={idx} key={item.uuid}/>
                             })}
                         </ul>

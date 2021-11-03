@@ -1,4 +1,4 @@
-import React, {createRef, useEffect} from 'react';
+import React, {createRef, SyntheticEvent, useEffect} from 'react';
 import ingredientsStyles from './burger-ingredients.module.css';
 import appStyles from '../app/app.module.css';
 import Ingredient from "../ingredient/ingredient";
@@ -11,25 +11,30 @@ import {
     REMOVE_INGREDIENT_FROM_MODAL,
     SET_INGREDIENT_TO_MODAL
 } from "../../services/actions/burger-ingredients";
+import {TIngredient} from "../../utils/types";
+import {useLocation, useParams} from "react-router-dom";
 
-function BurgerIngredients() {
-    const {ingredients, ingredientsRequest, ingredientsError, ingredientDetails} = useSelector(state => state.burgerIngredients)
-    const [current, setCurrent] = React.useState('buns');
+type TIngredients = TIngredient[];
+
+const BurgerIngredients = () => {
+    const {ingredients, ingredientsRequest, ingredientsError, ingredientDetails}: any = useSelector<any>(state => state.burgerIngredients)
+    const [current, setCurrent] = React.useState<string>('buns');
     const [modalIsOpen, setModalIsOpen] = React.useState(false);
-    const bunsRef = createRef();
-    const saucesRef = createRef();
-    const mainsRef = createRef();
+    const scrollContainer = createRef<HTMLDivElement>();
+    const bunsRef = createRef<HTMLDivElement>();
+    const saucesRef = createRef<HTMLDivElement>();
+    const mainsRef = createRef<HTMLDivElement>();
     const dispatch = useDispatch();
-
     useEffect(() => {
         dispatch(getIngredients());
     }, [dispatch]);
 
-    const handleOpenModal = (e) => {
-        const id = e.currentTarget.getAttribute('_id');
+    const handleOpenModal = (e: SyntheticEvent) => {
+        const id = e.currentTarget.getAttribute('id');
+        console.log(id);
         dispatch({
             type: SET_INGREDIENT_TO_MODAL,
-            item: ingredients.find((item) => item._id === id)
+            item: ingredients.find((item: TIngredient) => item._id === id)
         })
         setModalIsOpen(true);
     }
@@ -39,22 +44,24 @@ function BurgerIngredients() {
             type: REMOVE_INGREDIENT_FROM_MODAL
         })
     }
-    const handleTabClick = (value) => {
+    const handleTabClick = (value: string) => {
         setCurrent(value);
     }
 
-    const handleScroll = (e) => {
-        const scrollContainer = e.target;
-        const saucesContainer = saucesRef.current.getBoundingClientRect();
-        const mainsContainer = mainsRef.current.getBoundingClientRect();
+    const handleScroll = (e: SyntheticEvent) => {
+        const saucesContainer = saucesRef.current?.getBoundingClientRect();
+        const mainsContainer = mainsRef.current?.getBoundingClientRect();
         // console.log(`buns: ${scrollContainer.offsetTop - bunsContainer.top}, sauces: ${scrollContainer.offsetTop - saucesContainer.top}, mains: ${scrollContainer.offsetTop - mainsContainer.top}`)
-        if (scrollContainer.offsetTop - saucesContainer.top < 0) {
-            setCurrent('buns');
-        } else if (scrollContainer.offsetTop - mainsContainer.top < 0) {
-            setCurrent('sauces');
-        } else {
-            setCurrent('mains');
+        if (scrollContainer !== null) {
+            if (saucesContainer && scrollContainer instanceof HTMLElement && scrollContainer.offsetTop - saucesContainer.top < 0) {
+                setCurrent('buns');
+            } else if (mainsContainer && scrollContainer instanceof HTMLElement && scrollContainer.offsetTop - mainsContainer.top < 0) {
+                setCurrent('sauces');
+            } else {
+                setCurrent('mains');
+            }
         }
+
     }
 
     return (
@@ -86,20 +93,20 @@ function BurgerIngredients() {
                         </a>
                     </div>
                     <div className={`${ingredientsStyles.ingredients} mt-10`}>
-                        <div className={ingredientsStyles.products} onScroll={handleScroll}>
+                        <div className={ingredientsStyles.products} onScroll={handleScroll} ref={scrollContainer}>
                             <h3 className="text text_type_main-medium" ref={bunsRef} id="buns">Булки</h3>
                             <div className={ingredientsStyles.products__cont}>
-                                {ingredients.filter((item) => item.type === 'bun').map((item) => <Ingredient
+                                {ingredients.filter((item: TIngredient) => item.type === 'bun').map((item: TIngredient) => <Ingredient
                                     onOpen={handleOpenModal} {...item} key={item._id}/>)}
                             </div>
                             <h3 className="text text_type_main-medium" ref={saucesRef} id="sauces">Соусы</h3>
                             <div className={ingredientsStyles.products__cont}>
-                                {ingredients.filter((item) => item.type === 'sauce').map((item) => <Ingredient
+                                {ingredients.filter((item: TIngredient) => item.type === 'sauce').map((item: TIngredient) => <Ingredient
                                     onOpen={handleOpenModal} {...item} key={item._id}/>)}
                             </div>
                             <h3 className="text text_type_main-medium" ref={mainsRef} id="mains">Начинки</h3>
                             <div className={ingredientsStyles.products__cont}>
-                                {ingredients.filter((item) => item.type === 'main').map((item) => <Ingredient
+                                {ingredients.filter((item: TIngredient) => item.type === 'main').map((item: TIngredient) => <Ingredient
                                     onOpen={handleOpenModal} {...item} key={item._id}/>)}
                             </div>
                         </div>
@@ -109,7 +116,7 @@ function BurgerIngredients() {
             }
             {modalIsOpen && ingredientDetails && (
                 <Modal onClose={handleCloseModal} title={'Детали ингредиента'}>
-                    <IngredientDetails data={ingredientDetails}/>
+                    <IngredientDetails {...ingredientDetails}/>
                 </Modal>)
             }
         </>

@@ -1,5 +1,7 @@
 import {checkResponse, getUser, patchUser, sendData} from "../../utils/api";
 import {apiURL} from "../../utils/constants";
+import {Dispatch} from "react";
+import {History, Location} from 'history';
 
 export const GET_USER_REQUEST = 'GET_USER_REQUEST';
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
@@ -11,8 +13,9 @@ export const CHANGE_USER_INFO = 'CHANGE_USER_INFO';
 export const SET_WAS_ON_FORGOT_PAGE = 'SET_WAS_ON_FORGOT_PAGE';
 export const DELETE_WAS_ON_FORGOT_PAGE = 'DELETE_WAS_ON_FORGOT_PAGE';
 
-export const postForgotPassword = (emailValue, history) => {
-    return function (dispatch) {
+
+export const postForgotPassword = (emailValue: string, history: History) => {
+    return function (dispatch: Dispatch<any>) {
         dispatch({
             type: GET_USER_REQUEST
         })
@@ -44,8 +47,13 @@ export const postForgotPassword = (emailValue, history) => {
     }
 }
 
-export const postResetPassword = (formData, history) => {
-    return function (dispatch) {
+type TResetPasswordForm = {
+    password: string;
+    token: string
+}
+
+export const postResetPassword = (formData: TResetPasswordForm, history: History) => {
+    return function (dispatch: Dispatch<any>) {
         dispatch({
             type: GET_USER_REQUEST
         })
@@ -80,8 +88,14 @@ export const postResetPassword = (formData, history) => {
     }
 }
 
-export const postRegister = (formData, history) => {
-    return function (dispatch) {
+type TRegisterForm = {
+    email: string;
+    password: string;
+    name: string;
+}
+
+export const postRegister = (formData: TRegisterForm, history: History) => {
+    return function (dispatch: Dispatch<any>) {
         dispatch({
             type: GET_USER_REQUEST
         })
@@ -130,8 +144,14 @@ export const postRegister = (formData, history) => {
     }
 }
 
-export const postLogin = (formData, history, from) => {
-    return function (dispatch) {
+type TLoginForm = Omit<TRegisterForm, 'name'>
+type TLocationState = {
+    from: Location
+}
+
+
+export const postLogin = (formData: TLoginForm, history: History, from: { pathname: string }) => {
+    return function (dispatch: Dispatch<any>) {
         dispatch({
             type: GET_USER_REQUEST
         })
@@ -180,8 +200,8 @@ export const postLogin = (formData, history, from) => {
     }
 }
 
-export const postLogout = (history) => {
-    return function (dispatch) {
+export const postLogout = (history: History) => {
+    return function (dispatch: Dispatch<any>) {
         dispatch({
             type: GET_USER_REQUEST
         })
@@ -220,7 +240,7 @@ export const postLogout = (history) => {
 }
 
 export const getUserInfo = () => {
-    return async function (dispatch) {
+    return async function (dispatch: Dispatch<any>) {
         dispatch({
             type: GET_USER_REQUEST
         })
@@ -249,8 +269,8 @@ export const getUserInfo = () => {
     }
 }
 
-export const postChangeUserInfo = (formData) => {
-    return async function (dispatch) {
+export const postChangeUserInfo = (formData: TRegisterForm) => {
+    return async function (dispatch: Dispatch<any>) {
         dispatch({
             type: GET_USER_REQUEST
         })
