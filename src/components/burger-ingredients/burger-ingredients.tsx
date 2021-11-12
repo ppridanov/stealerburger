@@ -7,7 +7,6 @@ import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    getIngredients,
     REMOVE_INGREDIENT_FROM_MODAL,
     SET_INGREDIENT_TO_MODAL
 } from "../../services/actions/burger-ingredients";
@@ -22,9 +21,6 @@ const BurgerIngredients = () => {
     const saucesRef = createRef<HTMLDivElement>();
     const mainsRef = createRef<HTMLDivElement>();
     const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getIngredients());
-    }, [dispatch]);
 
     const handleOpenModal = (e: SyntheticEvent) => {
         const id = e.currentTarget.getAttribute('id');

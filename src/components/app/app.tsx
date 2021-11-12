@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Switch, Route, useLocation, useHistory} from 'react-router-dom';
 import {Home, Login, Register} from "../../pages";
 import {ForgotPassword} from "../../pages/forgot-password/forgot-password";
@@ -9,12 +9,17 @@ import {ProtectedRoute} from "../../hocs/protected-route";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {Page404} from "../../pages/page-404/page-404";
 import { TLocationState } from '../../utils/types';
+import {useDispatch} from "react-redux";
+import {getIngredients} from "../../services/actions/burger-ingredients";
 
 function App() {
     const history = useHistory();
     const location = useLocation<TLocationState>();
     let background = history.action === 'PUSH' && location.state && location.state.background;
-
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getIngredients());
+    }, [dispatch]);
     return (
         <div>
                 <AppHeader/>

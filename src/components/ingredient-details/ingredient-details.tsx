@@ -1,27 +1,18 @@
-import {useEffect,} from 'react';
 import ingredientDetailsStyle from './ingredient-detail.module.css';
 import {useParams} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {getIngredients} from "../../services/actions/burger-ingredients";
+import {useSelector} from "react-redux";
 import {isEmptyObj} from "../../utils/funcs";
 import {TIngredient, TIngredientDetailParams} from "../../utils/types";
 
 function IngredientDetails() {
-    const dispatch = useDispatch();
     const {ingredients, ingredientDetails}: any = useSelector<any>(state => state.burgerIngredients);
     const {id} = useParams<TIngredientDetailParams>();
     let ingredient;
-    useEffect(() => {
-        if (ingredients.length <= 0) {
-            dispatch(getIngredients())
-        }
-    }, [dispatch, ingredients.length]);
     if (!isEmptyObj(ingredientDetails)) {
         ingredient = ingredientDetails;
     } else {
         ingredient = ingredients.find((item: TIngredient) => item._id === id);
     }
-
     return (
         <>
             {isEmptyObj(ingredientDetails) && (
