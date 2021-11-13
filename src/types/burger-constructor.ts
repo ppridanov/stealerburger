@@ -10,7 +10,7 @@ import {
   CLEAR_CONSTRUCTOR
 } from "../services/actions/burger-constructor";
 
-import {TConstructorIngredient} from "../utils/types";
+import {TConstructorIngredient} from "./index";
 
 export type TGetOrderAction = {
   readonly type: typeof GET_ORDER_REQUEST;

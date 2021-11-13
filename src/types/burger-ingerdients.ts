@@ -6,7 +6,7 @@ import {
   REMOVE_INGREDIENT_FROM_MODAL
 } from "../services/actions/burger-ingredients";
 
-import {TIngredient} from "../utils/types";
+import {TIngredient} from "./index";
 
 export type TGetIngredientsRequestAction = {
   readonly type: typeof GET_INGREDIENTS_REQUEST;

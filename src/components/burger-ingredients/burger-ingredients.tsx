@@ -10,7 +10,7 @@ import {
     REMOVE_INGREDIENT_FROM_MODAL,
     SET_INGREDIENT_TO_MODAL
 } from "../../services/actions/burger-ingredients";
-import {TIngredient} from "../../utils/types";
+import {TIngredient} from "../../types";
 
 const BurgerIngredients = () => {
     const {ingredients, ingredientsRequest, ingredientsError, ingredientDetails}: any = useSelector<any>(state => state.burgerIngredients)

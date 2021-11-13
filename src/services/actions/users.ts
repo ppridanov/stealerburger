@@ -2,17 +2,17 @@ import { checkResponse, getUser, patchUser, sendData } from "../../utils/api";
 import { apiURL } from "../../utils/constants";
 import { Dispatch } from "react";
 import { History } from 'history';
-import { TFormData, TLoginForm, TResetPasswordForm } from "../../utils/types";
+import { TFormData, TLoginForm, TResetPasswordForm } from "../../types";
 
-export const GET_USER_REQUEST = 'GET_USER_REQUEST';
-export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
-export const GET_USER_FAILED = 'GET_USER_FAILED';
-export const GET_USER_INFO = 'GET_USER_INFO';
-export const SET_IS_AUTH = 'SET_IS_AUTH';
-export const DELETE_IS_AUTH = 'DELETE_IS_AUTH';
-export const CHANGE_USER_INFO = 'CHANGE_USER_INFO';
-export const SET_WAS_ON_FORGOT_PAGE = 'SET_WAS_ON_FORGOT_PAGE';
-export const DELETE_WAS_ON_FORGOT_PAGE = 'DELETE_WAS_ON_FORGOT_PAGE';
+export const GET_USER_REQUEST: 'GET_USER_REQUEST' = 'GET_USER_REQUEST';
+export const GET_USER_SUCCESS: 'GET_USER_SUCCESS' = 'GET_USER_SUCCESS';
+export const GET_USER_FAILED: 'GET_USER_FAILED' = 'GET_USER_FAILED';
+export const GET_USER_INFO: 'GET_USER_INFO' = 'GET_USER_INFO';
+export const SET_IS_AUTH: 'SET_IS_AUTH' = 'SET_IS_AUTH';
+export const DELETE_IS_AUTH: 'DELETE_IS_AUTH' = 'DELETE_IS_AUTH';
+export const CHANGE_USER_INFO: 'CHANGE_USER_INFO' = 'CHANGE_USER_INFO';
+export const SET_WAS_ON_FORGOT_PAGE: 'SET_WAS_ON_FORGOT_PAGE' = 'SET_WAS_ON_FORGOT_PAGE';
+export const DELETE_WAS_ON_FORGOT_PAGE: 'DELETE_WAS_ON_FORGOT_PAGE' = 'DELETE_WAS_ON_FORGOT_PAGE';
 
 
 export const postForgotPassword = (emailValue: string, history: History) => {
@@ -155,9 +155,7 @@ export const postLogin = (formData: TLoginForm, history: History, from: { pathna
                 if (res && res.success) {
                     dispatch({
                         type: GET_USER_SUCCESS,
-                        payload: {
-                            user: res.user
-                        },
+                        user: res.user
                     });
                     dispatch({
                         type: SET_IS_AUTH,
@@ -233,9 +231,7 @@ export const getUserInfo = () => {
                 if (res && res.success) {
                     dispatch({
                         type: GET_USER_INFO,
-                        payload: {
-                            user: res.user
-                        }
+                        user: res.user
                     })
                 } else {
                     dispatch({

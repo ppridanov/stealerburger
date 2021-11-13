@@ -15,7 +15,7 @@ import {v4 as uuidv4} from 'uuid';
 
 import BurgerConstructorIngredient from "../burger-constructor-item/burger-constructor-item";
 import {useHistory} from "react-router-dom";
-import { TConstructorIngredient } from '../../utils/types';
+import { TConstructorIngredient } from '../../types';
 
 const BurgerConstructor: React.FC = () => {
     const {ingredients, bun, order, isAuth}: any = useSelector<any>(state => ({

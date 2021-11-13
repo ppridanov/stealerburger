@@ -4,7 +4,7 @@ import {Button, EmailInput, Input} from "@ya.praktikum/react-developer-burger-ui
 import {useCustomInput} from "../../hooks/useInput";
 import {useDispatch, useSelector} from "react-redux";
 import {getUserInfo, postChangeUserInfo} from "../../services/actions/users";
-import { TFormData } from "../../utils/types";
+import { TFormData } from "../../types";
 
 export const ProfileForm: React.FC = () => {
     const {user}: any = useSelector<any>(state => state.userData);

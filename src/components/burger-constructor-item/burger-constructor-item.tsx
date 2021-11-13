@@ -7,7 +7,7 @@ import {
     REMOVE_INGREDIENT_FROM_CONSTRUCTOR
 } from "../../services/actions/burger-constructor";
 import {useDrag, useDrop} from "react-dnd";
-import {TConstructorItemIngredient, TIngredient} from "../../utils/types";
+import {TConstructorItemIngredient, TIngredient} from "../../types";
 
 const BurgerConstructorIngredient: React.FC<TConstructorItemIngredient> = (props) => {
     const {index, _id, name, price, image, uuid} = props;

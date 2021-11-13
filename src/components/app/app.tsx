@@ -8,7 +8,7 @@ import {Profile} from "../../pages/profile/profile";
 import {ProtectedRoute} from "../../hocs/protected-route";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {Page404} from "../../pages/page-404/page-404";
-import { TLocationState } from '../../utils/types';
+import { TLocationState } from '../../types';
 import {useDispatch} from "react-redux";
 import {getIngredients} from "../../services/actions/burger-ingredients";
 

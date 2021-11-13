@@ -1,4 +1,4 @@
-import { TConstructorIngredient } from "../../utils/types";
+import { TConstructorIngredient } from "../../types";
 import {
     GET_ORDER_FAILED,
     GET_ORDER_SUCCESS,
