@@ -4,11 +4,12 @@ import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components"
 import {Link, Redirect, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {postForgotPassword, SET_WAS_ON_FORGOT_PAGE} from "../../services/actions/users";
+import {RootState} from "../../types";
 
 export function ForgotPassword() {
     const history = useHistory();
     const dispatch = useDispatch();
-    const {isAuth}: any = useSelector<any>(state => state.userData);
+    const {isAuth} = useSelector((state: RootState) => state.userData);
 
     const [email, setEmail] = useState<string>("");
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

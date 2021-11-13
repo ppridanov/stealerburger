@@ -4,6 +4,7 @@ import {Button, Input} from "@ya.praktikum/react-developer-burger-ui-components"
 import {Link, Redirect, useHistory} from "react-router-dom";
 import {DELETE_WAS_ON_FORGOT_PAGE, postResetPassword} from "../../services/actions/users";
 import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../types";
 
 export type TFormData = {
     password: string;
@@ -13,7 +14,7 @@ export type TFormData = {
 export function ResetPassword() {
     const history = useHistory();
 
-    const {wasOnForgotPass, isAuth}: any = useSelector<any>(state => state.userData);
+    const {wasOnForgotPass, isAuth} = useSelector((state: RootState) => state.userData);
 
     const dispatch = useDispatch();
 

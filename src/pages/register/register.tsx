@@ -4,6 +4,7 @@ import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger
 import {Link, Redirect, useHistory} from "react-router-dom";
 import {postRegister} from "../../services/actions/users";
 import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../types";
 
 export type TFormData = {
     email: string;
@@ -14,7 +15,7 @@ export type TFormData = {
 export function Register() {
     const history = useHistory();
     const dispatch = useDispatch();
-    const {isAuth}: any = useSelector<any>(state => state.userData);
+    const {isAuth} = useSelector((state: RootState) => state.userData);
 
     const [formData, setFormData] = useState<TFormData>({
         email: "",

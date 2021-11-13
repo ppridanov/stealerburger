@@ -53,6 +53,7 @@ const BurgerConstructorIngredient: React.FC<TConstructorItemIngredient> = (props
             }
             const hoverBoundingRect = ref.current?.getBoundingClientRect();
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+            //Как типизировать clientOffset?
             const clientOffset: any = monitor.getClientOffset();
             const hoverClientY = clientOffset.y - hoverBoundingRect.top;
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {

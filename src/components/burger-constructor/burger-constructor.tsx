@@ -15,10 +15,10 @@ import {v4 as uuidv4} from 'uuid';
 
 import BurgerConstructorIngredient from "../burger-constructor-item/burger-constructor-item";
 import {useHistory} from "react-router-dom";
-import { TConstructorIngredient } from '../../types';
+import {RootState, TConstructorIngredient} from '../../types';
 
 const BurgerConstructor: React.FC = () => {
-    const {ingredients, bun, order, isAuth}: any = useSelector<any>(state => ({
+    const {ingredients, bun, order, isAuth} = useSelector((state: RootState) => ({
         ingredients: state.burgerConstructor.ingredients,
         bun: state.burgerConstructor.bun,
         order: state.burgerConstructor.order,
@@ -72,7 +72,7 @@ const BurgerConstructor: React.FC = () => {
         let price = ingredients.reduce((acc: number, item: TConstructorIngredient) => {
             return item.price + acc;
         }, 0);
-        price += bun && bun.price * 2;
+        bun && (price += bun.price * 2);
         return price;
     }, [ingredients, bun])
 

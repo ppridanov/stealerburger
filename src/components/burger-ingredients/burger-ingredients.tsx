@@ -1,4 +1,4 @@
-import React, {createRef, SyntheticEvent, useEffect} from 'react';
+import React, {createRef, SyntheticEvent} from 'react';
 import ingredientsStyles from './burger-ingredients.module.css';
 import appStyles from '../app/app.module.css';
 import Ingredient from "../ingredient/ingredient";
@@ -10,10 +10,10 @@ import {
     REMOVE_INGREDIENT_FROM_MODAL,
     SET_INGREDIENT_TO_MODAL
 } from "../../services/actions/burger-ingredients";
-import {TIngredient} from "../../types";
+import {RootState, TIngredient} from "../../types";
 
 const BurgerIngredients = () => {
-    const {ingredients, ingredientsRequest, ingredientsError, ingredientDetails}: any = useSelector<any>(state => state.burgerIngredients)
+    const {ingredients, ingredientsRequest, ingredientsFailed, ingredientDetails} = useSelector((state: RootState) => state.burgerIngredients)
     const [current, setCurrent] = React.useState<string>('buns');
     const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
     const scrollContRef = createRef<HTMLDivElement>();
@@ -58,13 +58,13 @@ const BurgerIngredients = () => {
 
     return (
         <>
-            {ingredientsRequest && !ingredientsError && (
+            {ingredientsRequest && !ingredientsFailed && (
                 <h1>Идет загрузка...</h1>
             )}
-            {ingredientsError && !ingredientsRequest && (
+            {ingredientsFailed && !ingredientsRequest && (
                 <h1>Произошла ошибка попробуйте позже</h1>
             )}
-            {!ingredientsError && !ingredientsRequest && ingredients.length > 0 && (
+            {!ingredientsFailed && !ingredientsRequest && ingredients.length > 0 && (
                 <div className={ingredientsStyles.constr}>
                     <h1 className="text text_type_main-large mt-10 text_colo">Соберите бургер</h1>
                     <div style={{display: 'flex'}} className='mt-5'>
@@ -108,7 +108,7 @@ const BurgerIngredients = () => {
             }
             {modalIsOpen && ingredientDetails && (
                 <Modal onClose={handleCloseModal} title={'Детали ингредиента'}>
-                    <IngredientDetails {...ingredientDetails}/>
+                    <IngredientDetails/>
                 </Modal>)
             }
         </>

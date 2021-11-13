@@ -1,6 +1,5 @@
 import {checkResponse, getUser, patchUser, sendData} from "../../utils/api";
 import {apiURL} from "../../utils/constants";
-import {Dispatch} from "react";
 import {History} from 'history';
 import {AppDispatch, AppThunk, TFormData, TLoginForm, TResetPasswordForm} from "../../types";
 

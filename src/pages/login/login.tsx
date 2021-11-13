@@ -5,6 +5,7 @@ import {Link, Redirect, useHistory, useLocation} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {postLogin} from "../../services/actions/users";
 import {Location} from "history";
+import {RootState} from "../../types";
 
 export type TFormData = {
     email: string;
@@ -19,7 +20,7 @@ export function Login() {
     const history = useHistory();
     const location = useLocation<TLocationState>();
     const dispatch = useDispatch();
-    const {isAuth}: any = useSelector<any>(state => state.userData);
+    const {isAuth} = useSelector((state: RootState) => state.userData);
     const [formData, setFormData] = useState<TFormData>({
         email: "",
         password: ""

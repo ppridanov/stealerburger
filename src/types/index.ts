@@ -22,6 +22,7 @@ export type TIngredient = {
     index: number;
 }
 
+
 export type TLocationState = {
     background?: Location;
     state?: Location;

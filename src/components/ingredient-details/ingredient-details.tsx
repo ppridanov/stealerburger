@@ -2,17 +2,16 @@ import ingredientDetailsStyle from './ingredient-detail.module.css';
 import {useParams} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {isEmptyObj} from "../../utils/funcs";
-import {TIngredient, TIngredientDetailParams} from "../../types";
+import {RootState, TIngredient, TIngredientDetailParams} from "../../types";
+
+type TIngredientDetail = {
+    [key: string]: any
+} | undefined
 
 function IngredientDetails() {
-    const {ingredients, ingredientDetails}: any = useSelector<any>(state => state.burgerIngredients);
+    const {ingredients, ingredientDetails} = useSelector((state: RootState) => state.burgerIngredients);
     const {id} = useParams<TIngredientDetailParams>();
-    let ingredient;
-    if (!isEmptyObj(ingredientDetails)) {
-        ingredient = ingredientDetails;
-    } else {
-        ingredient = ingredients.find((item: TIngredient) => item._id === id);
-    }
+    const ingredient: TIngredientDetail = (!isEmptyObj(ingredientDetails)) ? ingredientDetails : ingredients.find((item: TIngredient) => item._id === id);
     return (
         <>
             {isEmptyObj(ingredientDetails) && (
