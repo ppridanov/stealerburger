@@ -2,11 +2,11 @@ import {getData} from "../../utils/api";
 import {apiURL} from "../../utils/constants";
 import {Dispatch} from "react";
 
-export const GET_INGREDIENTS_REQUEST = 'GET_ITEMS_REQUEST';
-export const GET_INGREDIENTS_SUCCESS = 'GET_ITEMS_SUCCESS';
-export const GET_INGREDIENTS_FAILED = 'GET_ITEMS_FAILED';
-export const SET_INGREDIENT_TO_MODAL = 'SET_INGREDIENT_TO_MODAL';
-export const REMOVE_INGREDIENT_FROM_MODAL = 'REMOVE_INGREDIENT_FROM_MODAL';
+export const GET_INGREDIENTS_REQUEST: 'GET_ITEMS_REQUEST' = 'GET_ITEMS_REQUEST';
+export const GET_INGREDIENTS_SUCCESS: 'GET_ITEMS_SUCCESS' = 'GET_ITEMS_SUCCESS';
+export const GET_INGREDIENTS_FAILED: 'GET_ITEMS_FAILED' = 'GET_ITEMS_FAILED';
+export const SET_INGREDIENT_TO_MODAL: 'SET_INGREDIENT_TO_MODAL' = 'SET_INGREDIENT_TO_MODAL';
+export const REMOVE_INGREDIENT_FROM_MODAL: 'REMOVE_INGREDIENT_FROM_MODAL' = 'REMOVE_INGREDIENT_FROM_MODAL';
 
 export const getIngredients = () => {
     return function (dispatch: Dispatch<any>) {

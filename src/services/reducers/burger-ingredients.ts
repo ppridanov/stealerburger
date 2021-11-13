@@ -5,11 +5,12 @@ import {
     GET_INGREDIENTS_FAILED,
     SET_INGREDIENT_TO_MODAL, REMOVE_INGREDIENT_FROM_MODAL
 } from "../actions/burger-ingredients";
+import {TBurgerIngredientsActions} from "../../types/burger-ingerdients";
 
 type TIngredientInitialState = {
     ingredients: TIngredient[];
-    ingredientsRequest: false;
-    ingredientsFailed: false;
+    ingredientsRequest: boolean;
+    ingredientsFailed: boolean;
     ingredientDetails: TIngredient | {}
 }
 
@@ -20,7 +21,7 @@ const initialState: TIngredientInitialState = {
     ingredientDetails: {}
 };
 
-export const burgerIngredientsReducer = (state = initialState, action: any) => {
+export const burgerIngredientsReducer = (state = initialState, action: TBurgerIngredientsActions): TIngredientInitialState => {
     switch (action.type) {
         case GET_INGREDIENTS_REQUEST: {
             return {
