@@ -61,7 +61,7 @@ export const ProfileForm: React.FC = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className={`${styles.form}`}>
+        <form onSubmit={handleSubmit} className={`${styles.form} mt-30`}>
             <div className="form__item mb-6">
                 <Input
                     placeholder="Имя"

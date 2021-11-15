@@ -8,9 +8,11 @@ import {Profile} from "../../pages/profile/profile";
 import {ProtectedRoute} from "../../hocs/protected-route";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import {Page404} from "../../pages/page-404/page-404";
+import {Feed} from "../../pages/feed/feed";
 import { TLocationState } from '../../types';
 import {useDispatch} from "react-redux";
 import {getIngredients} from "../../services/actions/burger-ingredients";
+import {FeedDetails} from "../feed-details/feed-details";
 
 function App() {
     const history = useHistory();
@@ -28,6 +30,18 @@ function App() {
                         <Route path="/" exact={true}>
                             <Home/>
                         </Route>
+                        <ProtectedRoute path={"/profile/orders/:orderId"} exact={true}>
+                            <FeedDetails />
+                        </ProtectedRoute>
+                        <ProtectedRoute path={"/profile"}>
+                            <Profile/>
+                        </ProtectedRoute>
+                        <Route path="/feed" exact={true}>
+                            <Feed />
+                        </Route>
+                        <Route path={`/feed/:id`} exact={true}>
+                            <FeedDetails />
+                        </Route>
                         <Route path="/login" exact={true}>
                             <Login/>
                         </Route>
@@ -43,9 +57,6 @@ function App() {
                         <Route path={"/ingredients/:id"} exact={true}>
                             <IngredientDetails />
                         </Route>
-                        <ProtectedRoute path={"/profile"} exact={true}>
-                            <Profile/>
-                        </ProtectedRoute>
                         <Route path={`*`}>
                             <Page404 />
                         </Route>
