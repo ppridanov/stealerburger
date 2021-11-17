@@ -1,3 +1,6 @@
+import { formatRelative } from 'date-fns'
+import {ru} from "date-fns/locale";
+
 type TSetCookieProps = {
     expires?: number | Date | string;
     path?: string;
@@ -46,4 +49,8 @@ export function isEmptyObj(obj: {}) {
         return false;
     }
     return true;
+}
+
+export function getDate (date: string): string {
+    return formatRelative(new Date(date), new Date(), { locale: ru })
 }

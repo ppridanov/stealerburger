@@ -2,14 +2,16 @@ import React from "react";
 import styles from "./profile.module.css";
 import {ProfileForm} from "../../components/profile-form/profile-form";
 import {ProfileMenu} from "../../components/profile-menu/profile-menu";
-import {Route, Router, Switch, useRouteMatch} from "react-router-dom";
+import {Route, Switch, useHistory, useLocation, useRouteMatch} from "react-router-dom";
 import {ProfileOrders} from "../../components/profile-orders/profile-orders";
-import Modal from "../../components/modal/modal";
-import {FeedDetails} from "../../components/feed-details/feed-details";
+import {TLocationState} from "../../types";
 
 export function Profile() {
   const { path } = useRouteMatch();
-
+  //Remove this
+  const history = useHistory();
+  const location = useLocation<TLocationState>();
+  let background = history.action === 'PUSH' && location.state && location.state.background;
 
     return (
       <>
@@ -17,7 +19,7 @@ export function Profile() {
           <div className={`${styles.profile__container} pr-5 pl-5`}>
             <ProfileMenu/>
             <div className={`${styles.profile__content}`}>
-              <Switch>
+              <Switch location={background || location}>
                 <Route path={`${path}/`} exact={true}>
                   <ProfileForm />
                 </Route>

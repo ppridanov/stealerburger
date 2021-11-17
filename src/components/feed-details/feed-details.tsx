@@ -1,8 +1,19 @@
 import React from 'react';
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import feedDetailsStyle from './feed-details.module.css';
+import {useParams, useRouteMatch} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {RootState} from "../../types";
 
-export  const FeedDetails = () => {
+export  const FeedDetails: React.FC<any> = ({page}) => {
+  const {id}: {id: string} = useParams();
+  const {url} = useRouteMatch();
+  const {orders} = useSelector((state: RootState) => state.feed);
+  const {userOrders} = useSelector((state: RootState) => state.order);
+  console.log(Number(id))
+  const order = (url === 'feed') ? orders.find((item) => item.number === Number(id)) : userOrders.find((item) => item.number === Number(id));
+  console.log(order);
+
   return (
     <div className={`${feedDetailsStyle.feed}`}>
       <p className={`text text_type_digits-default ${feedDetailsStyle.title}`}>#034533</p>

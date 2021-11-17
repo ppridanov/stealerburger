@@ -66,3 +66,14 @@ export type TChangeUserInfoAction = {
     user: TUser
   }
 }
+
+export type TFeedItem = {
+  createdAt: string;
+  ingredients: [string];
+  name: string;
+  number: number;
+  status: string;
+  updatedAt: string;
+  _id: string;
+  owner?: string;
+}

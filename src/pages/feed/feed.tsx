@@ -1,11 +1,17 @@
-import React, {SyntheticEvent} from 'react';
+import React, {SyntheticEvent, useEffect} from 'react';
 import feedStyles from './feed.module.css';
 import Modal from "../../components/modal/modal";
 import {FeedDetails} from "../../components/feed-details/feed-details";
 import {FeedItem} from "../../components/feed-item/feed-item";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "../../types";
+import {feedWsConnectionClosed, feedWsConnectionStart, feedWsGetMessage} from "../../services/actions/wsFeed";
 
 
 export const Feed = () => {
+  const {orders, total, totalToday, wsConnected} = useSelector((state: RootState) => state.feed);
+
+  const dispatch = useDispatch();
   const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
   const handleOpenModal = (e: SyntheticEvent) => {
     setModalIsOpen(true);
@@ -14,44 +20,65 @@ export const Feed = () => {
     setModalIsOpen(false);
   }
 
+  useEffect(() => {
+    dispatch(feedWsConnectionStart());
+    return () => {
+      dispatch(feedWsConnectionClosed());
+    }
+  }, [dispatch])
+
+  if (orders.length !== 0) {
+    console.log(orders);
+  }
+
   return (
     <>
-      <div className={`container pl-5 pr-5`}>
-        <div className={`main__container`}>
-          <div className={feedStyles.feeds__container}>
-            <h1 className="text text_type_main-large mt-10 text_colo">Лента заказов</h1>
-            <div className={`${feedStyles.feeds} mt-5`}>
-              <FeedItem openModal={handleOpenModal} />
+      {wsConnected && total && totalToday && orders.length !== 0 && (
+        <div className={`container pl-5 pr-5`}>
+          <div className={`main__container`}>
+            <div className={feedStyles.feeds__container}>
+              <h1 className="text text_type_main-large mt-10 text_colo">Лента заказов</h1>
+              <div className={`${feedStyles.feeds} mt-5 custom-scroll`}>
+                {orders.map((item) => <FeedItem data={item} openModal={handleOpenModal} />)}
+              </div>
             </div>
-          </div>
-          <div className={`${feedStyles.feed__info}`}>
-            <div className={feedStyles.feed__board}>
-              <ul className={feedStyles.feed__completed}>
-                <li className={`text text_type_main-default mb-6`}>Готовы:</li>
-                <li className={`text text_type_digits-default text_color_success mb-2`}>034533</li>
-                <li className={`text text_type_digits-default text_color_success mb-2`}>034533</li>
-                <li className={`text text_type_digits-default text_color_success mb-2`}>034533</li>
-                <li className={`text text_type_digits-default text_color_success mb-2`}>034533</li>
-                <li className={`text text_type_digits-default text_color_success mb-2`}>034533</li>
-              </ul>
-              <ul className={feedStyles.feed__inProgress}>
-                <li className={`text text_type_main-default mb-6`}>В работе:</li>
-                <li className={`text text_type_digits-default mb-2`}>034538</li>
-                <li className={`text text_type_digits-default mb-2`}>034538</li>
-                <li className={`text text_type_digits-default mb-2`}>034538</li>
-              </ul>
-            </div>
-            <div className="feed__allCount mt-15">
-              <p className={`text text_type_main-default`}>Выполнено за все время:</p>
-              <p className={`text text_type_digits-large text_color_primary ${feedStyles.feed__mainTitle}`}>28 752</p>
-            </div>
-            <div className="feed__todayCount mt-15">
-              <p className={`text text_type_main-default`}>Выполнено за сегодня:</p>
-              <p className={`text text_type_digits-large  text_color_primary ${feedStyles.feed__mainTitle}`}>138</p>
+            <div className={`${feedStyles.feed__info}`}>
+              <div className={feedStyles.feed__board}>
+                <div className={feedStyles.feed__boardLeft}>
+                  <p className={`text text_type_main-medium mb-6`}>Готовы</p>
+                  <ul className={feedStyles.feed__completed}>
+                    {orders
+                      .filter((item: any) => item.status === 'done')
+                      .slice(0, 10)
+                      .map((item: any) => (<li className={`text text_type_digits-default text_color_success mb-2`}>{item.number}</li>))
+                    }
+                  </ul>
+                </div>
+                <div className={feedStyles.feed__boardRight}>
+                  <p className={`text text_type_main-medium mb-6`}>В работе:</p>
+                  <ul className={feedStyles.feed__inProgress}>
+                    {orders
+                      .filter((item: any) => item.status === 'pending')
+                      .slice(0, 10)
+                      .map((item: any) => (<li className={`text text_type_digits-default text_color_success mb-2`}>{item.number}</li>))
+                    }
+                  </ul>
+                </div>
+
+              </div>
+              <div className="feed__allCount mt-15">
+                <p className={`text text_type_main-default`}>Выполнено за все время:</p>
+                <p className={`text text_type_digits-large text_color_primary ${feedStyles.feed__mainTitle}`}>{total}</p>
+              </div>
+              <div className="feed__todayCount mt-15">
+                <p className={`text text_type_main-default`}>Выполнено за сегодня:</p>
+                <p className={`text text_type_digits-large  text_color_primary ${feedStyles.feed__mainTitle}`}>{totalToday}</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
+
       {modalIsOpen && (
         <Modal onClose={handleCloseModal}>
           <FeedDetails />

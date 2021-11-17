@@ -83,3 +83,17 @@ export const getUser = async () => {
         }
     })
 }
+
+export const getUserOrderReq = async (orderId: string) => {
+    const accessToken = getCookie('token')
+    if (!accessToken) {
+        return { user: null };
+    }
+    return await fetchWithRefresh(`${apiURL}/orders/${orderId}`, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': accessToken
+        }
+    })
+}
