@@ -4,9 +4,10 @@ export const ORDER_WS_CONNECTION_CLOSED: 'ORDER_WS_CONNECTION_CLOSED' = 'ORDER_W
 export const ORDER_WS_GET_MESSAGE: 'ORDER_WS_GET_MESSAGE' = 'ORDER_WS_GET_MESSAGE';
 export const ORDER_WS_CONNECTION_START: 'ORDER_WS_CONNECTION_START' = 'ORDER_WS_CONNECTION_START';
 
-export const orderWsConnectionStart = () => {
+export const orderWsConnectionStart = (url: string) => {
   return {
-    type: ORDER_WS_CONNECTION_START
+    type: ORDER_WS_CONNECTION_START,
+    payload: url
   }
 }
 

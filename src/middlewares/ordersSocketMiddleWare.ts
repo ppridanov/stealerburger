@@ -15,10 +15,11 @@ export const ordersSocketMiddleWare = (wsUrl: string, wsActions: wsActionsType):
 
     return next => action => {
       const {dispatch} = store;
-      const {type} = action;
+      const {type, payload} = action;
       const {wsInit, onOpen, onClose, onError, onMessage} = wsActions;
-      if (type === wsInit) {
-        socket = new WebSocket(`${wsUrl}/token=${getCookie('accessToken')}`);
+      if (wsInit.match(type)) {
+        console.log(payload)
+        socket = new WebSocket(payload);
       }
       if (socket) {
         socket.onopen = event => {

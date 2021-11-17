@@ -5,11 +5,11 @@ import {FeedDetails} from "../../components/feed-details/feed-details";
 import {FeedItem} from "../../components/feed-item/feed-item";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../types";
-import {feedWsConnectionClosed, feedWsConnectionStart, feedWsGetMessage} from "../../services/actions/wsFeed";
-
+import {orderWsConnectionClosed, orderWsConnectionStart} from "../../services/actions/wsOrders";
+import {wsUrl} from "../../utils/constants";
 
 export const Feed = () => {
-  const {orders, total, totalToday, wsConnected} = useSelector((state: RootState) => state.feed);
+  const {orders, total, totalToday, wsConnected} = useSelector((state: RootState) => state.order);
 
   const dispatch = useDispatch();
   const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
@@ -21,12 +21,12 @@ export const Feed = () => {
   }
 
   useEffect(() => {
-    dispatch(feedWsConnectionStart());
+    dispatch(orderWsConnectionStart(`${wsUrl}/all`));
     return () => {
-      dispatch(feedWsConnectionClosed());
+      dispatch(orderWsConnectionClosed());
     }
   }, [dispatch])
-
+  console.log(orders)
   if (orders.length !== 0) {
     console.log(orders);
   }

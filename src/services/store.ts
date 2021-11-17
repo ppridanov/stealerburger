@@ -10,13 +10,6 @@ import {
     ORDER_WS_GET_MESSAGE
 } from "./actions/wsOrders";
 import {ordersSocketMiddleWare} from "../middlewares/ordersSocketMiddleWare";
-import {
-    FEED_WS_CONNECTION_CLOSED,
-    FEED_WS_CONNECTION_ERROR,
-    FEED_WS_CONNECTION_START,
-    FEED_WS_CONNECTION_SUCCESS, FEED_WS_GET_MESSAGE
-} from "./actions/wsFeed";
-import {feedSocketMiddleWare} from "../middlewares/feedSocketMiddleWare";
 
 const orderWsActions = {
     wsInit: ORDER_WS_CONNECTION_START,
@@ -26,13 +19,6 @@ const orderWsActions = {
     onMessage: ORDER_WS_GET_MESSAGE
 };
 
-const feedWsActions = {
-    wsInit: FEED_WS_CONNECTION_START,
-    onOpen: FEED_WS_CONNECTION_SUCCESS,
-    onClose: FEED_WS_CONNECTION_CLOSED,
-    onError: FEED_WS_CONNECTION_ERROR,
-    onMessage: FEED_WS_GET_MESSAGE
-}
 
 declare global {
     interface Window {
@@ -41,7 +27,7 @@ declare global {
 }
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const enhancer = composeEnhancers(applyMiddleware(thunk, ordersSocketMiddleWare(wsUrl, orderWsActions), feedSocketMiddleWare(wsUrl, feedWsActions)));
+const enhancer = composeEnhancers(applyMiddleware(thunk, ordersSocketMiddleWare(wsUrl, orderWsActions)));
 
 export const store = createStore(rootReducer, enhancer);
 

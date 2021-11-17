@@ -10,12 +10,16 @@ import {TFeedItem} from "../../types/user";
 
 type TInitialState = {
   wsConnected: boolean,
-  userOrders: TFeedItem[]
+  orders: TFeedItem[],
+  total: number,
+  totalToday: number
 }
 
 const initialState: TInitialState = {
   wsConnected: false,
-  userOrders: []
+  orders: [],
+  total: 0,
+  totalToday: 0
 }
 
 export const wsOrdersReducer = (state = initialState, action: TOrdersActions): TInitialState => {
@@ -33,12 +37,13 @@ export const wsOrdersReducer = (state = initialState, action: TOrdersActions): T
     case ORDER_WS_CONNECTION_CLOSED:
       return {
         ...state,
-        wsConnected: false
+        wsConnected: false,
+        orders: []
       }
     case ORDER_WS_GET_MESSAGE:
       return {
         ...state,
-        userOrders: action.payload
+        orders: action.payload
       }
     default:
       return state;

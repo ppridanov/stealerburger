@@ -8,10 +8,9 @@ import {RootState} from "../../types";
 export  const FeedDetails: React.FC<any> = ({page}) => {
   const {id}: {id: string} = useParams();
   const {url} = useRouteMatch();
-  const {orders} = useSelector((state: RootState) => state.feed);
-  const {userOrders} = useSelector((state: RootState) => state.order);
+  const {orders} = useSelector((state: RootState) => state.order);
   console.log(Number(id))
-  const order = (url === 'feed') ? orders.find((item) => item.number === Number(id)) : userOrders.find((item) => item.number === Number(id));
+  const order = orders.find((item: any) => item.number === Number(id));
   console.log(order);
 
   return (
