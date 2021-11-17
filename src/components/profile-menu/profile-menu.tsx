@@ -18,7 +18,7 @@ export function ProfileMenu() {
                     <NavLink to={`/profile`} exact={true} activeClassName={"text_color_primary"}>Профиль</NavLink>
                 </li>
                 <li className={`${styles.profile__menuItem} text text_type_main-medium text_color_inactive`}>
-                    <NavLink to={`/profile/orders`} exact={true} activeClassName={"text_color_primary"}>История заказов</NavLink>
+                    <NavLink to={`/profile/orders`} exact={true} className={isProfileOrders ? 'text_color_primary' : ''} activeClassName={"text_color_primary"}>История заказов</NavLink>
                 </li>
                 <li onClick={handleClick} className={`${styles.profile__menuItem} text text_type_main-medium text_color_inactive`}>
                     <NavLink exact={true} to={`/login`} activeClassName={"text_color_primary"}>Выход</NavLink>

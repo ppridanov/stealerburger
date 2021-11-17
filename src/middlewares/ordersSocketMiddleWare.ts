@@ -1,5 +1,4 @@
 import {Middleware} from "redux";
-import {getCookie} from "../utils/funcs";
 
 type wsActionsType = {
   wsInit: string,
@@ -18,6 +17,7 @@ export const ordersSocketMiddleWare = (wsUrl: string, wsActions: wsActionsType):
       const {type, payload} = action;
       const {wsInit, onOpen, onClose, onError, onMessage} = wsActions;
       if (wsInit.match(type)) {
+        console.log(payload)
         socket = new WebSocket(payload);
       }
       if (socket) {

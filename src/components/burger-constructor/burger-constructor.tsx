@@ -49,7 +49,7 @@ const BurgerConstructor: React.FC = () => {
             return alert('Выберите булку');
         }
         if (!isAuth) {
-            history.push('/login');
+            return history.push('/login');
         }
         //Здесь я не понял как мне две булки отправлять или же она одна?
         const idsArr = [...ingredients.map((item: TConstructorIngredient) => item._id), bun._id, bun._id];

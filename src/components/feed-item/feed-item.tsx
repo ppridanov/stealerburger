@@ -18,7 +18,7 @@ export const FeedItem: FC<TFeedItemProps> = (props: any) => {
   const { url } = useRouteMatch();
 
   const {ingredients} = useSelector((state: RootState) => state.burgerIngredients);
-  const _id = props.data.number;
+  const _id: number = props.data.number;
 
   const uniqueOrderIngredients = Array.from(new Set(props.data.ingredients));
 
@@ -26,7 +26,7 @@ export const FeedItem: FC<TFeedItemProps> = (props: any) => {
     return ingredients.find((item) => item._id === ingredient);
   });
 
-  const price = orderIngredients?.reduce((acc: any, curr: any): any => {
+  const price = orderIngredients.reduce((acc: any, curr: any): any => {
     if (curr.type === 'bun') {
       acc += curr.price * 2;
     } else {
@@ -36,7 +36,7 @@ export const FeedItem: FC<TFeedItemProps> = (props: any) => {
   }, 0)
 
   return (
-    <Link to={{pathname: `${url}/${_id}`, state: {background: location}}}
+    <Link id={String(_id)} to={{pathname: `${url}/${_id}`, state: {background: location}}}
           className={`${feedStyles.feed} mt-4`}
           onClick={props.openModal}>
       <div className={`${feedStyles.feed__top}`}>

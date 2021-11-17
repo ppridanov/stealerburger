@@ -13,7 +13,9 @@ export const Feed = () => {
 
   const dispatch = useDispatch();
   const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
+  const [orderId, setOrderId] = React.useState<string | null>(null)
   const handleOpenModal = (e: SyntheticEvent) => {
+    setOrderId(e.currentTarget.id);
     setModalIsOpen(true);
   }
   const handleCloseModal = () => {
@@ -29,7 +31,7 @@ export const Feed = () => {
 
   return (
     <>
-      {!wsConnected && <h1 style={{textAlign: "center"}}>Произошла ошибка</h1>}
+      {/*{!wsConnected && <h1 style={{textAlign: "center"}}>Произошла ошибка</h1>}*/}
       {wsConnected && orders && orders.length === 0 && (<h1 style={{textAlign: "center"}}>Идет загрузка</h1>)}
       {(total && totalToday && orders.length !== 0) ? (
         <div className={`container pl-5 pr-5`}>
@@ -79,7 +81,7 @@ export const Feed = () => {
 
       {modalIsOpen && (
         <Modal onClose={handleCloseModal}>
-          <FeedDetails />
+          <FeedDetails orderId={orderId} />
         </Modal>)
       }
     </>
