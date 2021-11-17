@@ -58,7 +58,7 @@ export type TGetOrderRequestAction = {
 
 export type TGetOrderSuccessAction = {
   readonly type: typeof GET_ORDER_SUCCESS;
-  readonly order: TFeedItem;
+  readonly orders: TFeedItem[];
 }
 
 export type TGetOrderFailedAction = {

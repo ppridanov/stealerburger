@@ -66,7 +66,7 @@ export const getOrder: AppThunk = (orderId) => {
         if (data && data.success) {
           dispatch({
             type: GET_ORDER_SUCCESS,
-            order: data.data,
+            orders: data.orders,
           })
         } else {
           dispatch({type: GET_ORDER_FAILED})

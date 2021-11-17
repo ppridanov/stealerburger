@@ -80,7 +80,7 @@ export const ordersReducer = (state = initialState, action: TOrdersActions): TIn
     case GET_ORDER_SUCCESS:
       return {
         ...state,
-        order: action.order
+        orders: action.orders
       }
     case GET_ORDER_NUMBER_REQUEST:
       return {

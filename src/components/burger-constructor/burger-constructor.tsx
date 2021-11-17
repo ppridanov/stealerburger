@@ -26,7 +26,7 @@ const BurgerConstructor: React.FC = () => {
     }));
     const dispatch = useDispatch();
     const history = useHistory();
-    console.log(orderNumber)
+
     const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false)
     const moveIngredient = (ingredient: TConstructorIngredient) => {
         dispatch({

@@ -26,15 +26,14 @@ export const FeedItem: FC<TFeedItemProps> = (props: any) => {
     return ingredients.find((item) => item._id === ingredient);
   });
 
-  const totalPrice = useMemo(() => {
-    let price = orderIngredients.reduce((acc: number, item: any) => {
-      if (item.bun) {
-        acc += item.price * 2
-      }
-      return item.price + acc;
-    }, 0);
-    return price;
-  }, [orderIngredients]);
+  const price = orderIngredients?.reduce((acc: any, curr: any): any => {
+    if (curr.type === 'bun') {
+      acc += curr.price * 2;
+    } else {
+      acc += curr.price;
+    }
+    return acc;
+  }, 0)
 
   return (
     <Link to={{pathname: `${url}/${_id}`, state: {background: location}}}
@@ -53,7 +52,7 @@ export const FeedItem: FC<TFeedItemProps> = (props: any) => {
           {orderIngredients.length > 4 && (<span className={`${feedStyles.more} text text_type_main-default`}>+{orderIngredients.length - 4}</span>)}
         </div>
         <div className={`${constructorStyle.total__price} mr-10`}>
-          <span className="text text_type_digits-medium">{totalPrice}</span>
+          <span className="text text_type_digits-medium">{price}</span>
           <CurrencyIcon type="primary"/>
         </div>
       </div>

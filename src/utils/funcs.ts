@@ -51,6 +51,24 @@ export function isEmptyObj(obj: {}) {
     return true;
 }
 
-export function getDate (date: string): string {
+export function getDate (date: string | undefined): string | null {
+    if (!date) return null;
     return formatRelative(new Date(date), new Date(), { locale: ru })
+}
+
+export function translateOrderStatus(status: string | undefined): string | any {
+    let result = '';
+    switch (status) {
+        case 'done':
+            result = 'Выполнен';
+            break;
+        case 'pending':
+            result = 'Готовится';
+            break;
+        case 'created':
+            result = 'Создан';
+            break;
+        default:
+            throw new Error('Не указан статус заказа');
+    }
 }
