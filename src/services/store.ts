@@ -8,7 +8,7 @@ import {
     ORDER_WS_CONNECTION_START,
     ORDER_WS_CONNECTION_SUCCESS,
     ORDER_WS_GET_MESSAGE
-} from "./actions/wsOrders";
+} from "./actions/orders";
 import {ordersSocketMiddleWare} from "../middlewares/ordersSocketMiddleWare";
 
 const orderWsActions = {

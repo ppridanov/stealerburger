@@ -5,13 +5,12 @@ import {useParams, useRouteMatch} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {RootState} from "../../types";
 
-export  const FeedDetails: React.FC<any> = ({page}) => {
+export  const FeedDetails: React.FC<any> = ({orderId}) => {
   const {id}: {id: string} = useParams();
-  const {url} = useRouteMatch();
-  const {orders} = useSelector((state: RootState) => state.order);
-  console.log(Number(id))
-  const order = orders.find((item: any) => item.number === Number(id));
-  console.log(order);
+
+
+  const {orders} = useSelector((state: RootState) => state.orderData);
+
 
   return (
     <div className={`${feedDetailsStyle.feed}`}>

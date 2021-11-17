@@ -5,11 +5,11 @@ import {FeedDetails} from "../../components/feed-details/feed-details";
 import {FeedItem} from "../../components/feed-item/feed-item";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../types";
-import {orderWsConnectionClosed, orderWsConnectionStart} from "../../services/actions/wsOrders";
+import {orderWsConnectionClosed, orderWsConnectionStart} from "../../services/actions/orders";
 import {wsUrl} from "../../utils/constants";
 
 export const Feed = () => {
-  const {orders, total, totalToday, wsConnected} = useSelector((state: RootState) => state.order);
+  const {orders, total, totalToday, wsConnected} = useSelector((state: RootState) => state.orderData);
 
   const dispatch = useDispatch();
   const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
@@ -26,20 +26,18 @@ export const Feed = () => {
       dispatch(orderWsConnectionClosed());
     }
   }, [dispatch])
-  console.log(orders)
-  if (orders.length !== 0) {
-    console.log(orders);
-  }
 
   return (
     <>
-      {wsConnected && total && totalToday && orders.length !== 0 && (
+      {!wsConnected && <h1 style={{textAlign: "center"}}>Произошла ошибка</h1>}
+      {wsConnected && orders && orders.length === 0 && (<h1 style={{textAlign: "center"}}>Идет загрузка</h1>)}
+      {(total && totalToday && orders.length !== 0) ? (
         <div className={`container pl-5 pr-5`}>
           <div className={`main__container`}>
             <div className={feedStyles.feeds__container}>
               <h1 className="text text_type_main-large mt-10 text_colo">Лента заказов</h1>
               <div className={`${feedStyles.feeds} mt-5 custom-scroll`}>
-                {orders.map((item) => <FeedItem data={item} openModal={handleOpenModal} />)}
+                {orders.map((item, index) => <FeedItem data={item} openModal={handleOpenModal} key={index} />)}
               </div>
             </div>
             <div className={`${feedStyles.feed__info}`}>
@@ -50,7 +48,7 @@ export const Feed = () => {
                     {orders
                       .filter((item: any) => item.status === 'done')
                       .slice(0, 10)
-                      .map((item: any) => (<li className={`text text_type_digits-default text_color_success mb-2`}>{item.number}</li>))
+                      .map((item: any, index) => (<li className={`text text_type_digits-default text_color_success mb-2`} key={index}>{item.number}</li>))
                     }
                   </ul>
                 </div>
@@ -60,7 +58,7 @@ export const Feed = () => {
                     {orders
                       .filter((item: any) => item.status === 'pending')
                       .slice(0, 10)
-                      .map((item: any) => (<li className={`text text_type_digits-default text_color_success mb-2`}>{item.number}</li>))
+                      .map((item: any, index) => (<li className={`text text_type_digits-default text_color_success mb-2`} key={index}>{item.number}</li>))
                     }
                   </ul>
                 </div>
@@ -77,7 +75,7 @@ export const Feed = () => {
             </div>
           </div>
         </div>
-      )}
+      ) : null}
 
       {modalIsOpen && (
         <Modal onClose={handleCloseModal}>

@@ -4,10 +4,11 @@ import {CheckMarkIcon} from "@ya.praktikum/react-developer-burger-ui-components"
 import doneImage from '../../images/graphics.svg'
 
 type TOrderDetailsProps = {
-    id: string
+    id: string | null
 }
 
 const OrderDetails: React.FC<TOrderDetailsProps> = ({id}) => {
+  console.log(id);
     return(
         <div className={`${orderDetailsStyles.order} pb-15`}>
             <h3 className={`${orderDetailsStyles.title} text text_primary_ligth text_type_digits-large`}>

@@ -6,9 +6,9 @@ import OrderDetails from "../order-details/order-details";
 import {useDispatch, useSelector} from "react-redux";
 import {
     ADD_BUN_TO_CONSTRUCTOR,
-    ADD_INGREDIENT_TO_CONSTRUCTOR, CLEAR_CONSTRUCTOR, CLEAR_ORDER,
-    postOrder
+    ADD_INGREDIENT_TO_CONSTRUCTOR, CLEAR_CONSTRUCTOR
 } from "../../services/actions/burger-constructor";
+import {CLEAR_ORDER_NUMBER, postOrder} from "../../services/actions/orders";
 
 import {useDrop} from "react-dnd";
 import {v4 as uuidv4} from 'uuid';
@@ -18,15 +18,15 @@ import {useHistory} from "react-router-dom";
 import {RootState, TConstructorIngredient} from '../../types';
 
 const BurgerConstructor: React.FC = () => {
-    const {ingredients, bun, order, isAuth} = useSelector((state: RootState) => ({
+    const {ingredients, bun, orderNumber, isAuth} = useSelector((state: RootState) => ({
         ingredients: state.burgerConstructor.ingredients,
         bun: state.burgerConstructor.bun,
-        order: state.burgerConstructor.order,
+        orderNumber: state.orderData.orderNumber,
         isAuth: state.userData.isAuth
     }));
     const dispatch = useDispatch();
     const history = useHistory();
-
+    console.log(orderNumber)
     const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false)
     const moveIngredient = (ingredient: TConstructorIngredient) => {
         dispatch({
@@ -51,7 +51,6 @@ const BurgerConstructor: React.FC = () => {
         if (!isAuth) {
             history.push('/login');
         }
-         
         //Здесь я не понял как мне две булки отправлять или же она одна?
         const idsArr = [...ingredients.map((item: TConstructorIngredient) => item._id), bun._id, bun._id];
         dispatch(postOrder(idsArr));
@@ -60,7 +59,7 @@ const BurgerConstructor: React.FC = () => {
 
     const handleClose = () => {
         dispatch({
-            type: CLEAR_ORDER
+            type: CLEAR_ORDER_NUMBER
         })
         dispatch({
             type: CLEAR_CONSTRUCTOR
@@ -132,9 +131,9 @@ const BurgerConstructor: React.FC = () => {
                     </div>
                 )}
             </div>
-            {modalIsOpen && order && (
+            {modalIsOpen && orderNumber && (
                 <Modal onClose={handleClose}>
-                    <OrderDetails id={order}/>
+                    <OrderDetails id={orderNumber}/>
                 </Modal>
             )}
         </>

@@ -17,7 +17,6 @@ type TIngredientProps = {
 
 const Ingredient: React.FC<TIngredientProps> = (props) => {
     const location = useLocation();
-    console.log(location)
     const {image, price, name, _id, onOpen, type} = props;
     const {ingredients, bun}: any = useSelector<any>(state => state.burgerConstructor);
     let ingredientsCount = ingredients.filter((item: TIngredient) => item._id === _id).length;

@@ -34,7 +34,7 @@ function App() {
                             <FeedDetails />
                         </ProtectedRoute>
                         <ProtectedRoute path={"/profile"}>
-                            <Profile/>
+                            <Profile />
                         </ProtectedRoute>
                         <Route path="/feed" exact={true}>
                             <Feed />
