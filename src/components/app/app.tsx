@@ -30,7 +30,7 @@ function App() {
                         <Route path="/" exact={true}>
                             <Home/>
                         </Route>
-                        <ProtectedRoute path={"/profile/orders/:orderId"} exact={true}>
+                        <ProtectedRoute path={"/profile/orders/:id"} exact={true}>
                             <FeedDetails />
                         </ProtectedRoute>
                         <ProtectedRoute path={"/profile"}>

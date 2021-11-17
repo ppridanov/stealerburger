@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo} from 'react';
 import {CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import feedDetailsStyle from './feed-details.module.css';
-import {useParams} from "react-router-dom";
+import {useParams, useRouteMatch} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {RootState} from "../../types";
 import {getOrder} from "../../services/actions/orders";
@@ -9,6 +9,7 @@ import {getDate} from "../../utils/funcs";
 
 export  const FeedDetails: React.FC<any> = ({orderId}) => {
   const {id}: {id: string} = useParams();
+  console.log(id)
   const orderNumber = id || orderId;
 
   const dispatch = useDispatch();
@@ -21,26 +22,21 @@ export  const FeedDetails: React.FC<any> = ({orderId}) => {
     }
   }, [dispatch])
 
-  const order = orders.find((item) => item.number === Number(orderNumber));
 
-  const uniqueOrder = useMemo(() => {
-    return Array.from(new Set(order?.ingredients));
-  }, [order])
+  const order = orders && orders.find((item) => item.number === Number(orderNumber));
 
   const orderIngredients = useMemo(() => {
-    return uniqueOrder.map((ingredient) => {
+    return Array.from(new Set(order?.ingredients)).map((ingredient) => {
       return ingredients.find((item) => item._id === ingredient);
-    });
-  }, [uniqueOrder])
+    });;
+  }, [order, ingredients])
 
   const price = useMemo(() => {
-    return orderIngredients && orderIngredients.reduce((acc: any, item: any): any => {
-      console.log(item)
-      console.log(orderIngredients)
-      if (item.type === 'bun') {
-        acc += item.price * 2;
+    return orderIngredients.reduce((acc: any, item: any): any => {
+      if (item && item.type === 'bun') {
+        acc += item && item.price * 2;
       } else {
-        acc += item.price;
+        acc += item && item.price;
       }
       return acc;
     }, 0)
