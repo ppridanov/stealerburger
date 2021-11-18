@@ -77,6 +77,14 @@ export const getOrder = (orderNumber: string): AppThunk => {
   }
 }
 
+export const orderWsActions = {
+  wsInit: ORDER_WS_CONNECTION_START,
+  onOpen: ORDER_WS_CONNECTION_SUCCESS,
+  onClose: ORDER_WS_CONNECTION_CLOSED,
+  onError: ORDER_WS_CONNECTION_ERROR,
+  onMessage: ORDER_WS_GET_MESSAGE
+};
+
 export const postOrder = (idsArr: string[]): AppThunk => {
   return async function (dispatch: AppDispatch) {
     dispatch({

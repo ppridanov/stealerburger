@@ -1,5 +1,5 @@
 import { Middleware, MiddlewareAPI } from "redux";
-import {orderWsActions} from "../../utils/constants";
+import {orderWsActions} from "../actions/orders";
 
 type wsActionsType = typeof orderWsActions;
 

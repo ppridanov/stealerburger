@@ -5,7 +5,7 @@ import {
   GET_USER_SUCCESS,
   SET_IS_AUTH,
   DELETE_IS_AUTH,
-  SET_WAS_ON_FORGOT_PAGE, DELETE_WAS_ON_FORGOT_PAGE, CHANGE_USER_INFO, SET_IS_FPASSWORD_RESET
+  SET_WAS_ON_FORGOT_PAGE, DELETE_WAS_ON_FORGOT_PAGE, CHANGE_USER_INFO
 } from "../actions/users";
 import { setCookie, deleteCookie, getCookie } from "../../utils/funcs";
 import { TUserActions } from "../types/user";
@@ -75,11 +75,6 @@ export const usersReducer = (state = initialState, action: TUserActions): TUsers
       return {
         ...state,
         isAuth: true,
-      }
-    case SET_IS_FPASSWORD_RESET:
-      return {
-        ...state,
-        forgotPasswordSuccess: true
       }
     case DELETE_IS_AUTH:
       deleteCookie('token');

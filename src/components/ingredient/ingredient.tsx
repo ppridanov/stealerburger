@@ -4,7 +4,6 @@ import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-com
 import {useDrag} from "react-dnd";
 import {Link, useLocation} from "react-router-dom";
 import { useSelector } from '../../hooks/store';
-import { TIngredient } from '../../utils/types';
 
 type TIngredientProps = {
     image: string;

@@ -22,10 +22,18 @@ const BurgerConstructor: React.FC = () => {
   const history = useHistory();
 
   const moveIngredient = (ingredient: TConstructorIngredient) => {
-    dispatch({
-      type: ingredient.type === 'bun' ? ADD_BUN_TO_CONSTRUCTOR : ADD_INGREDIENT_TO_CONSTRUCTOR,
-      item: { ...ingredient, uuid: uuidv4() }
-    })
+    if (ingredient.type === 'bun') {
+      dispatch({
+        type: ADD_BUN_TO_CONSTRUCTOR,
+        item: { ...ingredient, uuid: uuidv4() }
+      })
+    } else {
+      dispatch({
+        type: ADD_INGREDIENT_TO_CONSTRUCTOR,
+        item: { ...ingredient, uuid: uuidv4() }
+      })
+    }
+
   }
 
   const [{ isHover }, dropTarget] = useDrop({

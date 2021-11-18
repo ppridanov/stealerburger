@@ -7,7 +7,7 @@ import {
   SET_WAS_ON_FORGOT_PAGE,
   DELETE_WAS_ON_FORGOT_PAGE,
   DELETE_IS_AUTH,
-  CHANGE_USER_INFO, SET_IS_FPASSWORD_RESET,
+  CHANGE_USER_INFO,
 } from "../actions/users";
 import { TUser } from "../../utils/types";
 
@@ -20,8 +20,7 @@ export type TUserActions =
   TDeleteIsAuthAction |
   TSetWasOnForgotPageAction |
   TDeleteWasOnForgotPageAction |
-  TChangeUserInfoAction |
-  TSetIsFPasswordAction
+  TChangeUserInfoAction;
 
 export type TGetUserFailedAction = {
   readonly type: typeof GET_USER_FAILED;
@@ -66,10 +65,6 @@ export type TChangeUserInfoAction = {
   readonly payload: {
     user: TUser
   }
-}
-
-export type TSetIsFPasswordAction = {
-  readonly type: typeof SET_IS_FPASSWORD_RESET;
 }
 
 export type TFeedItem = {

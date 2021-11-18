@@ -3,7 +3,6 @@ import ingredientsStyles from './burger-ingredients.module.css';
 import Ingredient from "../ingredient/ingredient";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from '../../hooks/store';
-import { TIngredient } from '../../utils/types';
 
 const BurgerIngredients = () => {
   const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector((state) => state.burgerIngredients)
