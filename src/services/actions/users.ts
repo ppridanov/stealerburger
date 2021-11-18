@@ -1,7 +1,7 @@
 import { checkResponse, getUser, patchUser, sendData } from "../../utils/api";
 import { apiURL } from "../../utils/constants";
 import { History } from 'history';
-import { AppDispatch, TResetPasswordForm, TFormData, TLoginForm } from "../../utils/types";
+import {AppDispatch, TResetPasswordForm, TFormData, TLoginForm, AppThunk} from "../../utils/types";
 
 export const GET_USER_REQUEST: 'GET_USER_REQUEST' = 'GET_USER_REQUEST';
 export const GET_USER_SUCCESS: 'GET_USER_SUCCESS' = 'GET_USER_SUCCESS';
@@ -13,7 +13,7 @@ export const CHANGE_USER_INFO: 'CHANGE_USER_INFO' = 'CHANGE_USER_INFO';
 export const SET_WAS_ON_FORGOT_PAGE: 'SET_WAS_ON_FORGOT_PAGE' = 'SET_WAS_ON_FORGOT_PAGE';
 export const DELETE_WAS_ON_FORGOT_PAGE: 'DELETE_WAS_ON_FORGOT_PAGE' = 'DELETE_WAS_ON_FORGOT_PAGE';
 
-export const postForgotPassword = (emailValue: string, history: History) => {
+export const postForgotPassword = (emailValue: string, history: History): AppThunk => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST
@@ -46,7 +46,7 @@ export const postForgotPassword = (emailValue: string, history: History) => {
   }
 }
 
-export const postResetPassword = (formData: TResetPasswordForm, history: History) => {
+export const postResetPassword = (formData: TResetPasswordForm, history: History): AppThunk => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST
@@ -82,7 +82,7 @@ export const postResetPassword = (formData: TResetPasswordForm, history: History
   }
 }
 
-export const postRegister = (formData: TFormData, history: History) => {
+export const postRegister = (formData: TFormData, history: History): AppThunk => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST
@@ -131,7 +131,7 @@ export const postRegister = (formData: TFormData, history: History) => {
   }
 }
 
-export const postLogin = (formData: TLoginForm, history: History, from: { pathname: string }) => {
+export const postLogin = (formData: TLoginForm, history: History, from: { pathname: string }): AppThunk => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST
@@ -179,7 +179,7 @@ export const postLogin = (formData: TLoginForm, history: History, from: { pathna
   }
 }
 
-export const postLogout = (history: History) => {
+export const postLogout = (history: History): AppThunk => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST
@@ -218,7 +218,7 @@ export const postLogout = (history: History) => {
   }
 }
 
-export const getUserInfo = () => {
+export const getUserInfo = (): AppThunk => {
   return async function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST
@@ -246,7 +246,7 @@ export const getUserInfo = () => {
   }
 }
 
-export const postChangeUserInfo = (formData: TFormData) => {
+export const postChangeUserInfo = (formData: TFormData): AppThunk => {
   return async function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST

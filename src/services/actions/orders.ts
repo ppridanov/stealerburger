@@ -1,4 +1,4 @@
-import { AppDispatch } from "../../utils/types";
+import {AppDispatch, AppThunk} from "../../utils/types";
 import { apiURL } from "../../utils/constants";
 import { getData, postOrderReq } from "../../utils/api";
 import { TFeedItem } from "../types/user";
@@ -48,12 +48,12 @@ export const orderWsGetMessage = (message: TFeedItem[]) => {
   }
 }
 
-export const getOrder = (orderId: string) => {
+export const getOrder = (orderNumber: string): AppThunk => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_ORDER_REQUEST
     })
-    getData(`${apiURL}/orders/${orderId}`)
+    getData(`${apiURL}/orders/${orderNumber}`)
       .then(res => {
         if (res.ok) {
           return res.json();
@@ -77,7 +77,7 @@ export const getOrder = (orderId: string) => {
   }
 }
 
-export const postOrder = (idsArr: string[]) => {
+export const postOrder = (idsArr: string[]): AppThunk => {
   return async function (dispatch: AppDispatch) {
     dispatch({
       type: GET_ORDER_NUMBER_REQUEST
