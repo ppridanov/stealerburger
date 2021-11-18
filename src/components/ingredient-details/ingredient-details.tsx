@@ -1,12 +1,12 @@
 import ingredientDetailsStyle from './ingredient-detail.module.css';
 import { useHistory, useLocation, useParams } from "react-router-dom";
 import { useSelector } from '../../hooks/store';
-import { TIngredientDetailParams, TIngredient, TLocationState } from '../../utils/types';
+import { TIngredientDetailParams, TLocationState } from '../../utils/types';
 
 function IngredientDetails() {
   const { ingredients } = useSelector((state) => state.burgerIngredients);
   const { id } = useParams<TIngredientDetailParams>();
-  const ingredient: TIngredient | undefined = ingredients.find((item) => item._id === id);
+  const ingredient = ingredients.find((item) => item._id === id);
 
   const history = useHistory();
 
