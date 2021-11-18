@@ -10,6 +10,7 @@ import {
     ORDER_WS_GET_MESSAGE
 } from "./actions/orders";
 import {ordersSocketMiddleWare} from "../middlewares/ordersSocketMiddleWare";
+import {configureStore} from "@reduxjs/toolkit";
 
 const orderWsActions = {
     wsInit: ORDER_WS_CONNECTION_START,
@@ -26,9 +27,12 @@ declare global {
     }
 }
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const enhancer = composeEnhancers(applyMiddleware(thunk, ordersSocketMiddleWare(wsUrl, orderWsActions)));
+const orderMiddleWare = ordersSocketMiddleWare(wsUrl, orderWsActions)
 
-export const store = createStore(rootReducer, enhancer);
-
+export const store = configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => {
+        return getDefaultMiddleware().concat(orderMiddleWare)
+    }
+})
 export default store;

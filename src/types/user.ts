@@ -9,7 +9,7 @@ import {
   DELETE_IS_AUTH,
   CHANGE_USER_INFO,
 } from "../services/actions/users";
-import {TUser} from "./index";
+import { TUser } from "./index";
 
 export type TUserActions =
   TGetUserFailedAction |

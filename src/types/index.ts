@@ -1,10 +1,18 @@
-import {Location} from 'history';
-import {store} from "../services/store";
-import { Action, ActionCreator } from 'redux';
+import { Location } from 'history';
+import { store } from "../services/store";
 import { ThunkAction } from 'redux-thunk';
-import {TUserActions} from "./user";
-import {TBurgerIngredientsActions} from "./burger-ingerdients";
-import {TConstructorActions} from "./burger-constructor";
+import { TUserActions } from "./user";
+import { TBurgerIngredientsActions } from "./burger-ingerdients";
+import { TConstructorActions } from "./burger-constructor";
+import {
+    TypedUseSelectorHook,
+    useDispatch as dispatchHook,
+    useSelector as selectorHook
+} from 'react-redux';
+import { TOrdersActions } from "./orders";
+import { rootReducer } from "../services/reducers";
+import { TIngredientsThunkActions } from "../services/actions/burger-ingredients";
+import { TOrdersThunkActions } from "../services/actions/orders";
 
 export type TIngredient = {
     calories: number;
@@ -64,14 +72,16 @@ export type TUser = {
     name: string;
 }
 
-type TApplicationActions = TUserActions | TBurgerIngredientsActions | TConstructorActions;
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
-export type AppThunk<ReturnType = void> = ActionCreator<
-  ThunkAction<
+type TApplicationActions = TUserActions | TBurgerIngredientsActions | TConstructorActions | TOrdersActions;
+export type AppThunk<ReturnType = void> = ThunkAction<
     ReturnType,
-    Action,
     RootState,
+    unknown,
     TApplicationActions
-    >
-  >;
+>
+
+export type AppDispatch = <TReturnType>(action: TApplicationActions | AppThunk | undefined) => TReturnType;
+export const useDispatch = () => dispatchHook<AppDispatch>();
+
+export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
+export type RootState = ReturnType<typeof rootReducer>;

@@ -12,15 +12,6 @@ export const Feed = () => {
   const {orders, total, totalToday, wsConnected} = useSelector((state: RootState) => state.orderData);
 
   const dispatch = useDispatch();
-  const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
-  const [orderId, setOrderId] = React.useState<string | null>(null)
-  const handleOpenModal = (e: SyntheticEvent) => {
-    setOrderId(e.currentTarget.id);
-    setModalIsOpen(true);
-  }
-  const handleCloseModal = () => {
-    setModalIsOpen(false);
-  }
 
   useEffect(() => {
     dispatch(orderWsConnectionStart(`${wsUrl}/all`));
@@ -39,7 +30,7 @@ export const Feed = () => {
             <div className={feedStyles.feeds__container}>
               <h1 className="text text_type_main-large mt-10 text_colo">Лента заказов</h1>
               <div className={`${feedStyles.feeds} mt-5 custom-scroll`}>
-                {orders.map((item, index) => <FeedItem data={item} openModal={handleOpenModal} key={index} />)}
+                {orders.map((item, index) => <FeedItem data={item} key={index} />)}
               </div>
             </div>
             <div className={`${feedStyles.feed__info}`}>
@@ -78,12 +69,6 @@ export const Feed = () => {
           </div>
         </div>
       ) : null}
-
-      {modalIsOpen && (
-        <Modal onClose={handleCloseModal}>
-          <FeedDetails orderId={orderId} />
-        </Modal>)
-      }
     </>
   )
 }

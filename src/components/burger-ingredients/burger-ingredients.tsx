@@ -1,19 +1,18 @@
-import React, {createRef, SyntheticEvent} from 'react';
+import React, { createRef, SyntheticEvent } from 'react';
 import ingredientsStyles from './burger-ingredients.module.css';
 import appStyles from '../app/app.module.css';
 import Ingredient from "../ingredient/ingredient";
-import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../modal/modal";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import {useDispatch, useSelector} from "react-redux";
 import {
     REMOVE_INGREDIENT_FROM_MODAL,
     SET_INGREDIENT_TO_MODAL
 } from "../../services/actions/burger-ingredients";
-import {RootState, TIngredient} from "../../types";
+import { RootState, TIngredient, useSelector, useDispatch } from "../../types";
 
 const BurgerIngredients = () => {
-    const {ingredients, ingredientsRequest, ingredientsFailed, ingredientDetails} = useSelector((state: RootState) => state.burgerIngredients)
+    const { ingredients, ingredientsRequest, ingredientsFailed, ingredientDetails } = useSelector((state: RootState) => state.burgerIngredients)
     const [current, setCurrent] = React.useState<string>('buns');
     const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
     const scrollContRef = createRef<HTMLDivElement>();
@@ -24,10 +23,13 @@ const BurgerIngredients = () => {
 
     const handleOpenModal = (e: SyntheticEvent) => {
         const id = e.currentTarget.getAttribute('id');
-        dispatch({
-            type: SET_INGREDIENT_TO_MODAL,
-            item: ingredients.find((item: TIngredient) => item._id === id)
-        })
+        const ingredient = ingredients.find((item: TIngredient) => item._id === id)
+        if (ingredient) {
+            dispatch({
+                type: SET_INGREDIENT_TO_MODAL,
+                item: ingredient
+            })
+        }
         setModalIsOpen(true);
     }
     const handleCloseModal = () => {
@@ -67,7 +69,7 @@ const BurgerIngredients = () => {
             {!ingredientsFailed && !ingredientsRequest && ingredients.length > 0 && (
                 <div className={ingredientsStyles.constr}>
                     <h1 className="text text_type_main-large mt-10 text_colo">Соберите бургер</h1>
-                    <div style={{display: 'flex'}} className='mt-5'>
+                    <div style={{ display: 'flex' }} className='mt-5'>
                         <a className={appStyles.link} href="#buns">
                             <Tab value="buns" active={current === 'buns'} onClick={handleTabClick}>
                                 Булка
@@ -89,27 +91,22 @@ const BurgerIngredients = () => {
                             <h3 className="text text_type_main-medium" ref={bunsRef} id="buns">Булки</h3>
                             <div className={ingredientsStyles.products__cont}>
                                 {ingredients.filter((item: TIngredient) => item.type === 'bun').map((item: TIngredient) => <Ingredient
-                                    onOpen={handleOpenModal} {...item} key={item._id}/>)}
+                                    {...item} key={item._id} />)}
                             </div>
                             <h3 className="text text_type_main-medium" ref={saucesRef} id="sauces">Соусы</h3>
                             <div className={ingredientsStyles.products__cont}>
                                 {ingredients.filter((item: TIngredient) => item.type === 'sauce').map((item: TIngredient) => <Ingredient
-                                    onOpen={handleOpenModal} {...item} key={item._id}/>)}
+                                    {...item} key={item._id} />)}
                             </div>
                             <h3 className="text text_type_main-medium" ref={mainsRef} id="mains">Начинки</h3>
                             <div className={ingredientsStyles.products__cont}>
                                 {ingredients.filter((item: TIngredient) => item.type === 'main').map((item: TIngredient) => <Ingredient
-                                    onOpen={handleOpenModal} {...item} key={item._id}/>)}
+                                    {...item} key={item._id} />)}
                             </div>
                         </div>
                     </div>
                 </div>
             )
-            }
-            {modalIsOpen && ingredientDetails && (
-                <Modal onClose={handleCloseModal} title={'Детали ингредиента'}>
-                    <IngredientDetails/>
-                </Modal>)
             }
         </>
     );

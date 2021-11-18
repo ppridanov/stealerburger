@@ -1,7 +1,7 @@
-import {checkResponse, getUser, patchUser, sendData} from "../../utils/api";
-import {apiURL} from "../../utils/constants";
-import {History} from 'history';
-import {AppDispatch, AppThunk, TFormData, TLoginForm, TResetPasswordForm} from "../../types";
+import { checkResponse, getUser, patchUser, sendData } from "../../utils/api";
+import { apiURL } from "../../utils/constants";
+import { History } from 'history';
+import { AppDispatch, AppThunk, TFormData, TLoginForm, TResetPasswordForm } from "../../types";
 
 export const GET_USER_REQUEST: 'GET_USER_REQUEST' = 'GET_USER_REQUEST';
 export const GET_USER_SUCCESS: 'GET_USER_SUCCESS' = 'GET_USER_SUCCESS';
@@ -14,7 +14,7 @@ export const SET_WAS_ON_FORGOT_PAGE: 'SET_WAS_ON_FORGOT_PAGE' = 'SET_WAS_ON_FORG
 export const DELETE_WAS_ON_FORGOT_PAGE: 'DELETE_WAS_ON_FORGOT_PAGE' = 'DELETE_WAS_ON_FORGOT_PAGE';
 
 
-export const postForgotPassword: AppThunk = (emailValue: string, history: History) => {
+export const postForgotPassword = (emailValue: string, history: History) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST
@@ -25,18 +25,18 @@ export const postForgotPassword: AppThunk = (emailValue: string, history: Histor
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({email: emailValue})
+      body: JSON.stringify({ email: emailValue })
     })
       .then(res => checkResponse(res))
       .then(res => {
-          if (res && res.success) {
-            history.push('/reset-password');
-          } else {
-            dispatch({
-              type: GET_USER_FAILED
-            })
-          }
+        if (res && res.success) {
+          history.push('/reset-password');
+        } else {
+          dispatch({
+            type: GET_USER_FAILED
+          })
         }
+      }
       )
       .catch(err => {
         console.log(err)
@@ -47,7 +47,7 @@ export const postForgotPassword: AppThunk = (emailValue: string, history: Histor
   }
 }
 
-export const postResetPassword: AppThunk = (formData: TResetPasswordForm, history: History) => {
+export const postResetPassword = (formData: TResetPasswordForm, history: History) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST
@@ -65,14 +65,14 @@ export const postResetPassword: AppThunk = (formData: TResetPasswordForm, histor
     })
       .then(res => checkResponse(res))
       .then(res => {
-          if (res && res.success) {
-            history.push('/login');
-          } else {
-            dispatch({
-              type: GET_USER_FAILED
-            })
-          }
+        if (res && res.success) {
+          history.push('/login');
+        } else {
+          dispatch({
+            type: GET_USER_FAILED
+          })
         }
+      }
       )
       .catch(err => {
         console.log(err)
@@ -83,7 +83,7 @@ export const postResetPassword: AppThunk = (formData: TResetPasswordForm, histor
   }
 }
 
-export const postRegister: AppThunk = (formData: TFormData, history: History) => {
+export const postRegister = (formData: TFormData, history: History) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST
@@ -102,26 +102,26 @@ export const postRegister: AppThunk = (formData: TFormData, history: History) =>
     })
       .then(res => checkResponse(res))
       .then(res => {
-          if (res && res.success) {
-            dispatch({
-              type: GET_USER_SUCCESS,
-              user: res.user
+        if (res && res.success) {
+          dispatch({
+            type: GET_USER_SUCCESS,
+            user: res.user
 
-            });
-            dispatch({
-              type: SET_IS_AUTH,
-              payload: {
-                accessToken: res.accessToken,
-                refreshToken: res.refreshToken
-              }
-            })
-            history.push({pathname: "/"});
-          } else {
-            dispatch({
-              type: GET_USER_FAILED
-            })
-          }
+          });
+          dispatch({
+            type: SET_IS_AUTH,
+            payload: {
+              accessToken: res.accessToken,
+              refreshToken: res.refreshToken
+            }
+          })
+          history.push({ pathname: "/" });
+        } else {
+          dispatch({
+            type: GET_USER_FAILED
+          })
         }
+      }
       )
       .catch(err => {
         console.log(err)
@@ -132,7 +132,7 @@ export const postRegister: AppThunk = (formData: TFormData, history: History) =>
   }
 }
 
-export const postLogin: AppThunk = (formData: TLoginForm, history: History, from: { pathname: string }) => {
+export const postLogin = (formData: TLoginForm, history: History, from: { pathname: string }) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST
@@ -150,25 +150,25 @@ export const postLogin: AppThunk = (formData: TLoginForm, history: History, from
     })
       .then(res => checkResponse(res))
       .then(res => {
-          if (res && res.success) {
-            dispatch({
-              type: GET_USER_SUCCESS,
-              user: res.user
-            });
-            dispatch({
-              type: SET_IS_AUTH,
-              payload: {
-                accessToken: res.accessToken,
-                refreshToken: res.refreshToken
-              }
-            })
-            history.replace(from)
-          } else {
-            dispatch({
-              type: GET_USER_FAILED
-            })
-          }
+        if (res && res.success) {
+          dispatch({
+            type: GET_USER_SUCCESS,
+            user: res.user
+          });
+          dispatch({
+            type: SET_IS_AUTH,
+            payload: {
+              accessToken: res.accessToken,
+              refreshToken: res.refreshToken
+            }
+          })
+          history.replace(from)
+        } else {
+          dispatch({
+            type: GET_USER_FAILED
+          })
         }
+      }
       )
       .catch(err => {
         console.log(err)
@@ -180,7 +180,7 @@ export const postLogin: AppThunk = (formData: TLoginForm, history: History, from
   }
 }
 
-export const postLogout: AppThunk = (history: History) => {
+export const postLogout = (history: History) => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST
@@ -197,17 +197,17 @@ export const postLogout: AppThunk = (history: History) => {
     })
       .then(res => checkResponse(res))
       .then(res => {
-          if (res && res.success) {
-            dispatch({
-              type: DELETE_IS_AUTH
-            })
-            history.replace({pathname: '/login'})
-          } else {
-            dispatch({
-              type: GET_USER_FAILED
-            })
-          }
+        if (res && res.success) {
+          dispatch({
+            type: DELETE_IS_AUTH
+          })
+          history.replace({ pathname: '/login' })
+        } else {
+          dispatch({
+            type: GET_USER_FAILED
+          })
         }
+      }
       )
       .catch(err => {
         console.log(err)
@@ -219,24 +219,24 @@ export const postLogout: AppThunk = (history: History) => {
   }
 }
 
-export const getUserInfo: AppThunk = () => {
+export const getUserInfo = () => {
   return async function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST
     })
     await getUser()
       .then(res => {
-          if (res && res.success) {
-            dispatch({
-              type: GET_USER_INFO,
-              user: res.user
-            })
-          } else {
-            dispatch({
-              type: GET_USER_FAILED
-            })
-          }
+        if (res && res.success) {
+          dispatch({
+            type: GET_USER_INFO,
+            user: res.user
+          })
+        } else {
+          dispatch({
+            type: GET_USER_FAILED
+          })
         }
+      }
       )
       .catch(err => {
         console.log(err)
@@ -247,26 +247,26 @@ export const getUserInfo: AppThunk = () => {
   }
 }
 
-export const postChangeUserInfo: AppThunk = (formData: TFormData) => {
+export const postChangeUserInfo = (formData: TFormData) => {
   return async function (dispatch: AppDispatch) {
     dispatch({
       type: GET_USER_REQUEST
     })
     await patchUser(formData)
       .then(res => {
-          if (res && res.success) {
-            dispatch({
-              type: CHANGE_USER_INFO,
-              payload: {
-                user: res.user
-              }
-            })
-          } else {
-            dispatch({
-              type: GET_USER_FAILED
-            })
-          }
+        if (res && res.success) {
+          dispatch({
+            type: CHANGE_USER_INFO,
+            payload: {
+              user: res.user
+            }
+          })
+        } else {
+          dispatch({
+            type: GET_USER_FAILED
+          })
         }
+      }
       )
       .catch(err => {
         console.log(err)

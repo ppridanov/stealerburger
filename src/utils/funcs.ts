@@ -1,5 +1,5 @@
 import { formatRelative } from 'date-fns'
-import {ru} from "date-fns/locale";
+import { ru } from "date-fns/locale";
 
 type TSetCookieProps = {
     expires?: number | Date | string;
@@ -37,11 +37,11 @@ export function getCookie(name: string) {
         // eslint-disable-next-line no-useless-escape
         new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
     );
-    return matches ? decodeURIComponent(matches[1]) : undefined;
+    if (matches) return decodeURIComponent(matches[1]);
 }
 
 export function deleteCookie(name: string) {
-    setCookie(name, "", {expires: -1});
+    setCookie(name, "", { expires: -1 });
 }
 
 export function isEmptyObj(obj: {}) {
@@ -51,7 +51,7 @@ export function isEmptyObj(obj: {}) {
     return true;
 }
 
-export function getDate (date: string | undefined): string | null {
+export function getDate(date: string | undefined): string | null {
     if (!date) return null;
     return formatRelative(new Date(date), new Date(), { locale: ru })
 }

@@ -10,7 +10,6 @@ import {TFeedItem} from "../../types/user";
 
 type TFeedItemProps = {
   data?: TFeedItem;
-  openModal: (e: SyntheticEvent) => void;
 }
 
 export const FeedItem: FC<TFeedItemProps> = (props: any) => {
@@ -36,7 +35,7 @@ export const FeedItem: FC<TFeedItemProps> = (props: any) => {
   }, 0)
 
   return (
-    <Link id={String(_id)} to={{pathname: `${url}/${_id}`, state: {background: location}}}
+    <Link to={{pathname: `${url}/${_id}`, state: {background: location}}}
           className={`${feedStyles.feed} mt-4`}
           onClick={props.openModal}>
       <div className={`${feedStyles.feed__top}`}>

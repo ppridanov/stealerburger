@@ -26,9 +26,9 @@
     margin-left: -10px;
 }
 
-.ingredient:last-child {
-    margin-left: 0;
-}
+/*.ingredient:last-child {*/
+/*    margin-left: 0;*/
+/*}*/
 
 .feed {
     background: #1C1C21;

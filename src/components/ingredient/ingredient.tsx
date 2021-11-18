@@ -11,13 +11,12 @@ type TIngredientProps = {
     price: number;
     name: string;
     _id: string;
-    onOpen: (e: SyntheticEvent) => void;
     type: string;
 }
 
 const Ingredient: React.FC<TIngredientProps> = (props) => {
     const location = useLocation();
-    const {image, price, name, _id, onOpen, type} = props;
+    const {image, price, name, _id, type} = props;
     const {ingredients, bun}: any = useSelector<any>(state => state.burgerConstructor);
     let ingredientsCount = ingredients.filter((item: TIngredient) => item._id === _id).length;
     let counter;
@@ -44,7 +43,6 @@ const Ingredient: React.FC<TIngredientProps> = (props) => {
             draggable
             className={`${ingredientStyle.product}`}
             style={{opacity: opacity}}
-            onClick={onOpen}
             id={_id}
         >
             {counter && <Counter count={counter}/>}

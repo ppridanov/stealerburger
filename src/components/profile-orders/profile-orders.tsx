@@ -13,16 +13,6 @@ export const ProfileOrders = () => {
   const {orders, wsConnected} = useSelector((state: RootState) => state.orderData);
   const dispatch = useDispatch();
 
-  const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false);
-  const [orderId, setOrderId] = React.useState<string | null>(null)
-  const handleOpenModal = (e: SyntheticEvent) => {
-    setOrderId(e.currentTarget.id);
-    setModalIsOpen(true);
-  }
-  const handleCloseModal = () => {
-    setModalIsOpen(false);
-  }
-
   useEffect(() => {
     const token = getCookie('token')?.replace('Bearer ', '');
     dispatch(orderWsConnectionStart(`${wsUrl}?token=${token}`));
@@ -33,15 +23,12 @@ export const ProfileOrders = () => {
 
   return (
     <>
-      <div className={`${profileOrdersStyle.profile__orders} mt-8 custom-scroll`}>
-        {wsConnected && orders.length === 0 && (<h1>У вас нет заказов.</h1>)}
-        {wsConnected && orders.map((item, index) => <FeedItem data={item} openModal={handleOpenModal} key={index} />)}
-      </div>
-      {modalIsOpen && (
-        <Modal onClose={handleCloseModal}>
-          <FeedDetails orderId={orderId}/>
-        </Modal>)
-      }
+      {orders && (
+        <div className={`${profileOrdersStyle.profile__orders} mt-8 custom-scroll`}>
+          {wsConnected && orders.length === 0 && (<h1>У вас нет заказов.</h1>)}
+          {wsConnected && orders.map((item, index) => <FeedItem data={item} key={index}/>)}
+        </div>
+      )}
     </>
 
   )

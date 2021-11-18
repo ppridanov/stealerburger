@@ -7,8 +7,8 @@ import {
     DELETE_IS_AUTH,
     SET_WAS_ON_FORGOT_PAGE, DELETE_WAS_ON_FORGOT_PAGE, CHANGE_USER_INFO
 } from "../actions/users";
-import {setCookie, deleteCookie, getCookie} from "../../utils/funcs";
-import {TUserActions} from "../../types/user";
+import { setCookie, deleteCookie, getCookie } from "../../utils/funcs";
+import { TUserActions } from "../../types/user";
 
 type TUsersInitialState = {
     authRequest: boolean;

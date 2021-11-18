@@ -9,14 +9,14 @@ type TIngredientDetail = {
 } | undefined
 
 function IngredientDetails() {
-    const {ingredients, ingredientDetails} = useSelector((state: RootState) => state.burgerIngredients);
+    const {ingredients} = useSelector((state: RootState) => state.burgerIngredients);
     const {id} = useParams<TIngredientDetailParams>();
-    const ingredient: TIngredientDetail = (!isEmptyObj(ingredientDetails)) ? ingredientDetails : ingredients.find((item: TIngredient) => item._id === id);
+    const ingredient: TIngredientDetail = ingredients.find((item: TIngredient) => item._id === id);
     return (
         <>
-            {isEmptyObj(ingredientDetails) && (
-                <h1 className={`${ingredientDetailsStyle.title}  mt-30 text text_color_primary text_type_main-large`}>Детали ингредиента</h1>
-            )}
+            {/*{isEmptyObj(ingredientDetails) && (*/}
+            {/*    <h1 className={`${ingredientDetailsStyle.title}  mt-30 text text_color_primary text_type_main-large`}>Детали ингредиента</h1>*/}
+            {/*)}*/}
             {ingredient && (
                 <div className={ingredientDetailsStyle.body}>
                     <img src={ingredient?.image_large} alt=""/>

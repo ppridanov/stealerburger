@@ -1,13 +1,13 @@
 import React, {useRef} from 'react';
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import constructorStyle from "../burger-constructor/burger-constructor.module.css";
-import {useDispatch} from "react-redux";
+
 import {
     MOVE_INGREDIENT_IN_CONSTRUCTOR,
     REMOVE_INGREDIENT_FROM_CONSTRUCTOR
 } from "../../services/actions/burger-constructor";
 import {useDrag, useDrop} from "react-dnd";
-import {TConstructorItemIngredient, TIngredient} from "../../types";
+import {TConstructorItemIngredient, TIngredient, useDispatch} from "../../types";
 
 const BurgerConstructorIngredient: React.FC<TConstructorItemIngredient> = (props) => {
     const {index, _id, name, price, image, uuid} = props;

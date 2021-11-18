@@ -1,4 +1,4 @@
-import {Middleware} from "redux";
+import {Middleware, MiddlewareAPI} from "redux";
 
 type wsActionsType = {
   wsInit: string,
@@ -9,7 +9,7 @@ type wsActionsType = {
 }
 
 export const ordersSocketMiddleWare = (wsUrl: string, wsActions: wsActionsType): Middleware => {
-  return (store: any) => {
+  return (store: MiddlewareAPI) => {
     let socket: WebSocket | null = null;
 
     return next => action => {
@@ -17,16 +17,15 @@ export const ordersSocketMiddleWare = (wsUrl: string, wsActions: wsActionsType):
       const {type, payload} = action;
       const {wsInit, onOpen, onClose, onError, onMessage} = wsActions;
       if (wsInit.match(type)) {
-        console.log(payload)
         socket = new WebSocket(payload);
       }
       if (socket) {
         socket.onopen = event => {
-          dispatch({type: onOpen, payload: event});
+          dispatch({type: onOpen});
         };
 
         socket.onerror = event => {
-          dispatch({type: onError, payload: event});
+          dispatch({type: onError});
         };
 
         socket.onmessage = event => {
@@ -38,7 +37,7 @@ export const ordersSocketMiddleWare = (wsUrl: string, wsActions: wsActionsType):
         };
 
         socket.onclose = event => {
-          dispatch({type: onClose, payload: event});
+          dispatch({type: onClose});
         };
       }
 
