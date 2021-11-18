@@ -7,7 +7,7 @@ import { getCookie } from "../../utils/funcs";
 import { useDispatch, useSelector } from '../../hooks/store';
 
 export const ProfileOrders = () => {
-  const { orders, wsConnected } = useSelector((state) => state.orderData);
+  const { orders, wsConnected, wsError } = useSelector((state) => state.orderData);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,10 +20,11 @@ export const ProfileOrders = () => {
 
   return (
     <>
-      {orders && (
+      {wsError && (<h1>Произошла ошибка. Проверьте интернет-подключение.</h1>)}
+      {!wsError && wsConnected && orders.length === 0 && <h1>Идет загрузка...</h1>}
+      {!wsError && wsConnected && orders && orders.length > 0 && (
         <div className={`${profileOrdersStyle.profile__orders} mt-8 custom-scroll`}>
-          {wsConnected && orders.length === 0 && (<h1>У вас нет заказов.</h1>)}
-          {wsConnected && orders.map((item, index) => <FeedItem data={item} key={index} />)}
+          {orders.map((item, index) => <FeedItem data={item} key={index} />)}
         </div>
       )}
     </>

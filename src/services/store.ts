@@ -6,7 +6,7 @@ import {
   ORDER_WS_CONNECTION_SUCCESS,
   ORDER_WS_GET_MESSAGE
 } from "./actions/orders";
-import { ordersSocketMiddleWare } from "../middlewares/ordersSocketMiddleWare";
+import { ordersSocketMiddleWare } from "./middlewares/ordersSocketMiddleWare";
 import { configureStore } from "@reduxjs/toolkit";
 
 const orderWsActions = {
