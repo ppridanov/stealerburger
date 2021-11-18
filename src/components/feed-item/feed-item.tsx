@@ -25,7 +25,7 @@ export const FeedItem: FC<TFeedItemProps> = (props) => {
     return ingredients.find((item) => item._id === ingredient);
   });
 
-  const price = orderIngredients.reduce((acc: number, curr) => {
+  const price = orderIngredients.reduce((acc, curr) => {
     if (curr && curr.type === 'bun') {
       acc += curr.price * 2;
     } else if (curr) {

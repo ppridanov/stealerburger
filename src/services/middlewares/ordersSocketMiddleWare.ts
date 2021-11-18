@@ -1,12 +1,7 @@
 import { Middleware, MiddlewareAPI } from "redux";
+import {orderWsActions} from "../../utils/constants";
 
-type wsActionsType = {
-  wsInit: string,
-  onOpen: string,
-  onClose: string,
-  onError: string,
-  onMessage: string
-}
+type wsActionsType = typeof orderWsActions;
 
 export const ordersSocketMiddleWare = (wsActions: wsActionsType): Middleware => {
   return (store: MiddlewareAPI) => {

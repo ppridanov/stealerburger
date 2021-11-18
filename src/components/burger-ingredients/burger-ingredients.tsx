@@ -64,17 +64,17 @@ const BurgerIngredients = () => {
             <div className={ingredientsStyles.products} onScroll={handleScroll} ref={scrollContRef}>
               <h3 className="text text_type_main-medium" ref={bunsRef} id="buns">Булки</h3>
               <div className={ingredientsStyles.products__cont}>
-                {ingredients.filter((item: TIngredient) => item.type === 'bun').map((item: TIngredient) => <Ingredient
+                {ingredients.filter((item) => item.type === 'bun').map((item) => <Ingredient
                   {...item} key={item._id} />)}
               </div>
               <h3 className="text text_type_main-medium" ref={saucesRef} id="sauces">Соусы</h3>
               <div className={ingredientsStyles.products__cont}>
-                {ingredients.filter((item: TIngredient) => item.type === 'sauce').map((item: TIngredient) => <Ingredient
+                {ingredients.filter((item) => item.type === 'sauce').map((item) => <Ingredient
                   {...item} key={item._id} />)}
               </div>
               <h3 className="text text_type_main-medium" ref={mainsRef} id="mains">Начинки</h3>
               <div className={ingredientsStyles.products__cont}>
-                {ingredients.filter((item: TIngredient) => item.type === 'main').map((item: TIngredient) => <Ingredient
+                {ingredients.filter((item) => item.type === 'main').map((item) => <Ingredient
                   {...item} key={item._id} />)}
               </div>
             </div>

@@ -6,6 +6,8 @@ import { TConstructorActions } from '../services/types/burger-constructor';
 import { TBurgerIngredientsActions } from '../services/types/burger-ingerdients';
 import { TOrdersActions } from '../services/types/orders';
 import { TUserActions } from '../services/types/user';
+import {TUsersThunkActions} from "../services/actions/users";
+import store from "../services/store";
 
 export type TIngredient = {
     calories: number;
@@ -73,4 +75,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
     TApplicationActions
 >
 export type AppDispatch = <TReturnType>(action: TApplicationActions | AppThunk | undefined) => TReturnType;
-export type RootState = ReturnType<typeof rootReducer>;
+export type RootState = ReturnType<typeof store.getState>;

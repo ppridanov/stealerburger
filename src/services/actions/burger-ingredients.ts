@@ -1,12 +1,12 @@
 import { getData } from "../../utils/api";
 import { apiURL } from "../../utils/constants";
-import { AppDispatch } from "../../utils/types";
+import {AppDispatch, AppThunk} from "../../utils/types";
 
 export const GET_INGREDIENTS_REQUEST: 'GET_ITEMS_REQUEST' = 'GET_ITEMS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS: 'GET_ITEMS_SUCCESS' = 'GET_ITEMS_SUCCESS';
 export const GET_INGREDIENTS_FAILED: 'GET_ITEMS_FAILED' = 'GET_ITEMS_FAILED';
 
-export const getIngredients = () => {
+export const getIngredients: AppThunk = () => {
   return function (dispatch: AppDispatch) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST

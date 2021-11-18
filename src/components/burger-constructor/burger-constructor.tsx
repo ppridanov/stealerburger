@@ -49,7 +49,7 @@ const BurgerConstructor: React.FC = () => {
       return history.push('/login');
     }
 
-    const idsArr = [...ingredients.map((item: TConstructorIngredient) => item._id), bun._id, bun._id];
+    const idsArr = [...ingredients.map((item) => item._id), bun._id, bun._id];
     dispatch(postOrder(idsArr));
     history.push({
       pathname: "/sendOrder",
@@ -63,7 +63,7 @@ const BurgerConstructor: React.FC = () => {
   }
 
   const totalPrice = useMemo(() => {
-    let price = ingredients.reduce((acc: number, item: TConstructorIngredient) => {
+    let price = ingredients.reduce((acc, item) => {
       return item.price + acc;
     }, 0);
     bun && (price += bun.price * 2);
@@ -93,7 +93,7 @@ const BurgerConstructor: React.FC = () => {
           <li className={`${constructorStyle.item} ${isHover ? constructorStyle.item_isHovering : ''}`}>
             <ul className={constructorStyle.list__scroll}
               style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: "flex-end" }}>
-              {ingredients.map((item: TConstructorIngredient, idx: number) => {
+              {ingredients.map((item, idx: number) => {
                 return <BurgerConstructorIngredient {...item} index={idx} key={item.uuid} />
               })}
             </ul>
