@@ -1,12 +1,12 @@
+import { TConstructorIngredient } from "../../utils/types";
 import {
   ADD_INGREDIENT_TO_CONSTRUCTOR,
   REMOVE_INGREDIENT_FROM_CONSTRUCTOR,
   MOVE_INGREDIENT_IN_CONSTRUCTOR,
   ADD_BUN_TO_CONSTRUCTOR,
   CLEAR_CONSTRUCTOR
-} from "../services/actions/burger-constructor";
+} from "../actions/burger-constructor";
 
-import {TConstructorIngredient} from "./index";
 
 export type TAddIngredientToConstructorAction = {
   readonly type: typeof ADD_INGREDIENT_TO_CONSTRUCTOR;

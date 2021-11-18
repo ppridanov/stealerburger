@@ -1,20 +1,16 @@
-import React, {SyntheticEvent, useEffect} from 'react';
+import React, { useEffect } from 'react';
 import feedStyles from './feed.module.css';
-import Modal from "../../components/modal/modal";
-import {FeedDetails} from "../../components/feed-details/feed-details";
-import {FeedItem} from "../../components/feed-item/feed-item";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../types";
-import {orderWsConnectionClosed, orderWsConnectionStart} from "../../services/actions/orders";
-import {wsUrl} from "../../utils/constants";
+import { FeedItem } from "../../components/feed-item/feed-item";
+import { orderWsConnectionClosed, orderWsConnectionStart } from "../../services/actions/orders";
+import { wsURL } from "../../utils/constants";
+import { useDispatch, useSelector } from '../../hooks/store';
 
 export const Feed = () => {
-  const {orders, total, totalToday, wsConnected} = useSelector((state: RootState) => state.orderData);
-
   const dispatch = useDispatch();
+  const { orders, total, totalToday, wsConnected, wsError } = useSelector((state) => state.orderData);
 
   useEffect(() => {
-    dispatch(orderWsConnectionStart(`${wsUrl}/all`));
+    dispatch(orderWsConnectionStart(`${wsURL}/all`));
     return () => {
       dispatch(orderWsConnectionClosed());
     }
@@ -22,8 +18,8 @@ export const Feed = () => {
 
   return (
     <>
-      {/*{!wsConnected && <h1 style={{textAlign: "center"}}>Произошла ошибка</h1>}*/}
-      {wsConnected && orders && orders.length === 0 && (<h1 style={{textAlign: "center"}}>Идет загрузка</h1>)}
+      {wsError && <h1 style={{textAlign: "center"}}>Произошла ошибка</h1>}
+      {!wsError && wsConnected && orders && orders.length === 0 && (<h1 style={{ textAlign: "center" }}>Идет загрузка</h1>)}
       {(total && totalToday && orders.length !== 0) ? (
         <div className={`container pl-5 pr-5`}>
           <div className={`main__container`}>
@@ -39,9 +35,8 @@ export const Feed = () => {
                   <p className={`text text_type_main-medium mb-6`}>Готовы</p>
                   <ul className={feedStyles.feed__completed}>
                     {orders
-                      .filter((item: any) => item.status === 'done')
-                      .slice(0, 10)
-                      .map((item: any, index) => (<li className={`text text_type_digits-default text_color_success mb-2`} key={index}>{item.number}</li>))
+                      .filter((item) => item.status === 'done')
+                      .map((item, index) => (<li className={`text text_type_digits-small text_color_success`} key={index}>{item.number}</li>))
                     }
                   </ul>
                 </div>
@@ -49,9 +44,8 @@ export const Feed = () => {
                   <p className={`text text_type_main-medium mb-6`}>В работе:</p>
                   <ul className={feedStyles.feed__inProgress}>
                     {orders
-                      .filter((item: any) => item.status === 'pending')
-                      .slice(0, 10)
-                      .map((item: any, index) => (<li className={`text text_type_digits-default text_color_success mb-2`} key={index}>{item.number}</li>))
+                      .filter((item) => item.status === 'pending')
+                      .map((item, index) => (<li className={`text text_type_digits-small text_color_success`} key={index}>{item.number}</li>))
                     }
                   </ul>
                 </div>
@@ -70,5 +64,5 @@ export const Feed = () => {
         </div>
       ) : null}
     </>
-  )
+  );
 }

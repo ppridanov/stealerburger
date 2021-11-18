@@ -5,10 +5,18 @@ import {
   ORDER_WS_CONNECTION_ERROR,
   ORDER_WS_CONNECTION_SUCCESS,
   ORDER_WS_GET_MESSAGE,
-  CLEAR_ORDER, GET_ORDER_NUMBER_REQUEST, GET_ORDER_NUMBER_SUCCESS, GET_ORDER_NUMBER_FAILED, CLEAR_ORDER_NUMBER
-} from "../services/actions/orders";
-import {TFeedItem} from "./user";
+  GET_ORDER_NUMBER_REQUEST,
+  GET_ORDER_NUMBER_SUCCESS,
+  GET_ORDER_NUMBER_FAILED,
+  CLEAR_ORDER_NUMBER,
+  ORDER_WS_CONNECTION_START
+} from "../actions/orders";
+import { TFeedItem } from "./user";
 
+export type TOrdersWsConnectionStart = {
+  readonly type: typeof ORDER_WS_CONNECTION_START;
+  readonly payload: string;
+}
 
 export type TOrdersWsConnectionSuccessAction = {
   readonly type: typeof ORDER_WS_CONNECTION_SUCCESS;
@@ -44,10 +52,6 @@ export type TGetOrderNumberSuccessAction = {
   readonly payload: string;
 }
 
-export type TClearOrderAction = {
-  readonly type: typeof CLEAR_ORDER;
-}
-
 export type TClearOrderNumberAction = {
   readonly type: typeof CLEAR_ORDER_NUMBER;
 }
@@ -66,6 +70,7 @@ export type TGetOrderFailedAction = {
 }
 
 export type TOrdersActions =
+  TOrdersWsConnectionStart |
   TOrdersWsConnectionSuccessAction |
   TOrdersWsConnectionErrorAction |
   TOrdersWsConnectionClosedAction |
@@ -73,7 +78,6 @@ export type TOrdersActions =
   TGetOrderNumberRequestAction |
   TGetOrderNumberFailedAction |
   TGetOrderNumberSuccessAction |
-  TClearOrderAction |
   TGetOrderRequestAction |
   TGetOrderSuccessAction |
   TGetOrderFailedAction |

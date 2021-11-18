@@ -1,8 +1,8 @@
-import { AppDispatch, AppThunk } from "../../types";
+import { AppDispatch } from "../../utils/types";
 import { apiURL } from "../../utils/constants";
-import { getData, sendData } from "../../utils/api";
-import { Dispatch } from "react";
+import { getData, postOrderReq } from "../../utils/api";
 import { getCookie } from "../../utils/funcs";
+import { TFeedItem } from "../types/user";
 
 export const ORDER_WS_CONNECTION_SUCCESS: 'ORDER_WS_CONNECTION_SUCCESS' = 'ORDER_WS_CONNECTION_SUCCESS';
 export const ORDER_WS_CONNECTION_ERROR: 'ORDER_WS_CONNECTION_ERROR' = 'ORDER_WS_CONNECTION_ERROR';
@@ -16,7 +16,6 @@ export const GET_ORDER_NUMBER_REQUEST: 'GET_ORDER_NUMBER_REQUEST' = 'GET_ORDER_N
 export const GET_ORDER_NUMBER_SUCCESS: 'GET_ORDER_NUMBER_SUCCESS' = 'GET_ORDER_NUMBER_SUCCESS';
 export const GET_ORDER_NUMBER_FAILED: 'GET_ORDER_NUMBER_REQUEST' = 'GET_ORDER_NUMBER_REQUEST';
 export const CLEAR_ORDER_NUMBER: 'CLEAR_ORDER_NUMBER' = 'CLEAR_ORDER_NUMBER';
-export const CLEAR_ORDER: 'CLEAR_ORDER' = 'CLEAR_ORDER';
 
 export const orderWsConnectionStart = (url: string) => {
   return {
@@ -43,7 +42,7 @@ export const orderWsConnectionClosed = () => {
   }
 }
 
-export const orderWsGetMessage = (message: any) => {
+export const orderWsGetMessage = (message: TFeedItem[]) => {
   return {
     type: ORDER_WS_GET_MESSAGE,
     payload: message
@@ -80,7 +79,7 @@ export const getOrder = (orderId: string) => {
 }
 
 export const postOrder = (idsArr: string[]) => {
-  // Здесь не понял как описать токен если его нету. Если уберу проверку то будет ошибка. Если в AppDispatch убрать undefined будет
+  // Здесь не понял как описать токен если его нету. Если уберу проверку то будет ошибка. Если в AppDispatch убрать undefined будет ошибка
   const accessToken = getCookie('token')
   if (!accessToken) {
     return;
@@ -89,21 +88,7 @@ export const postOrder = (idsArr: string[]) => {
     dispatch({
       type: GET_ORDER_NUMBER_REQUEST
     })
-    sendData({
-      url: `${apiURL}/orders`,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'authorization': accessToken
-      },
-      body: JSON.stringify({ ingredients: idsArr })
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        throw new Error(`Something wrong: ${res.status}`)
-      })
+    return postOrderReq(idsArr)
       .then(res => {
         if (res && res.success) {
           dispatch({
@@ -122,12 +107,6 @@ export const postOrder = (idsArr: string[]) => {
         dispatch({
           type: GET_ORDER_NUMBER_FAILED
         })
-        dispatch({
-          type: CLEAR_ORDER
-        })
       })
   }
 }
-
-
-export type TOrdersThunkActions = ReturnType<typeof postOrder> | ReturnType<typeof getOrder>

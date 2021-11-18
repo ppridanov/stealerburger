@@ -1,21 +1,18 @@
-import React, {SyntheticEvent, useEffect} from 'react';
+import React, { useEffect } from 'react';
 import profileOrdersStyle from "./profile-orders.module.css";
-import {FeedItem} from "../feed-item/feed-item";
-import Modal from "../modal/modal";
-import {FeedDetails} from "../feed-details/feed-details";
-import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "../../types";
-import {orderWsConnectionClosed, orderWsConnectionStart} from "../../services/actions/orders";
-import {wsUrl} from "../../utils/constants";
-import {getCookie} from "../../utils/funcs";
+import { FeedItem } from "../feed-item/feed-item";
+import { orderWsConnectionClosed, orderWsConnectionStart } from "../../services/actions/orders";
+import { wsURL } from "../../utils/constants";
+import { getCookie } from "../../utils/funcs";
+import { useDispatch, useSelector } from '../../hooks/store';
 
 export const ProfileOrders = () => {
-  const {orders, wsConnected} = useSelector((state: RootState) => state.orderData);
+  const { orders, wsConnected } = useSelector((state) => state.orderData);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const token = getCookie('token')?.replace('Bearer ', '');
-    dispatch(orderWsConnectionStart(`${wsUrl}?token=${token}`));
+    dispatch(orderWsConnectionStart(`${wsURL}?token=${token}`));
     return () => {
       dispatch(orderWsConnectionClosed());
     }
@@ -26,10 +23,9 @@ export const ProfileOrders = () => {
       {orders && (
         <div className={`${profileOrdersStyle.profile__orders} mt-8 custom-scroll`}>
           {wsConnected && orders.length === 0 && (<h1>У вас нет заказов.</h1>)}
-          {wsConnected && orders.map((item, index) => <FeedItem data={item} key={index}/>)}
+          {wsConnected && orders.map((item, index) => <FeedItem data={item} key={index} />)}
         </div>
       )}
     </>
-
-  )
+  );
 }

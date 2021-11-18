@@ -8,8 +8,8 @@ import {
   DELETE_WAS_ON_FORGOT_PAGE,
   DELETE_IS_AUTH,
   CHANGE_USER_INFO,
-} from "../services/actions/users";
-import { TUser } from "./index";
+} from "../actions/users";
+import { TUser } from "../../utils/types";
 
 export type TUserActions =
   TGetUserFailedAction |

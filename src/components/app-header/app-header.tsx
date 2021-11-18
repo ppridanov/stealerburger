@@ -2,11 +2,10 @@ import React from 'react';
 import appHeaderStyles from './app-header.module.css';
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, NavLink, useRouteMatch} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {RootState} from "../../types";
+import { useSelector } from '../../hooks/store';
 
 const AppHeader: React.FC = () => {
-  const {isAuth} = useSelector((state: RootState) => state.userData);
+  const {isAuth} = useSelector((state) => state.userData);
   const isConstructor = !!useRouteMatch({ path: '/', exact: true});
   const isFeed = !!useRouteMatch('/feed');
   const isProfile = !!useRouteMatch('/profile');
@@ -47,7 +46,5 @@ const AppHeader: React.FC = () => {
       </header>
   );
 }
-
-
 
 export default AppHeader;

@@ -4,13 +4,13 @@ import BurgerConstructor from "../../components/burger-constructor/burger-constr
 
 
 export function Home() {
-    return (
-        <div className={`container pl-5 pr-5`}>
-            <div className={`main__container`}>
-                <BurgerIngredients />
-                <BurgerConstructor />
-            </div>
-        </div>
-    );
+  return (
+    <div className={`container pl-5 pr-5`}>
+      <div className={`main__container`}>
+        <BurgerIngredients />
+        <BurgerConstructor />
+      </div>
+    </div>
+  );
 }
 

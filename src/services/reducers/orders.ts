@@ -1,5 +1,4 @@
 import {
-  CLEAR_ORDER,
   CLEAR_ORDER_NUMBER,
   GET_ORDER_FAILED,
   GET_ORDER_NUMBER_REQUEST,
@@ -12,15 +11,15 @@ import {
   ORDER_WS_GET_MESSAGE
 } from "../actions/orders";
 
-import {TOrdersActions} from "../../types/orders";
-import {TFeedItem} from "../../types/user";
+import { TOrdersActions } from "../types/orders";
+import { TFeedItem } from "../types/user";
 
 type TInitialState = {
   wsConnected: boolean,
+  wsError: boolean,
   orders: TFeedItem[],
   total: number,
   totalToday: number,
-  order: TFeedItem | null,
   orderRequest: boolean,
   orderFailed: boolean,
   orderNumber: string | null,
@@ -30,8 +29,8 @@ type TInitialState = {
 
 const initialState: TInitialState = {
   wsConnected: false,
+  wsError: false,
   orders: [],
-  order: null,
   orderRequest: false,
   orderFailed: false,
   total: 0,
@@ -39,7 +38,6 @@ const initialState: TInitialState = {
   orderNumber: null,
   orderNumberRequest: false,
   orderNumberFailed: false,
-
 }
 
 export const ordersReducer = (state = initialState, action: TOrdersActions): TInitialState => {
@@ -47,17 +45,20 @@ export const ordersReducer = (state = initialState, action: TOrdersActions): TIn
     case ORDER_WS_CONNECTION_SUCCESS:
       return {
         ...state,
-        wsConnected: true
+        wsConnected: true,
+        wsError: false
       }
     case ORDER_WS_CONNECTION_ERROR:
       return {
         ...state,
-        wsConnected: false
+        wsConnected: false,
+        wsError: true
       }
     case ORDER_WS_CONNECTION_CLOSED:
       return {
         ...state,
         wsConnected: false,
+        wsError: false,
         orders: []
       }
     case ORDER_WS_GET_MESSAGE:
@@ -88,7 +89,6 @@ export const ordersReducer = (state = initialState, action: TOrdersActions): TIn
         orderRequest: true
       }
     case GET_ORDER_NUMBER_SUCCESS:
-      console.log(action.payload)
       return {
         ...state,
         orderNumber: action.payload
@@ -97,11 +97,6 @@ export const ordersReducer = (state = initialState, action: TOrdersActions): TIn
       return {
         ...state,
         orderNumber: null
-      }
-    case CLEAR_ORDER:
-      return {
-        ...state,
-        order: null
       }
     default:
       return state;

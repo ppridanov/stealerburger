@@ -1,14 +1,14 @@
-import React, {SyntheticEvent} from 'react';
+import React, { SyntheticEvent } from 'react';
 import modalOverlayStyles from './modal-overlay.module.css';
 
 type TModalOverlayProps = {
-    onClose: (e: SyntheticEvent) => void
+  onClose: (e: SyntheticEvent) => void
 }
 
 const ModalOverlay: React.FC<TModalOverlayProps> = (props) => {
-        return (
-            <div className={modalOverlayStyles.overlay} onClick={props.onClose}></div>
-        )
+  return (
+    <div className={modalOverlayStyles.overlay} onClick={props.onClose}></div>
+  )
 }
 
-export default  ModalOverlay;
+export default ModalOverlay;

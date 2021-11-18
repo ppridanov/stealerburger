@@ -1,23 +1,17 @@
-import React, {useMemo} from 'react';
+import React, { useMemo } from 'react';
 import constructorStyle from './burger-constructor.module.css';
-import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import Modal from "../modal/modal";
-import OrderDetails from "../order-details/order-details";
-import {
-  ADD_BUN_TO_CONSTRUCTOR,
-  ADD_INGREDIENT_TO_CONSTRUCTOR, CLEAR_CONSTRUCTOR
-} from "../../services/actions/burger-constructor";
-import {CLEAR_ORDER_NUMBER, postOrder} from "../../services/actions/orders";
-
-import {useDrop} from "react-dnd";
-import {v4 as uuidv4} from 'uuid';
-
+import { Button, ConstructorElement, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { ADD_BUN_TO_CONSTRUCTOR, ADD_INGREDIENT_TO_CONSTRUCTOR, CLEAR_CONSTRUCTOR } from "../../services/actions/burger-constructor";
+import { CLEAR_ORDER_NUMBER, postOrder } from "../../services/actions/orders";
+import { useDrop } from "react-dnd";
+import { v4 as uuidv4 } from 'uuid';
 import BurgerConstructorIngredient from "../burger-constructor-item/burger-constructor-item";
-import {useHistory, useLocation} from "react-router-dom";
-import {RootState, TConstructorIngredient, useDispatch, useSelector} from '../../types';
+import { useHistory, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from '../../hooks/store';
+import { TConstructorIngredient } from '../../utils/types';
 
 const BurgerConstructor: React.FC = () => {
-  const {ingredients, bun, orderNumber, isAuth} = useSelector((state: RootState) => ({
+  const { ingredients, bun, orderNumber, isAuth } = useSelector((state) => ({
     ingredients: state.burgerConstructor.ingredients,
     bun: state.burgerConstructor.bun,
     orderNumber: state.orderData.orderNumber,
@@ -27,14 +21,14 @@ const BurgerConstructor: React.FC = () => {
   const location = useLocation();
   const history = useHistory();
 
-  const [modalIsOpen, setModalIsOpen] = React.useState<boolean>(false)
   const moveIngredient = (ingredient: TConstructorIngredient) => {
     dispatch({
       type: ingredient.type === 'bun' ? ADD_BUN_TO_CONSTRUCTOR : ADD_INGREDIENT_TO_CONSTRUCTOR,
-      item: {...ingredient, uuid: uuidv4()}
+      item: { ...ingredient, uuid: uuidv4() }
     })
   }
-  const [{isHover}, dropTarget] = useDrop({
+
+  const [{ isHover }, dropTarget] = useDrop({
     accept: 'ingredients',
     collect: monitor => ({
       isHover: monitor.isOver()
@@ -54,7 +48,7 @@ const BurgerConstructor: React.FC = () => {
     if (!isAuth) {
       return history.push('/login');
     }
-    //Здесь я не понял как мне две булки отправлять или же она одна?
+
     const idsArr = [...ingredients.map((item: TConstructorIngredient) => item._id), bun._id, bun._id];
     dispatch(postOrder(idsArr));
     history.push({
@@ -98,9 +92,9 @@ const BurgerConstructor: React.FC = () => {
           </li>
           <li className={`${constructorStyle.item} ${isHover ? constructorStyle.item_isHovering : ''}`}>
             <ul className={constructorStyle.list__scroll}
-                style={{display: 'flex', flexDirection: 'column', gap: '10px', alignItems: "flex-end"}}>
+              style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: "flex-end" }}>
               {ingredients.map((item: TConstructorIngredient, idx: number) => {
-                return <BurgerConstructorIngredient {...item} index={idx} key={item.uuid}/>
+                return <BurgerConstructorIngredient {...item} index={idx} key={item.uuid} />
               })}
             </ul>
           </li>
@@ -124,7 +118,7 @@ const BurgerConstructor: React.FC = () => {
           <div className={`${constructorStyle.order} mr-8`}>
             <div className={`${constructorStyle.total__price} mr-10`}>
               <span className="text text_type_digits-medium">{totalPrice}</span>
-              <CurrencyIcon type="primary"/>
+              <CurrencyIcon type="primary" />
             </div>
             <Button type="primary" size="large" onClick={handleOpenModal}>
               Оформить заказ
@@ -133,8 +127,7 @@ const BurgerConstructor: React.FC = () => {
         )}
       </div>
     </>
-
-  )
+  );
 }
 
 export default BurgerConstructor;

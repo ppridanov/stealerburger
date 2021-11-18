@@ -1,10 +1,10 @@
-import React, {SyntheticEvent} from 'react';
+import React from 'react';
 import ingredientStyle from './ingredient.module.css';
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDrag} from "react-dnd";
-import {useSelector} from "react-redux";
 import {Link, useLocation} from "react-router-dom";
-import {TIngredient} from "../../types";
+import { useSelector } from '../../hooks/store';
+import { TIngredient } from '../../utils/types';
 
 type TIngredientProps = {
     image: string;
@@ -17,7 +17,7 @@ type TIngredientProps = {
 const Ingredient: React.FC<TIngredientProps> = (props) => {
     const location = useLocation();
     const {image, price, name, _id, type} = props;
-    const {ingredients, bun}: any = useSelector<any>(state => state.burgerConstructor);
+    const {ingredients, bun} = useSelector(state => state.burgerConstructor);
     let ingredientsCount = ingredients.filter((item: TIngredient) => item._id === _id).length;
     let counter;
 
@@ -26,7 +26,7 @@ const Ingredient: React.FC<TIngredientProps> = (props) => {
     } else if (type !== 'bun' && ingredientsCount) {
         counter = ingredientsCount
     } else {
-        counter = '';
+        counter = 0;
     }
 
     const [{opacity}, ref] = useDrag({

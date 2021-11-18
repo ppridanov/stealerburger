@@ -1,7 +1,7 @@
 import { checkResponse, getUser, patchUser, sendData } from "../../utils/api";
 import { apiURL } from "../../utils/constants";
 import { History } from 'history';
-import { AppDispatch, AppThunk, TFormData, TLoginForm, TResetPasswordForm } from "../../types";
+import { AppDispatch, TResetPasswordForm, TFormData, TLoginForm } from "../../utils/types";
 
 export const GET_USER_REQUEST: 'GET_USER_REQUEST' = 'GET_USER_REQUEST';
 export const GET_USER_SUCCESS: 'GET_USER_SUCCESS' = 'GET_USER_SUCCESS';
@@ -12,7 +12,6 @@ export const DELETE_IS_AUTH: 'DELETE_IS_AUTH' = 'DELETE_IS_AUTH';
 export const CHANGE_USER_INFO: 'CHANGE_USER_INFO' = 'CHANGE_USER_INFO';
 export const SET_WAS_ON_FORGOT_PAGE: 'SET_WAS_ON_FORGOT_PAGE' = 'SET_WAS_ON_FORGOT_PAGE';
 export const DELETE_WAS_ON_FORGOT_PAGE: 'DELETE_WAS_ON_FORGOT_PAGE' = 'DELETE_WAS_ON_FORGOT_PAGE';
-
 
 export const postForgotPassword = (emailValue: string, history: History) => {
   return function (dispatch: AppDispatch) {

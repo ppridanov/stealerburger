@@ -2,28 +2,24 @@ import React, { useEffect, useMemo } from 'react';
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import feedDetailsStyle from './feed-details.module.css';
 import { useParams } from "react-router-dom";
-
-import { RootState, useDispatch, useSelector } from "../../types";
 import { getOrder } from "../../services/actions/orders";
 import { getDate } from "../../utils/funcs";
+import { useDispatch, useSelector } from '../../hooks/store';
 
 export const FeedDetails = () => {
   const { id }: { id: string } = useParams();
-  console.log(id)
-  const orderNumber = id;
-
   const dispatch = useDispatch();
-  const { orders } = useSelector((state: RootState) => state.orderData);
-  const { ingredients } = useSelector((state: RootState) => state.burgerIngredients);
+  const { orders } = useSelector((state) => state.orderData);
+  const { ingredients } = useSelector((state) => state.burgerIngredients);
 
   useEffect(() => {
     if (orders.length === 0) {
-      dispatch(getOrder(orderNumber));
+      dispatch(getOrder(id));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch])
 
-
-  const order = orders && orders.find((item) => item.number === Number(orderNumber));
+  const order = orders && orders.find((item) => item.number === Number(id));
 
   const orderIngredients = useMemo(() => {
     return Array.from(new Set(order?.ingredients)).map((ingredient) => {
@@ -32,17 +28,15 @@ export const FeedDetails = () => {
   }, [order, ingredients])
 
   const price = useMemo(() => {
-    return orderIngredients.reduce((acc: any, item: any): any => {
+    return orderIngredients.reduce((acc, item) => {
       if (item && item.type === 'bun') {
         acc += item && item.price * 2;
-      } else {
+      } else if (item) {
         acc += item && item.price;
       }
       return acc;
     }, 0)
   }, [orderIngredients]);
-
-  if (!orderNumber) return (<h1>Произошла ошибка</h1>)
 
   return (
     <>
@@ -81,7 +75,5 @@ export const FeedDetails = () => {
         </div>
       )}
     </>
-
-
-  )
+  );
 }
