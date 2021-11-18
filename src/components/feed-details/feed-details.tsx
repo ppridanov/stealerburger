@@ -16,8 +16,7 @@ export const FeedDetails = () => {
     if (orders.length === 0) {
       dispatch(getOrder(id));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch])
+  }, [dispatch, orders, id])
 
   const order = orders && orders.find((item) => item.number === Number(id));
 

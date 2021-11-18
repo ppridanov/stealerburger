@@ -43,7 +43,7 @@ export const fetchWithRefresh = async (url: string, options: RequestInit = {}) =
     if (err.message === "jwt expired" || err.message === "You should be authorised") {
       const refreshData = await refreshToken();
       localStorage.setItem("refreshToken", refreshData.refreshToken);
-      setCookie("token", refreshData.accessToken.split("Bearer ")[1]);
+      setCookie("token", refreshData.accessToken);
       (options.headers as { [key: string]: string }).authorization =
         refreshData.accessToken;
       const res = await fetch(url, options);
@@ -95,6 +95,6 @@ export const postOrderReq = async (ids: string[]) => {
       'Content-Type': 'application/json',
       'authorization': accessToken
     },
-    body: JSON.stringify(ids)
+    body: JSON.stringify({ingredients: ids})
   })
 }

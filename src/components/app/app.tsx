@@ -40,12 +40,6 @@ const App = () => {
           <Route path={`/feed/:id`} exact={true}>
             <FeedDetails/>
           </Route>
-          <ProtectedRoute path={"/profile"} exact={true}>
-            <Profile/>
-          </ProtectedRoute>
-          <ProtectedRoute path={"/profile/orders/:id"} exact={true}>
-            <FeedDetails/>
-          </ProtectedRoute>
           <Route path="/login" exact={true}>
             <Login/>
           </Route>
@@ -61,6 +55,12 @@ const App = () => {
           <Route path={"/ingredients/:id"} exact={true}>
             <IngredientDetails/>
           </Route>
+          <ProtectedRoute path={"/profile/orders/:id"} exact={true}>
+            <FeedDetails/>
+          </ProtectedRoute>
+          <ProtectedRoute path={"/profile"}>
+            <Profile/>
+          </ProtectedRoute>
           <Route path={`*`}>
             <Page404/>
           </Route>
@@ -73,7 +73,7 @@ const App = () => {
                  children={<Modal><OrderDetails/></Modal>}/>
           <Route path={'/feed/:id'}
                  children={<Modal><FeedDetails/></Modal>} />
-          <Route path={'/profile/orders/:id'}
+          <ProtectedRoute path={'/profile/orders/:id'}
                  children={<Modal><FeedDetails/></Modal>} />
         </>)
         }

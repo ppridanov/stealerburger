@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import orderDetailsStyles from './order-details.module.css';
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import doneImage from '../../images/graphics.svg'
@@ -9,11 +9,14 @@ import { useDispatch, useSelector } from '../../hooks/store';
 const OrderDetails = () => {
   const { orderNumber } = useSelector((state) => state.orderData)
   const dispatch = useDispatch();
-  if (orderNumber) {
-    dispatch({
-      type: CLEAR_CONSTRUCTOR
-    })
-  }
+  useEffect(() => {
+    if (orderNumber) {
+        dispatch({
+          type: CLEAR_CONSTRUCTOR
+        })
+      }
+  }, [orderNumber, dispatch])
+
   return (
     <>
       {!orderNumber && (<h1>Отправка данных на сервер. Подождите...</h1>)}

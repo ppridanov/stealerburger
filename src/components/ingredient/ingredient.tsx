@@ -45,7 +45,7 @@ const Ingredient: React.FC<TIngredientProps> = (props) => {
             style={{opacity: opacity}}
             id={_id}
         >
-            {counter && <Counter count={counter}/>}
+            {counter !== 0 && <Counter count={counter}/>}
             <img className={`${ingredientStyle.image} pr-4 pl-4`} src={image} alt=""/>
             <div className={`${ingredientStyle.price} mt-1 mb-1`}>
                 <span className='text text_type_digits-default mr-2'>{price}</span>

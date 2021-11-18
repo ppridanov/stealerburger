@@ -1,7 +1,6 @@
 import { AppDispatch } from "../../utils/types";
 import { apiURL } from "../../utils/constants";
 import { getData, postOrderReq } from "../../utils/api";
-import { getCookie } from "../../utils/funcs";
 import { TFeedItem } from "../types/user";
 
 export const ORDER_WS_CONNECTION_SUCCESS: 'ORDER_WS_CONNECTION_SUCCESS' = 'ORDER_WS_CONNECTION_SUCCESS';
@@ -79,16 +78,11 @@ export const getOrder = (orderId: string) => {
 }
 
 export const postOrder = (idsArr: string[]) => {
-  // Здесь не понял как описать токен если его нету. Если уберу проверку то будет ошибка. Если в AppDispatch убрать undefined будет ошибка
-  const accessToken = getCookie('token')
-  if (!accessToken) {
-    return;
-  }
-  return function (dispatch: AppDispatch) {
+  return async function (dispatch: AppDispatch) {
     dispatch({
       type: GET_ORDER_NUMBER_REQUEST
     })
-    return postOrderReq(idsArr)
+    await postOrderReq(idsArr)
       .then(res => {
         if (res && res.success) {
           dispatch({
