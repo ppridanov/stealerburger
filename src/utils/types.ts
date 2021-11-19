@@ -1,4 +1,11 @@
-import {Location} from 'history';
+import { Location } from 'history';
+import { ThunkAction } from 'redux-thunk';
+
+import { rootReducer } from "../services/reducers";
+import { TConstructorActions } from '../services/types/burger-constructor';
+import { TBurgerIngredientsActions } from '../services/types/burger-ingerdients';
+import { TOrdersActions } from '../services/types/orders';
+import { TUserActions } from '../services/types/user';
 
 export type TIngredient = {
     calories: number;
@@ -51,3 +58,19 @@ export type TResetPasswordForm = Pick<TFormData, 'password'> & {
 }
 
 export type TLoginForm = Omit<TFormData, 'name'>
+
+export type TUser = {
+    email: string;
+    name: string;
+}
+
+type TApplicationActions = TUserActions | TBurgerIngredientsActions | TConstructorActions | TOrdersActions;
+
+export type AppThunk<ReturnType = void> = ThunkAction<
+    ReturnType,
+    RootState,
+    unknown,
+    TApplicationActions
+>
+export type AppDispatch = <TReturnType>(action: TApplicationActions | AppThunk | undefined ) => TReturnType;
+export type RootState = ReturnType<typeof rootReducer>;

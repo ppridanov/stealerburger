@@ -1,16 +1,14 @@
-import {applyMiddleware, compose, createStore} from "redux";
-import thunk from "redux-thunk";
-import {rootReducer} from "./reducers";
+import { rootReducer } from "./reducers";
+import { ordersSocketMiddleWare } from "./middlewares/ordersSocketMiddleWare";
+import { configureStore } from "@reduxjs/toolkit";
+import {orderWsActions} from "./actions/orders";
 
-declare global {
-    interface Window {
-        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-    }
-}
+const orderMiddleWare = ordersSocketMiddleWare(orderWsActions)
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const enhancer = composeEnhancers(applyMiddleware(thunk));
-
-const store = createStore(rootReducer, enhancer);
-
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(orderMiddleWare)
+  }
+})
 export default store;
