@@ -72,5 +72,5 @@ export type AppThunk<ReturnType = void> = ThunkAction<
     unknown,
     TApplicationActions
 >
-export type AppDispatch = <TReturnType>(action: TApplicationActions | AppThunk | undefined ) => TReturnType;
+export type AppDispatch = <TReturnType>(action: TApplicationActions | AppThunk ) => TReturnType;
 export type RootState = ReturnType<typeof rootReducer>;
