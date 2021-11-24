@@ -27,7 +27,7 @@ type TUsersInitialState = {
   }
 }
 
-const initialState: TUsersInitialState = {
+export const initialState: TUsersInitialState = {
   authRequest: false,
   authFailed: false,
   user: {
@@ -49,12 +49,14 @@ export const usersReducer = (state = initialState, action: TUserActions): TUsers
     case GET_USER_FAILED:
       return {
         ...state,
-        authFailed: true
+        authFailed: true,
+        authRequest: false
       }
     case GET_USER_REQUEST:
       return {
         ...state,
-        authRequest: true
+        authRequest: true,
+        authFailed: false
       }
     case GET_USER_SUCCESS:
       return {
