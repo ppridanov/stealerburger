@@ -17,7 +17,7 @@ function IngredientDetails() {
       {!ingredient && (<h1>Загрузка...</h1>)}
       {ingredient && (
         <>
-          <h1 className={`${ingredientDetailsStyle.title} ${!background && 'mt-30'} text text_color_primary text_type_main-large`}>Детали ингредиента</h1>
+          <h1 className={`${ingredientDetailsStyle.title} ${!background && 'mt-30'} text text_color_primary text_type_main-large`} id={ingredient?._id}>Детали ингредиента</h1>
           <div className={ingredientDetailsStyle.body}>
             <img src={ingredient?.image_large} alt="" />
             <h5 className="text text_type_main-medium mt-4">{ingredient?.name}</h5>

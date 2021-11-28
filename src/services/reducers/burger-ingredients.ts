@@ -8,7 +8,7 @@ type TIngredientInitialState = {
   ingredientsFailed: boolean;
 }
 
-const initialState: TIngredientInitialState = {
+export const initialState: TIngredientInitialState = {
   ingredients: [],
   ingredientsRequest: false,
   ingredientsFailed: false,

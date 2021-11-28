@@ -1,6 +1,7 @@
 import {
   CLEAR_ORDER_NUMBER,
   GET_ORDER_FAILED,
+  GET_ORDER_NUMBER_FAILED,
   GET_ORDER_NUMBER_REQUEST,
   GET_ORDER_NUMBER_SUCCESS,
   GET_ORDER_REQUEST,
@@ -11,8 +12,8 @@ import {
   ORDER_WS_GET_MESSAGE
 } from "../actions/orders";
 
-import { TOrdersActions } from "../types/orders";
-import { TFeedItem } from "../types/user";
+import {TOrdersActions} from "../types/orders";
+import {TFeedItem} from "../types/user";
 
 type TInitialState = {
   wsConnected: boolean,
@@ -27,7 +28,7 @@ type TInitialState = {
   orderNumberFailed: boolean
 }
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   wsConnected: false,
   wsError: false,
   orders: [],
@@ -86,12 +87,21 @@ export const ordersReducer = (state = initialState, action: TOrdersActions): TIn
     case GET_ORDER_NUMBER_REQUEST:
       return {
         ...state,
-        orderRequest: true
+        orderNumberRequest: true,
+        orderNumberFailed: false
+      }
+    case GET_ORDER_NUMBER_FAILED:
+      return {
+        ...state,
+        orderNumberRequest: false,
+        orderNumberFailed: true
       }
     case GET_ORDER_NUMBER_SUCCESS:
       return {
         ...state,
-        orderNumber: action.payload
+        orderNumber: action.payload,
+        orderNumberFailed: false,
+        orderNumberRequest: false
       }
     case CLEAR_ORDER_NUMBER:
       return {

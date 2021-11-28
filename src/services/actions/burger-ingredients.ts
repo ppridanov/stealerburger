@@ -1,10 +1,29 @@
-import { getData } from "../../utils/api";
-import { apiURL } from "../../utils/constants";
-import {AppDispatch, AppThunk} from "../../utils/types";
+import {getData} from "../../utils/api";
+import {apiURL} from "../../utils/constants";
+import {AppDispatch, AppThunk, TIngredient} from "../../utils/types";
 
 export const GET_INGREDIENTS_REQUEST: 'GET_ITEMS_REQUEST' = 'GET_ITEMS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS: 'GET_ITEMS_SUCCESS' = 'GET_ITEMS_SUCCESS';
 export const GET_INGREDIENTS_FAILED: 'GET_ITEMS_FAILED' = 'GET_ITEMS_FAILED';
+
+export const getIngredientsRequest = () => {
+  return {
+    type: GET_INGREDIENTS_REQUEST
+  }
+}
+
+export const getIngredientsSuccess = (data: TIngredient[]) => {
+  return {
+    type: GET_INGREDIENTS_SUCCESS,
+    ingredients: data
+  }
+}
+
+export const getIngredientsFailed = () => {
+  return {
+    type: GET_INGREDIENTS_FAILED
+  }
+}
 
 export const getIngredients = (): AppThunk => {
   return function (dispatch: AppDispatch) {
@@ -25,12 +44,17 @@ export const getIngredients = (): AppThunk => {
             ingredients: data.data,
           })
         } else {
-          dispatch({ type: GET_INGREDIENTS_FAILED })
+          dispatch({type: GET_INGREDIENTS_FAILED})
         }
       })
       .catch(err => {
         console.log(err)
-        dispatch({ type: GET_INGREDIENTS_FAILED })
+        dispatch({type: GET_INGREDIENTS_FAILED})
       })
   }
 }
+
+export type TBurgerIngredientsActions =
+  ReturnType<typeof getIngredientsRequest>
+  | ReturnType<typeof getIngredientsFailed>
+  | ReturnType<typeof getIngredientsSuccess>

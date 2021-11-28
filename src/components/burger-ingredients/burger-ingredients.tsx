@@ -30,7 +30,7 @@ const BurgerIngredients = () => {
       }
     }
   }
-
+  console.log(ingredients)
   return (
     <>
       {ingredientsRequest && !ingredientsFailed && (
@@ -41,7 +41,7 @@ const BurgerIngredients = () => {
       )}
       {!ingredientsFailed && !ingredientsRequest && ingredients.length > 0 && (
         <div className={ingredientsStyles.constr}>
-          <h1 className="text text_type_main-large mt-10 text_colo">Соберите бургер</h1>
+          <h1 className="text text_type_main-large mt-10 text_colo" id={"title"}>Соберите бургер</h1>
           <div style={{ display: 'flex' }} className='mt-5'>
             <a href="#buns">
               <Tab value="buns" active={current === 'buns'} onClick={handleTabClick}>

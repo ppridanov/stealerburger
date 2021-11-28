@@ -12,7 +12,7 @@ type TInitialState = {
   totalPrice: number;
 }
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   ingredients: [],
   bun: null,
   totalPrice: 0

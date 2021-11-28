@@ -67,7 +67,7 @@ const BurgerConstructorIngredient: React.FC<TConstructorItemIngredient> = (props
 
   drag(drop(ref))
 
-  return (<li style={{ opacity: opacity }} className={constructorStyle.item} ref={ref}>
+  return (<li style={{ opacity: opacity }} className={constructorStyle.item} ref={ref} id={_id}>
     <div className="mr-2" style={{ cursor: 'pointer' }}>
       <DragIcon type={"primary"} />
     </div>
