@@ -3,7 +3,7 @@
 ***
 
 ##Ссылка на проект:
-[Stellar Burger](https://stellar-burger.xyz)
+Здесь можно увидеть проект: [Stellar Burger](https://stellar-burger.xyz)
 
 
 ## Описание
