@@ -1,10 +1,7 @@
 # Проектная работа по Яндекс.Практикуму StellarBurgers
 
-***
-
-##Ссылка на проект:
-Здесь можно увидеть проект: [Stellar Burger](https://stellar-burger.xyz)
-
+Ссылка на проект: [Stellar Burger](https://stellar-burger.xyz)
+**
 
 ## Описание
 Космическая бургерная `StellarBurgers`. В проекте применены следующие технологии:
