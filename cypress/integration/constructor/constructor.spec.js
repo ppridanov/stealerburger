@@ -35,5 +35,6 @@ describe('service is available', function() {
         cy.wait('@postOrder');
         cy.get('#modal').should('exist');
         cy.contains('идентификатор заказа');
+        cy.get('#modal [class^="modal_close"] svg').trigger('click');
     })
 });
