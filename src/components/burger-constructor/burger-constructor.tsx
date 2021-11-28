@@ -81,7 +81,7 @@ const BurgerConstructor: React.FC = () => {
   return (
     <>
       <div ref={dropTarget} className={`${constructorStyle.constr} mt-25`}>
-        <ul className={`${constructorStyle.list}`}>
+        <ul className={`${constructorStyle.list}`} id="constructorList">
           <li className={`${constructorStyle.item} ${isHover ? constructorStyle.item_isHovering : ''}`}>
 
             {bun ? (
@@ -101,7 +101,7 @@ const BurgerConstructor: React.FC = () => {
           <li className={`${constructorStyle.item} ${isHover ? constructorStyle.item_isHovering : ''}`}>
             <ul className={constructorStyle.list__scroll}
               style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: "flex-end" }}>
-              {ingredients.map((item, idx: number) => {
+              {ingredients.map((item, idx) => {
                 return <BurgerConstructorIngredient {...item} index={idx} key={item.uuid} />
               })}
             </ul>

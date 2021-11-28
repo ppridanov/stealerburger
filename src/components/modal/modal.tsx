@@ -34,7 +34,7 @@ const Modal: React.FC<TModalProps> = (props) => {
   return ReactDOM.createPortal(
     <>
       <ModalOverlay onClose={(e) => back(e)} />
-      <div className={`${modalStyles.modal} pt-10 pr-10 pl-10 pb-15`}>
+      <div className={`${modalStyles.modal} pt-10 pr-10 pl-10 pb-15`} id='modal'>
         <div className={modalStyles.header}>
           <h3 className={`${modalStyles.title} text text_type_main-large`}>{title}</h3>
           <div className={modalStyles.close} onClick={(e) => back(e)}><CloseIcon type={"primary"} /></div>
